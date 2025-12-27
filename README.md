@@ -14,3 +14,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## ✅ FINAL ARCHITECTURE (HYBRID – CLEAN)
+Flutter UI
+   |
+   | MethodChannel
+   ↓
+Native Android (Kotlin)
+   |
+   ├─ ARCore (AugmentedFace)
+   ├─ Front Camera
+   ├─ OpenGL / Filament Renderer
+   └─ Loads GLB from path sent by Flutter
