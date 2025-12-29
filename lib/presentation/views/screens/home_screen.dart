@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:kacamatamoo/presentation/controllers/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () async {
-                await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.glb');
+                await controller.startCamera();
               },
               child: const Text('Start Face AR'),
             ),
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () async {
-                await FaceArChannel.stopFaceAr();
+                await controller.stopFaceAr();
               },
               child: const Text('Stop Face AR'),
             ),

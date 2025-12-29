@@ -1,13 +1,20 @@
 package com.example.kacamatamoo
 
 import android.content.Intent
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.File
+import java.io.FileOutputStream
+import android.util.Log
 
 class MainActivity : FlutterActivity() {
 
-    private val CHANNEL = "kacamatamoo/face_ar"
+    private companion object {
+        const val CHANNEL = "kacamatamoo/face_ar"
+        const val EXTRA_MODEL_PATH = "MODEL_PATH"
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -21,24 +28,64 @@ class MainActivity : FlutterActivity() {
 
                 "startFaceAr" -> {
                     val assetPath = call.argument<String>("assetPath")
-                    startFaceArActivity(assetPath)
-                    result.success(null)
+
+                    if (assetPath.isNullOrBlank()) {
+                        result.error(
+                            "INVALID_ARGUMENT",
+                            "assetPath is null or empty",
+                            null
+                        )
+                        return@setMethodCallHandler
+                    }
+
+                    try {
+                        val modelFile = copyAssetToCache(assetPath)
+                        startFaceArActivity(modelFile.absolutePath)
+                        result.success(null)
+                    } catch (e: Exception) {
+                        result.error(
+                            "ASSET_COPY_FAILED",
+                            e.localizedMessage,
+                            null
+                        )
+                    }
                 }
 
                 "stopFaceAr" -> {
+                    // Optional: finish FaceArActivity via broadcast later
                     result.success(null)
                 }
 
-                else -> {
-                    result.notImplemented()
-                }
+                else -> result.notImplemented()
             }
         }
     }
 
-    private fun startFaceArActivity(assetPath: String?) {
-        val intent = Intent(this, FaceArActivity::class.java)
-        intent.putExtra("assetPath", assetPath)
+    private fun copyAssetToCache(assetPath: String): File {
+        val fileName = assetPath.substringAfterLast("/")
+        val outFile = File(cacheDir, fileName)
+
+        // Avoid re-copying every time
+        if (outFile.exists()) return outFile
+
+        // Resolve Flutter asset path inside APK's asset folder
+        // Flutter packages assets under "flutter_assets/" in the APK.
+        // val assetKey = "flutter_assets/$assetPath"
+        val assetKey = assetPath
+        assets.open(assetKey).use { input ->
+            FileOutputStream(outFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        Log.d("FaceAR", "Copied to: ${outFile.absolutePath}")
+        return outFile
+    }
+
+    private fun startFaceArActivity(modelPath: String) {
+        val intent = Intent(this, FaceArActivity::class.java).apply {
+            putExtra(EXTRA_MODEL_PATH, modelPath)
+        }
         startActivity(intent)
     }
 }
