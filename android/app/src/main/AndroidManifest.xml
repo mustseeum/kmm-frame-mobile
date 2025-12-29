@@ -1,7 +1,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.kacamatamoo">
+    package="com.kacamatamoo.app">
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -39,9 +39,14 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <!-- ARCore meta-data (required for ARCore API) -->
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="optional" />
+
         <!-- ✅ FACE AR ACTIVITY (THIS FIXES YOUR ERROR) -->
         <activity
-            android:name="com.example.kacamatamoo.FaceArActivity"
+            android:name=".FaceArActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

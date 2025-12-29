@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kacamatamoo"
+    namespace = "com.kacamatamoo.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.kacamatamoo"
+        applicationId = "com.kacamatamoo.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // minSdk = flutter.minSdkVersion
@@ -30,6 +30,11 @@ android {
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        
+        // Required for Filament native libraries
+        ndk {
+            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64"))
+        }
     }
 
     buildTypes {
@@ -37,6 +42,25 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    packagingOptions {
+        // Ensure Filament native libraries are included
+        resources {
+            excludes += listOf(
+                "META-INF/proguard/androidx-*.pro",
+                "META-INF/*.kotlin_module"
+            )
+        }
+        // Ensure native .so files from Filament are included
+        jniLibs {
+            pickFirsts += listOf(
+                "lib/arm64-v8a/libfilament.so",
+                "lib/armeabi-v7a/libfilament.so",
+                "lib/x86/libfilament.so",
+                "lib/x86_64/libfilament.so"
+            )
         }
     }
 }
@@ -66,7 +90,7 @@ dependencies {
 
     // 🔥 ARCore (ONLY AR dependency you need)
     implementation ("com.google.ar:core:1.46.0")
-    // Filament + gltfio for GLB loading/rendering
+    // Filament + gltfio for GLB loading/rendering (use stable version with proper native lib support)
     val filamentVersion = "1.36.0"
     implementation("com.google.android.filament:filament-android:$filamentVersion")
     implementation("com.google.android.filament:gltfio-android:$filamentVersion")

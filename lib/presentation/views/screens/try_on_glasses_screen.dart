@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/presentation/controllers/home_screen_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/try_on_glasses_controller.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-  final controller = Get.find<HomeScreenController>();
+class TryOnGlassesScreen extends StatelessWidget {
+  TryOnGlassesScreen({super.key});
+  final controller = Get.find<TryOnGlassesController>();
 
   @override
   Widget build(BuildContext context) {

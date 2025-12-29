@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 
-class HomeScreenController extends GetxController {
+class TryOnGlassesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
@@ -33,8 +34,14 @@ class HomeScreenController extends GetxController {
 
   /// Start camera-related work. Implement camera initialization here.
   Future<void> startCamera() async {
-    // TODO: initialize camera controller / navigate to camera view
-    await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.obj');
+    try {
+      debugPrint('[TryOnGlassesController] Starting Face AR with GLB asset...');
+      await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.glb');
+      debugPrint('[TryOnGlassesController] Face AR started successfully');
+    } catch (e) {
+      debugPrint('[TryOnGlassesController] Error starting Face AR: $e');
+      rethrow;
+    }
   }
 
   Future<void> stopFaceAr() async {
