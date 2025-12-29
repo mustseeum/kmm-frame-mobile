@@ -81,13 +81,33 @@ class FilamentRenderer {
 
     fun setSurfaceAndViewport(surface: Any?, width: Int, height: Int) {
         try {
-            if (surface != null && swapChain == null) {
+            if (surface != null) {
+                // Recreate swap chain if surface changes
+                swapChain?.let { engine?.destroySwapChain(it) }
                 swapChain = engine?.createSwapChain(surface)
             }
             val viewport = Viewport(0, 0, width, height)
             view?.viewport = viewport
         } catch (e: Exception) {
             Log.e("FaceAR", "Error setting surface/viewport: ${e.localizedMessage}")
+        }
+    }
+
+    fun resizeViewport(width: Int, height: Int) {
+        try {
+            val viewport = Viewport(0, 0, width, height)
+            view?.viewport = viewport
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Error resizing viewport: ${e.localizedMessage}")
+        }
+    }
+
+    fun detachSurface() {
+        try {
+            swapChain?.let { engine?.destroySwapChain(it) }
+            swapChain = null
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Error detaching surface: ${e.localizedMessage}")
         }
     }
 
@@ -134,6 +154,11 @@ class FilamentRenderer {
             resourceLoader = null
             assetLoader = null
             filamentAsset = null
+            if (cameraEntity != 0) {
+                engine?.destroyCameraComponent(cameraEntity)
+                EntityManager.get().destroy(cameraEntity)
+                cameraEntity = 0
+            }
             engine = null
         } catch (e: Exception) {
             Log.e("FaceAR", "Error destroying resources: ${e.localizedMessage}")
