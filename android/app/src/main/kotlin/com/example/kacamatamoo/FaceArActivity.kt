@@ -9,15 +9,21 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import android.widget.Toast
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.*
+import com.google.ar.core.ArCoreApk
+import com.google.ar.core.Config
+import com.google.ar.core.Session
 import java.util.concurrent.Executors
 
 class FaceArActivity : ComponentActivity() {
 
     private lateinit var previewView: PreviewView
-    private lateinit var rendererView: FaceGlSurfaceView
+    private lateinit var rendererView: FilamentView
     private lateinit var faceDetector: FaceDetector
+    private var arSession: Session? = null
+    private var arSupported: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +32,12 @@ class FaceArActivity : ComponentActivity() {
             ?: error("MODEL_PATH missing")
 
         previewView = PreviewView(this)
-        rendererView = FaceGlSurfaceView(this, modelPath)
+        rendererView = FilamentView(this)
+
+        // load model asynchronously
+        Thread {
+            rendererView.loadModel(modelPath)
+        }.start()
 
         setContentView(
             FrameLayout(this).apply {
@@ -35,8 +46,41 @@ class FaceArActivity : ComponentActivity() {
             }
         )
 
+        // Check ARCore Augmented Faces support (non-blocking). Use CameraX+MLKit as fallback.
+        checkArCoreSupport()
+
         setupFaceDetector()
         startCamera()
+    }
+
+    private fun checkArCoreSupport() {
+        try {
+            val availability = ArCoreApk.getInstance().checkAvailability(this)
+            if (availability.isTransient) {
+                previewView.postDelayed({ checkArCoreSupport() }, 200)
+                return
+            }
+            if (availability.isSupported) {
+                try {
+                    arSession = Session(this)
+                    val config = Config(arSession)
+                    try {
+                        config.augmentedFaceMode = Config.AugmentedFaceMode.MESH3D
+                    } catch (e: Exception) {
+                        // ignore if unavailable
+                    }
+                    arSession?.configure(config)
+                    arSupported = true
+                    Toast.makeText(this, "ARCore: Augmented Faces enabled", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    arSupported = false
+                }
+            } else {
+                arSupported = false
+            }
+        } catch (e: Exception) {
+            arSupported = false
+        }
     }
 
     private fun setupFaceDetector() {

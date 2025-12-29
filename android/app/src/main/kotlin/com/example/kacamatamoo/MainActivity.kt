@@ -39,7 +39,36 @@ class MainActivity : FlutterActivity() {
                     }
 
                     try {
-                        val modelFile = copyAssetToCache(assetPath)
+                        // If caller passed an absolute/local path, use it directly
+                        val modelFile = when {
+                            assetPath.startsWith("/") || assetPath.startsWith("file://") -> {
+                                val p = assetPath.removePrefix("file://")
+                                val f = java.io.File(p)
+                                if (!f.exists()) throw IllegalArgumentException("File not found: $p")
+                                f
+                            }
+                            assetPath.startsWith("http://") || assetPath.startsWith("https://") -> {
+                                // Download remote URL into cache
+                                val url = java.net.URL(assetPath)
+                                val fileName = assetPath.substringAfterLast('/')
+                                val outFile = java.io.File(cacheDir, fileName)
+                                if (!outFile.exists()) {
+                                    try {
+                                        url.openStream().use { input ->
+                                            java.io.FileOutputStream(outFile).use { out ->
+                                                input.copyTo(out)
+                                            }
+                                        }
+                                        Log.d("FaceAR", "Downloaded remote model to: ${outFile.absolutePath}")
+                                    } catch (e: Exception) {
+                                        Log.e("FaceAR", "Failed downloading [$assetPath]: ${e.localizedMessage}")
+                                        throw e
+                                    }
+                                }
+                                outFile
+                            }
+                            else -> copyAssetToCache(assetPath)
+                        }
                         startFaceArActivity(modelFile.absolutePath)
                         result.success(null)
                     } catch (e: Exception) {
@@ -70,15 +99,18 @@ class MainActivity : FlutterActivity() {
 
         // Resolve Flutter asset path inside APK's asset folder
         // Flutter packages assets under "flutter_assets/" in the APK.
-        // val assetKey = "flutter_assets/$assetPath"
-        val assetKey = assetPath
-        assets.open(assetKey).use { input ->
-            FileOutputStream(outFile).use { output ->
-                input.copyTo(output)
+        val assetKey = "flutter_assets/$assetPath"
+        try {
+            assets.open(assetKey).use { input ->
+                FileOutputStream(outFile).use { output ->
+                    input.copyTo(output)
+                }
             }
+            Log.d("FaceAR", "Copied to: ${outFile.absolutePath}")
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Failed copying asset [$assetKey]: ${e.localizedMessage}")
+            throw e
         }
-
-        Log.d("FaceAR", "Copied to: ${outFile.absolutePath}")
         return outFile
     }
 

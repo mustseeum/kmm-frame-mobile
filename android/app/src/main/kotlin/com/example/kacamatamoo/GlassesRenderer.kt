@@ -15,6 +15,10 @@ class GlassesRenderer(
 
     private var program = 0
     private val mvpMatrix = FloatArray(16)
+    private val viewMatrix = FloatArray(16)
+    private val projMatrix = FloatArray(16)
+    private val modelMatrix = FloatArray(16)
+    private val tempMatrix = FloatArray(16)
 
     private var lx = 0f
     private var ly = 0f
@@ -56,7 +60,17 @@ class GlassesRenderer(
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
-        Matrix.setIdentityM(mvpMatrix, 0)
+        // Setup a simple perspective and place model at center so it's visible by default
+        val ratio = width.toFloat() / height.toFloat()
+        Matrix.frustumM(projMatrix, 0, -ratio, ratio, -1f, 1f, 1f, 10f)
+        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, 3f, 0f, 0f, 0f, 0f, 1f, 0f)
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        // default scale - tweak if model too large/small
+        Matrix.scaleM(modelMatrix, 0, 0.02f, 0.02f, 0.02f)
+
+        Matrix.multiplyMM(tempMatrix, 0, viewMatrix, 0, modelMatrix, 0)
+        Matrix.multiplyMM(mvpMatrix, 0, projMatrix, 0, tempMatrix, 0)
     }
 
     override fun onDrawFrame(gl: GL10?) {

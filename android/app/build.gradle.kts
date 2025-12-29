@@ -66,6 +66,11 @@ dependencies {
 
     // 🔥 ARCore (ONLY AR dependency you need)
     implementation ("com.google.ar:core:1.46.0")
+    // Filament + gltfio for GLB loading/rendering
+    val filamentVersion = "1.36.0"
+    implementation("com.google.android.filament:filament-android:$filamentVersion")
+    implementation("com.google.android.filament:gltfio-android:$filamentVersion")
+    implementation("com.google.android.filament:filament-utils-android:$filamentVersion")
 }
 
 flutter {

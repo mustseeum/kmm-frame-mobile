@@ -34,7 +34,7 @@ class HomeScreenController extends GetxController {
   /// Start camera-related work. Implement camera initialization here.
   Future<void> startCamera() async {
     // TODO: initialize camera controller / navigate to camera view
-    await FaceArChannel.startFaceAr('assets/model_3d/test_triangel.obj');
+    await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.obj');
   }
 
   Future<void> stopFaceAr() async {
