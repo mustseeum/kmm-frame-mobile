@@ -102,6 +102,10 @@ class FilamentRenderer {
         }
     }
 
+    /**
+     * Detach the rendering surface.
+     * Called when the surface is destroyed (e.g., activity going to background).
+     */
     fun detachSurface() {
         try {
             swapChain?.let { engine?.destroySwapChain(it) }
@@ -111,25 +115,65 @@ class FilamentRenderer {
         }
     }
 
+    /**
+     * Update the transformation matrix of a 3D entity.
+     * Applies position, rotation, and scale to the model in 3D space.
+     * 
+     * @param entity The Filament entity ID to transform
+     * @param matrix 4x4 transformation matrix (16 floats in column-major order)
+     */
     fun updateTransform(entity: Int, matrix: FloatArray) {
         try {
             val tm = engine?.transformManager ?: return
-            tm.setTransform(entity, matrix)
+            val instance = tm.getInstance(entity)
+            
+            if (instance != 0) {
+                tm.setTransform(instance, matrix)
+            }
         } catch (e: Exception) {
             Log.e("FaceAR", "Error updating transform: ${e.localizedMessage}")
         }
     }
 
+    /**
+     * Update transforms for all entities in the loaded model.
+     * Useful when applying global transforms to the entire glasses frame.
+     * 
+     * @param matrix 4x4 transformation matrix to apply to all entities
+     */
+    fun updateAllEntityTransforms(matrix: FloatArray) {
+        try {
+            filamentAsset?.entities?.forEach { entity ->
+                updateTransform(entity, matrix)
+            }
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Error updating all entity transforms: ${e.localizedMessage}")
+        }
+    }
+
+    /**
+     * Get the root entity of the loaded 3D model.
+     * The root entity is the parent of all model components.
+     * 
+     * @return Root entity ID, or a new entity if no model is loaded
+     */
     fun getRootEntity(): Int {
         return filamentAsset?.root ?: EntityManager.get().create()
     }
 
+    /**
+     * Main render loop - draws one frame.
+     * Called repeatedly (typically at 60fps) to update the display.
+     * 
+     * @return true if frame was rendered successfully, false otherwise
+     */
     fun render(): Boolean {
         val r = renderer ?: return false
         val v = view ?: return false
         val sc = swapChain ?: return false
 
         return try {
+            // Begin frame and render if ready
             if (r.beginFrame(sc, 0)) {
                 r.render(v)
                 r.endFrame()

@@ -14,6 +14,7 @@ class MainActivity : FlutterActivity() {
     private companion object {
         const val CHANNEL = "kacamatamoo/face_ar"
         const val EXTRA_MODEL_PATH = "MODEL_PATH"
+        const val EXTRA_USER_PD = "USER_PD"
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -28,6 +29,7 @@ class MainActivity : FlutterActivity() {
 
                 "startFaceAr" -> {
                     val assetPath = call.argument<String>("assetPath")
+                    val userPD = call.argument<Double>("userPD")  // Optional PD parameter
 
                     if (assetPath.isNullOrBlank()) {
                         result.error(
@@ -69,7 +71,7 @@ class MainActivity : FlutterActivity() {
                             }
                             else -> copyAssetToCache(assetPath)
                         }
-                        startFaceArActivity(modelFile.absolutePath)
+                        startFaceArActivity(modelFile.absolutePath, userPD)
                         result.success(null)
                     } catch (e: Exception) {
                         result.error(
@@ -120,9 +122,19 @@ class MainActivity : FlutterActivity() {
         return outFile
     }
 
-    private fun startFaceArActivity(modelPath: String) {
+    /**
+     * Launch FaceArActivity with model path and optional user PD.
+     * 
+     * @param modelPath Absolute file path to the GLB model
+     * @param userPD Optional user's pupillary distance in millimeters (54-74mm)
+     */
+    private fun startFaceArActivity(modelPath: String, userPD: Double? = null) {
         val intent = Intent(this, FaceArActivity::class.java).apply {
             putExtra(EXTRA_MODEL_PATH, modelPath)
+            userPD?.let { 
+                putExtra(EXTRA_USER_PD, it.toFloat())
+                Log.d("FaceAR", "Starting Face AR with user PD: ${it}mm")
+            }
         }
         startActivity(intent)
     }
