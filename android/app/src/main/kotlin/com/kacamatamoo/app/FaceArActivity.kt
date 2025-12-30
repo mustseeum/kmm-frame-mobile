@@ -129,7 +129,7 @@ class FaceArActivity : ComponentActivity() {
                             
                             Toast.makeText(
                                 this, 
-                                "✓ ARCore Augmented Faces enabled (Premium Mode)", 
+                                "✓ ARCore Augmented Faces enabled (Premium Mode): ${modelPath}", 
                                 Toast.LENGTH_SHORT
                             ).show()
                             
