@@ -43,7 +43,11 @@ class FaceArActivity : ComponentActivity() {
 
         val modelPath = intent.getStringExtra("MODEL_PATH")
             ?: error("MODEL_PATH missing")
-        
+        Toast.makeText(
+            this, 
+            "✓ ${modelPath}", 
+            Toast.LENGTH_SHORT
+        ).show()
         // Get optional user-provided PD from Flutter (in millimeters)
         userProvidedPD = intent.getFloatExtra("USER_PD", -1f).let { 
             if (it > 0) it else null 
@@ -129,7 +133,7 @@ class FaceArActivity : ComponentActivity() {
                             
                             Toast.makeText(
                                 this, 
-                                "✓ ARCore Augmented Faces enabled (Premium Mode): ${modelPath}", 
+                                "✓ ARCore Augmented Faces enabled (Premium Mode)", 
                                 Toast.LENGTH_SHORT
                             ).show()
                             
