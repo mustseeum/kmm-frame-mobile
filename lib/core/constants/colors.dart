@@ -9,10 +9,11 @@ class AppColors {
   static const Color onSurfaceLight = Color(0xFF141C48);
   static const Color hintLight = Color(0xFF6E7C90);
   static const Color outlineLight = Color(0xFFD0D5D9);
+  static const Color colorText = Color(0xFF040816);
 
   // Primary – Teal
   static const Color primary = Color(0xFF156061);
-  static const Color primaryContainerLight = Color(0xFFBCECED);
+  static const Color primaryContainerLight = Color(0xFFEAF6F6);
   static const Color onPrimary = Colors.white;
   static const Color onPrimaryContainerLight = Color(0xFF003638);
 
