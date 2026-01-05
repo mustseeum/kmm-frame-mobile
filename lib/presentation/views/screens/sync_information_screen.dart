@@ -26,16 +26,24 @@ class SyncInfotmationScreen extends StatelessWidget {
                     // Top Logo Card (rounded rectangle with shadow)
                     // heading logo and title
                     HeadingCardWidget(
-                      containerWidth: FunctionHelper.getContainerWidth(constraints),
+                      containerWidth: FunctionHelper.getContainerWidth(
+                        constraints,
+                      ),
                       isTablet: FunctionHelper.isTablet(constraints),
                     ),
 
                     // Main Sync Info Card
                     Container(
-                      width: FunctionHelper.getContainerWidth(constraints).clamp(320.0, 720.0),
+                      width: FunctionHelper.getContainerWidth(
+                        constraints,
+                      ).clamp(320.0, 720.0),
                       padding: EdgeInsets.symmetric(
-                        horizontal: FunctionHelper.isTablet(constraints) ? 28.0 : 20.0,
-                        vertical: FunctionHelper.isTablet(constraints) ? 22.0 : 16.0,
+                        horizontal: FunctionHelper.isTablet(constraints)
+                            ? 28.0
+                            : 20.0,
+                        vertical: FunctionHelper.isTablet(constraints)
+                            ? 22.0
+                            : 16.0,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -157,7 +165,7 @@ class SyncInfotmationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
                               ),
                             ],
                           ),
@@ -189,11 +197,14 @@ class SyncInfotmationScreen extends StatelessWidget {
                     const SizedBox(height: 18),
 
                     // Footer
-                    const Text(
-                      '2025 KACAMATAMOO. All rights reserved.',
+                    Text(
+                      'copy_right'.tr,
                       style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
+                        fontSize: FunctionHelper.isTablet(constraints)
+                            ? 14
+                            : 12,
+                        color: AppColors.colorText,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

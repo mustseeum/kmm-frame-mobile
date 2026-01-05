@@ -33,12 +33,12 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // Top logo card
-                       // heading logo and title
-                  HeadingCardWidget(
-                    containerWidth: containerWidth,
-                    isTablet: FunctionHelper.isTablet(constraints),
+                    // heading logo and title
+                    HeadingCardWidget(
+                      containerWidth: containerWidth,
+                      isTablet: FunctionHelper.isTablet(constraints),
                       onTap: () => ctrl.goBack(),
-                  ),
+                    ),
 
                     const SizedBox(height: 28),
 
@@ -104,7 +104,9 @@ class HomeScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.onBackgroundLight.withValues(alpha: 0.02),
+                                  color: AppColors.onBackgroundLight.withValues(
+                                    alpha: 0.02,
+                                  ),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
@@ -218,9 +220,15 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 26),
 
                     // Footer
-                    const Text(
-                      '2025 KACAMATAMOO. All rights reserved.',
-                      style: TextStyle(fontWeight: FontWeight.w700),
+                    Text(
+                      'copy_right'.tr,
+                      style: TextStyle(
+                        fontSize: FunctionHelper.isTablet(constraints)
+                            ? 14
+                            : 12,
+                        color: AppColors.colorText,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
