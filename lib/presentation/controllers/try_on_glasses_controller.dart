@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 
@@ -36,7 +37,8 @@ class TryOnGlassesController extends GetxController {
   Future<void> startCamera() async {
     try {
       debugPrint('[TryOnGlassesController] Starting Face AR with GLB asset...');
-      await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.glb');
+      // await FaceArChannel.startFaceAr('assets/model_3d/test_image_asset.glb');
+      Get.offNamed(ScreenRoutes.exampleTryOnGlasses);
       debugPrint('[TryOnGlassesController] Face AR started successfully');
     } catch (e) {
       debugPrint('[TryOnGlassesController] Error starting Face AR: $e');

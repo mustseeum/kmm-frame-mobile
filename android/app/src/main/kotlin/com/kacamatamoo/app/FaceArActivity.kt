@@ -21,8 +21,10 @@ import com.google.ar.core.CameraConfigFilter
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.core.TrackingState
+import com.google.ar.core.exceptions.CameraNotAvailableException
 import com.google.android.filament.utils.Utils
 import java.util.concurrent.Executors
+import java.io.File
 
 class FaceArActivity : ComponentActivity() {
 
@@ -32,6 +34,8 @@ class FaceArActivity : ComponentActivity() {
     private var arSession: Session? = null
     private var arSupported: Boolean = false
     private var useArCore: Boolean = false  // Flag to track which tracking method is active
+    private var arHandler: Handler? = null  // Handler for ARCore loop
+    private var arRunnable: Runnable? = null  // Runnable for ARCore loop
     
     // Pupillary distance tracking
     private var userProvidedPD: Float? = null  // User's actual PD from prescription/measurement
@@ -43,11 +47,9 @@ class FaceArActivity : ComponentActivity() {
 
         val modelPath = intent.getStringExtra("MODEL_PATH")
             ?: error("MODEL_PATH missing")
-        Toast.makeText(
-            this, 
-            "✓ ${modelPath}", 
-            Toast.LENGTH_SHORT
-        ).show()
+            
+        Log.d("FaceAR", "Received model path: $modelPath")
+        
         // Get optional user-provided PD from Flutter (in millimeters)
         userProvidedPD = intent.getFloatExtra("USER_PD", -1f).let { 
             if (it > 0) it else null 
@@ -59,10 +61,30 @@ class FaceArActivity : ComponentActivity() {
         // Load Filament native libs (required for Engine.create())
         Utils.init()
 
-        // load model asynchronously
-        Thread {
-            rendererView.loadModel(modelPath)
-        }.start()
+        // Resolve model path (handle both asset:// and file:// paths)
+        val resolvedPath = resolveModelPath(modelPath)
+        
+        if (resolvedPath != null) {
+            Toast.makeText(this, "✓ Loading model...", Toast.LENGTH_SHORT).show()
+            
+            // load model asynchronously
+            Thread {
+                try {
+                    rendererView.loadModel(resolvedPath)
+                    runOnUiThread {
+                        Log.d("FaceAR", "Model loading initiated successfully")
+                    }
+                } catch (e: Exception) {
+                    runOnUiThread {
+                        Log.e("FaceAR", "Failed to load model: ${e.localizedMessage}", e)
+                        Toast.makeText(this, "✗ Failed to load model", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }.start()
+        } else {
+            Toast.makeText(this, "✗ Invalid model path", Toast.LENGTH_LONG).show()
+            Log.e("FaceAR", "Could not resolve model path: $modelPath")
+        }
 
         setContentView(
             FrameLayout(this).apply {
@@ -76,14 +98,66 @@ class FaceArActivity : ComponentActivity() {
             checkArCoreSupport()
         } catch (e: Exception) {
             Log.e("FaceAR", "ARCore check failed (continuing with ML Kit fallback): ${e.localizedMessage}")
+            arSupported = false
+            useArCore = false
         }
 
         setupFaceDetector()
         startCamera()
-        
-        // If ARCore is enabled, start ARCore update loop
-        if (useArCore) {
-            startArCoreLoop()
+    }
+    
+    /**
+     * Resolve model path from Flutter to actual file system path.
+     * Handles:
+     * - asset:// paths → copies to cache and returns file path
+     * - file:// paths → returns direct path
+     * - Absolute paths → returns as-is if file exists
+     */
+    private fun resolveModelPath(path: String): String? {
+        return try {
+            when {
+                // Handle asset:// paths (from Flutter assets)
+                path.startsWith("asset://") || path.startsWith("assets/") -> {
+                    val assetPath = path.removePrefix("asset://").removePrefix("assets/")
+                    val cacheFile = File(cacheDir, "model_${assetPath.hashCode()}.glb")
+                    
+                    // Copy asset to cache if not already cached
+                    if (!cacheFile.exists()) {
+                        assets.open(assetPath).use { input ->
+                            cacheFile.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        Log.d("FaceAR", "Copied asset to cache: ${cacheFile.absolutePath}")
+                    }
+                    cacheFile.absolutePath
+                }
+                
+                // Handle file:// paths
+                path.startsWith("file://") -> {
+                    val filePath = path.removePrefix("file://")
+                    if (File(filePath).exists()) filePath else null
+                }
+                
+                // Handle absolute paths
+                File(path).exists() -> path
+                
+                // Last resort: try as asset path
+                else -> {
+                    val cacheFile = File(cacheDir, "model_${path.hashCode()}.glb")
+                    if (!cacheFile.exists()) {
+                        assets.open(path).use { input ->
+                            cacheFile.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                    }
+                    cacheFile.absolutePath
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Failed to resolve model path '$path': ${e.localizedMessage}", e)
+            null
         }
     }
 
@@ -309,10 +383,31 @@ class FaceArActivity : ComponentActivity() {
      * Start ARCore Augmented Faces update loop.
      * This provides premium face tracking with 468-point mesh and better pose estimation.
      * Runs in parallel with camera feed for optimal performance.
+     * 
+     * NOTE: Only starts if ARCore is properly initialized and supported.
      */
     private fun startArCoreLoop() {
-        val arHandler = Handler(android.os.Looper.getMainLooper())
-        val arRunnable = object : Runnable {
+        if (!useArCore || arSession == null) {
+            Log.d("FaceAR", "Skipping ARCore loop - not initialized or not supported")
+            return
+        }
+        
+        try {
+            // Resume ARCore session (required before update() calls)
+            arSession?.resume()
+            Log.d("FaceAR", "ARCore session resumed successfully")
+        } catch (e: CameraNotAvailableException) {
+            Log.e("FaceAR", "Camera not available for ARCore: ${e.localizedMessage}")
+            useArCore = false
+            return
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Failed to resume ARCore session: ${e.localizedMessage}")
+            useArCore = false
+            return
+        }
+        
+        arHandler = Handler(android.os.Looper.getMainLooper())
+        arRunnable = object : Runnable {
             override fun run() {
                 if (!useArCore || arSession == null) return
                 
@@ -325,8 +420,7 @@ class FaceArActivity : ComponentActivity() {
                     
                     // Process the first detected face
                     faces?.firstOrNull()?.let { augmentedFace ->
-                        if (augmentedFace.trackingState == 
-                            TrackingState.TRACKING) {
+                        if (augmentedFace.trackingState == TrackingState.TRACKING) {
                             
                             // Get face center pose (position + rotation)
                             val centerPose = augmentedFace.centerPose
@@ -380,19 +474,26 @@ class FaceArActivity : ComponentActivity() {
                                 eyeDistance * 1000f  // Convert to pixels equivalent
                             )
                             
-                            Log.d("FaceAR", "ARCore tracking: yaw=${eulerAngles[1]}, " +
-                                "pitch=${eulerAngles[0]}, roll=${eulerAngles[2]}")
+                            if (System.currentTimeMillis() % 1000 < 20) {  // Log once per second
+                                Log.d("FaceAR", "ARCore tracking: yaw=${eulerAngles[1]}, " +
+                                    "pitch=${eulerAngles[0]}, roll=${eulerAngles[2]}")
+                            }
                         }
                     }
+                } catch (e: CameraNotAvailableException) {
+                    Log.w("FaceAR", "ARCore camera not available, stopping ARCore loop")
+                    useArCore = false
+                    return
                 } catch (e: Exception) {
-                    Log.w("FaceAR", "ARCore update error: ${e.localizedMessage}")
+                    Log.w("FaceAR", "ARCore update error: ${e.message}")
+                    // Continue despite errors - occasional failures are normal
                 }
                 
                 // Continue loop at 60fps
-                arHandler.postDelayed(this, 16L)
+                arHandler?.postDelayed(this, 16L)
             }
         }
-        arHandler.post(arRunnable)
+        arHandler?.post(arRunnable!!)
     }
 
     /**
@@ -423,10 +524,61 @@ class FaceArActivity : ComponentActivity() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        
+        // Resume ARCore session if it was previously running
+        if (useArCore && arSession != null) {
+            try {
+                arSession?.resume()
+                // Restart ARCore loop if it was running
+                if (arRunnable != null && arHandler != null) {
+                    arHandler?.removeCallbacks(arRunnable!!)
+                    arHandler?.post(arRunnable!!)
+                } else {
+                    startArCoreLoop()
+                }
+                Log.d("FaceAR", "ARCore session resumed")
+            } catch (e: CameraNotAvailableException) {
+                Log.e("FaceAR", "Camera not available: ${e.localizedMessage}")
+                useArCore = false
+            } catch (e: Exception) {
+                Log.e("FaceAR", "Failed to resume ARCore: ${e.localizedMessage}")
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        
+        // Pause ARCore session to save resources
+        if (useArCore && arSession != null) {
+            try {
+                arSession?.pause()
+                // Stop ARCore loop
+                arHandler?.removeCallbacks(arRunnable!!)
+                Log.d("FaceAR", "ARCore session paused")
+            } catch (e: Exception) {
+                Log.e("FaceAR", "Error pausing ARCore: ${e.localizedMessage}")
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        
+        // Stop ARCore loop
+        arHandler?.removeCallbacks(arRunnable!!)
+        arHandler = null
+        arRunnable = null
+        
         // Clean up ARCore resources
-        arSession?.close()
-        arSession = null
+        try {
+            arSession?.close()
+            arSession = null
+            Log.d("FaceAR", "ARCore session closed")
+        } catch (e: Exception) {
+            Log.e("FaceAR", "Error closing ARCore session: ${e.localizedMessage}")
+        }
     }
 }
