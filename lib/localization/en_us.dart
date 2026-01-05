@@ -11,10 +11,13 @@ const enUS = {
   'email':'Email',
   'password':'Password',
   'forgot_password':'Forgot Password?',
-  'sign_up':'Sign In',
-  'copy_right': '© 2025 KacamataMoo. All rights reserved.',
+  'please_enter_email':'Please enter your email',
+  'password_warning':'Password must be at least 6 chars',
+  'sign_in':'Sign In',
+  'copy_right': '© 2026 KacamataMoo. All rights reserved.',
 
-  // Start Screen
+  // Home Screen
+  'eye_wear_for_everyone':'Eyewear Tailored to You',
   'ai_powered':'AI-Powered Virtual Try-On System',
   'ai_help_your_style':'When AI helps your style',
   'title_menu_one':'I want a new frame',

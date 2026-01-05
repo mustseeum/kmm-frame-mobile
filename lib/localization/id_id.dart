@@ -7,23 +7,23 @@ const idID = {
 
   // Login Page
   'login': 'Login',
-  'login_wording': 'Please input your email and password to login',
+  'login_wording': 'Silakan masukkan email dan kata sandi Anda untuk masuk',
   'email': 'Email',
   'password': 'Password',
-  'forgot_password': 'Forgot Password?',
-  'sign_up': 'Sign In',
+  'forgot_password': 'Lupa Kata Sandi?',
+  'sign_up': 'Masuk',
   'copy_right': '© 2025 KacamataMoo. All rights reserved.',
 
   // Start Screen
   'ai_powered': 'AI-Powered Virtual Try-On System',
-  'ai_help_your_style': 'When AI helps your style',
-  'title_menu_one': 'I want a new frame',
+  'ai_help_your_style': 'Saat AI membantu gayamu',
+  'title_menu_one': 'Saya ingin frame baru',
   'sub_title_menu_one': "",
-  'title_menu_two': 'I want new lens',
+  'title_menu_two': 'Saya ingin lensa baru',
   'sub_title_menu_two': '',
-  'title_menu_three': 'I want both',
+  'title_menu_three': 'Saya ingin keduanya',
   'sub_title_menu_three': '',
-  'change_language': 'Language',
+  'change_language': 'Bahasa',
 
   // Frame Recommendation
 };
