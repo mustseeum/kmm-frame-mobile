@@ -412,10 +412,10 @@ class GlassesTryOnExampleController extends ChangeNotifier {
       notifyListeners();
 
       // Start AR with user's PD if available
-      await FaceArChannel.startFaceAr(
-        modelPath,
-        userPD: _userPD,
-      );
+      // await FaceArChannel.startFaceAr(
+      //   modelPath,
+      //   userPD: _userPD,
+      // );
     } catch (e) {
       rethrow;
     } finally {
