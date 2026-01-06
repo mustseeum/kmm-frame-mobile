@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:provider/provider.dart';
 
@@ -434,7 +435,7 @@ class GlassesTryOnExampleController extends ChangeNotifier {
 
   /// Example: Try on from local assets
   Future<void> tryLocalFrame() async {
-    const localModelPath = 'assets/model_3d/test_image_asset.glb';
+    final localModelPath = AssetsConstants.modelGlasses;
 
     await startTryOn(localModelPath);
   }
