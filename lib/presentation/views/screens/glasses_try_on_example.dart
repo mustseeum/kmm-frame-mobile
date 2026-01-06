@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:provider/provider.dart';
 
@@ -427,15 +428,14 @@ class GlassesTryOnExampleController extends ChangeNotifier {
   /// Example: Try on from backend recommendation
   Future<void> tryRecommendedFrame() async {
     // In real app, this would come from your ML backend
-    const recommendedModelUrl = 'https://your-cdn.com/models/ray_ban_aviator.glb';
+    final recommendedModelUrl = AssetsConstants.modelGlasses;
 
     await startTryOn(recommendedModelUrl);
   }
 
   /// Example: Try on from local assets
   Future<void> tryLocalFrame() async {
-    const localModelPath = 'assets/model_3d/test_image_asset.glb';
-
+    final localModelPath = AssetsConstants.modelGlasses;
     await startTryOn(localModelPath);
   }
 

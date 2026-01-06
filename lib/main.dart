@@ -15,7 +15,7 @@ void main() {
       statusBarIconBrightness: Brightness.dark, // For Android: (dark icons)
     ),
   );
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]).then((
     value,
   ) {
     runApp(KacamataMooApp());
