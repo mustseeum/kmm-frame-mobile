@@ -9,4 +9,5 @@ class ScreenRoutes {
   static const String exampleTryOnGlasses = '/exampleTryOnGlasses';
   static const String syncScreen = '/syncScreen';
   static const String privacyIntroScreen = '/privacyIntroScreen';
+  static const String ageQuestionScreen = '/ageQuestionScreen';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/utils/permission_helper.dart';
 
 enum Language { id, en }
@@ -62,10 +63,10 @@ class HomeScreenController extends GetxController {
   void onTapOption(String key) {
     // Replace with real navigation
     if (key == 'frame') {
-      Get.toNamed('privacyIntroScreen');
+      Get.toNamed(ScreenRoutes.ageQuestionScreen);
       Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
-      Get.toNamed('exampleTryOnGlasses');
+      Get.toNamed(ScreenRoutes.exampleTryOnGlasses);
       Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
       Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
