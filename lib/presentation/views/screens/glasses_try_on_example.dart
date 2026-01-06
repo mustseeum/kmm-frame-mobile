@@ -428,7 +428,7 @@ class GlassesTryOnExampleController extends ChangeNotifier {
   /// Example: Try on from backend recommendation
   Future<void> tryRecommendedFrame() async {
     // In real app, this would come from your ML backend
-    const recommendedModelUrl = 'https://your-cdn.com/models/ray_ban_aviator.glb';
+    final recommendedModelUrl = AssetsConstants.modelGlasses;
 
     await startTryOn(recommendedModelUrl);
   }
