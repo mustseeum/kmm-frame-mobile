@@ -2,7 +2,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/api_constants.dart';
 import 'package:kacamatamoo/core/network/network_info.dart';
-import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
 class InitialBindings extends Bindings {
   @override

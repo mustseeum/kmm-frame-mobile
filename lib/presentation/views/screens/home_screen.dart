@@ -24,7 +24,6 @@ class HomeScreen extends StatelessWidget {
             final containerWidth = isTabletVertical
                 ? constraints.maxWidth * 0.72
                 : constraints.maxWidth * 0.86;
-            final topLogoHeight = isTabletVertical ? 92.0 : 80.0;
 
             return Center(
               child: SingleChildScrollView(
