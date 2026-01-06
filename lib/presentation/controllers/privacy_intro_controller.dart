@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
+import 'package:kacamatamoo/presentation/views/widgets/privacy_policy_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyIntroController extends GetxController {
@@ -9,13 +11,42 @@ class PrivacyIntroController extends GetxController {
   // URL for the privacy policy; replace with your real link
   final String privacyUrl = 'https://example.com/privacy';
 
+  // Big sample text: paragraphs separated by blank lines.
+  String get _sampleText => '''
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacus ipsum, tempus et condimentum quis, laoreet non nisl. Donec luctus turpis consequat, pulvinar lorem ut, sagittis diam. Nulla nibh nulla, condimentum et nunc id, ornare mattis elit. Maecenas facilisis sagittis arcu, eu tristique augue. Nulla ut metus in enim aliquet auctor eget non ex. Quisque at porttitor nunc.
+
+Nam accumsan massa nec libero auctor, eu pulvinar leo sodales. Pellentesque sodales quam felis, sed fringilla purus vulputate eu. Mauris consectetur neque eget egestas aliquet. Mauris consequat sollicitudin suscipit. Ut in ornare mi, lobortis mollis leo. Nulla porta urna ut lacus placerat, vitae tempus odio sagittis. Proin tempus augue sem, a efficitur lectus vehicula hendrerit.
+
+Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis dictum, ex mauris tristique tellus, vitae mattis sem erat non augue. Donec quis nibh mollis, suscipit justo vel, laoreet purus. Duis ac metus id lacus dapibus cursus. Vestibulum eu ligula id tortor posuere viverra.
+''';
+
   /// Open the privacy policy link in the browser.
   Future<void> openPrivacyPolicy() async {
     final uri = Uri.parse(privacyUrl);
     try {
-      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        Get.snackbar('Error', 'Could not open privacy policy');
-      }
+      // if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      //   Get.snackbar('Error', 'Could not open privacy policy');
+      // }
+      showDialog(
+        context: Get.context!,
+        barrierDismissible: false,
+        builder: (_) => PrivacyPolicyDialog(
+          title: 'Privacy Policy',
+          width: 716,
+          height: 745,
+          contentText: _sampleText,
+          showAgreeButton: true,
+          requireScrollToEnd: true,
+          onAgree: () {
+            ScaffoldMessenger.of(
+              Get.context!,
+            ).showSnackBar(const SnackBar(content: Text('Agreed — thanks!')));
+          },
+          onClose: () {
+            // optional
+          },
+        ),
+      );
     } catch (e) {
       Get.snackbar('Error', 'Could not open privacy policy');
     }
