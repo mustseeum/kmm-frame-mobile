@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:provider/provider.dart';
@@ -410,13 +411,13 @@ class GlassesTryOnExampleController extends ChangeNotifier {
   Future<void> startTryOn(String modelPath) async {
     try {
       _isLoading = true;
+      Get.toNamed(ScreenRoutes.tryOnGlasses);
       notifyListeners();
-
       // Start AR with user's PD if available
-      await FaceArChannel.startFaceAr(
-        modelPath,
-        userPD: _userPD,
-      );
+      // await FaceArChannel.startFaceAr(
+      //   modelPath,
+      //   userPD: _userPD,
+      // );
     } catch (e) {
       rethrow;
     } finally {
@@ -436,6 +437,7 @@ class GlassesTryOnExampleController extends ChangeNotifier {
   /// Example: Try on from local assets
   Future<void> tryLocalFrame() async {
     final localModelPath = AssetsConstants.modelGlasses;
+
     await startTryOn(localModelPath);
   }
 

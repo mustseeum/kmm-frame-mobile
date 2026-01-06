@@ -13,6 +13,6 @@ class AssetsConstants {
   static String iconLens = '${dirImages}icon_lens.png';
   
   // 3D Models
-  static String modelGlasses = '${dirModel3D}glasses.glb';
+  static String modelGlasses = '${dirModel3D}test_image_asset.glb';
 
 }

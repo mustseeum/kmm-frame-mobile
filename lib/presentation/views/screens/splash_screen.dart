@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
+import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/controllers/splash_screen_controller.dart';
 import 'package:lottie/lottie.dart';
 import 'package:kacamatamoo/core/constants/colors.dart';
@@ -19,7 +20,6 @@ class SplashScreen extends StatelessWidget {
     // Padding & ukuran dinamis
     final horizontalPadding = isMobile ? 24.0 : 48.0;
     final animationSize = isMobile ? 180.0 : 240.0;
-    final logoFontSize = isMobile ? 26.0 : 32.0;
     final subtitleFontSize = isMobile ? 13.0 : 15.0;
 
     return Scaffold(
@@ -27,10 +27,6 @@ class SplashScreen extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final isTablet = constraints.maxWidth >= 768;
-            final containerWidth = isTablet
-                ? constraints.maxWidth * 0.6
-                : constraints.maxWidth * 0.92;
             return Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -56,8 +52,8 @@ class SplashScreen extends StatelessWidget {
                     // 🔹 Logo "KacamataMoo" dengan split warna
                     Image.asset(
                       AssetsConstants.imageLogo,
-                      width: isTablet ? 300 : 100,
-                      height: isTablet ? 29 : 100,
+                      width: FunctionHelper.isTablet(constraints) ? 300 : 100,
+                      height: FunctionHelper.isTablet(constraints) ? 29 : 100,
                     ),
                     const SizedBox(height: 10 ),
                     // 🔹 Subtitle: "Eyewear for Everyone"

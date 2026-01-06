@@ -25,54 +25,50 @@ class HomeScreenController extends GetxController {
       ? 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
       : 'Contoh deskripsi singkat';
 
-  void toggleLanguage(Language lang) {
-    language.value = lang;
+  @override
+  void onInit() {
+    super.onInit();
+    _requestInitialPermissions();
   }
 
-  /// Request camera and storage permissions
-  Future<bool> requestCameraAndStoragePermissions() async {
+  /// Request camera and storage permissions on initialization
+  Future<void> _requestInitialPermissions() async {
     final result = await PermissionHelper.requestCameraAndStoragePermissions();
 
     final cameraGranted = result['camera'] ?? false;
     final storageGranted = result['storage'] ?? false;
 
-    if (cameraGranted && storageGranted) {
-      Get.snackbar(
-        'Permissions Granted',
-        'Camera and storage access granted',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return true;
-    } else {
+    if (!cameraGranted || !storageGranted) {
       final denied = <String>[];
       if (!cameraGranted) denied.add('Camera');
       if (!storageGranted) denied.add('Storage');
 
       Get.snackbar(
         'Permissions Required',
-        '${denied.join(' and ')} access is needed for this feature',
+        '${denied.join(' and ')} access is needed for AR try-on feature',
         snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 4),
+        duration: const Duration(seconds: 5),
         mainButton: TextButton(
           onPressed: () => PermissionHelper.openAppSettings(),
-          child: const Text('Settings'),
+          child: const Text('Open Settings'),
         ),
       );
-      return false;
     }
   }
 
-  void onTapOption(String key) async {
+  void toggleLanguage(Language lang) {
+    language.value = lang;
+  }
+
+  void onTapOption(String key) {
     // Replace with real navigation
-    if (key == "frame") {
-      // Request camera and storage permissions before navigating to try-on
-      final hasPermissions = await requestCameraAndStoragePermissions();
-      if (hasPermissions) {
-        Get.toNamed(ScreenRoutes.exampleTryOnGlasses);
-      }
-    } else if (key == "lens") {
+    if (key == 'frame') {
+      Get.toNamed(ScreenRoutes.ageQuestionScreen);
       Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
-    } else {
+    } else if (key == 'lens') {
+      Get.toNamed(ScreenRoutes.exampleTryOnGlasses);
+      Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
+    } else if (key == 'both') {
       Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     }
   }
