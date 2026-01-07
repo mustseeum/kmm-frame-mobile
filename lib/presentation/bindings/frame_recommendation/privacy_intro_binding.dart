@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:kacamatamoo/presentation/controllers/privacy_intro_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/frame_recommendation/privacy_intro_controller.dart';
 
 class PrivacyIntroBinding extends Bindings {
   @override

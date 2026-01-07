@@ -27,7 +27,7 @@ class KacamataMooApp extends StatelessWidget {
       fallbackLocale: LocalizationService.fallbackLocale,
       // 🔹 Akhir tambahan
 
-      initialRoute: ScreenRoutes.home,
+      initialRoute: ScreenRoutes.syncScreen,
       getPages: AppRoutes.pages,
     );
   }

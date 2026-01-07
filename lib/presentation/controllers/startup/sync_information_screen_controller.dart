@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 
 class SyncInformationScreenController extends GetxController {
   final RxString store = 'Rawamangun'.obs;
@@ -59,8 +60,8 @@ class SyncInformationScreenController extends GetxController {
     syncStatus.value = 'Ready';
     isSyncing.value = false;
     // replace with: Get.toNamed('/home'); etc.
-    Get.toNamed('/home');
-    Get.snackbar('Continue', 'Proceeding to next screen', snackPosition: SnackPosition.BOTTOM);
+    Get.toNamed(ScreenRoutes.home);
+    // Get.snackbar('Continue', 'Proceeding to next screen', snackPosition: SnackPosition.BOTTOM);
   }
 
   /// user taps Logout
@@ -68,8 +69,8 @@ class SyncInformationScreenController extends GetxController {
     // Clear session, token, etc. then navigate to login
     // For demo, show snackbar and reset state
     Get.snackbar('Logout', 'You have been logged out', snackPosition: SnackPosition.BOTTOM);
-    Get.toNamed('/login');
-    // Optionally: Get.offAllNamed('/login');
+    // Get.toNamed('/login');
+    Optionally: Get.offAllNamed(ScreenRoutes.login);
   }
 
   String formattedDateTime(DateTime dt) {

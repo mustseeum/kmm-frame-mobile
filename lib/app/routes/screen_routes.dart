@@ -10,4 +10,6 @@ class ScreenRoutes {
   static const String syncScreen = '/syncScreen';
   static const String privacyIntroScreen = '/privacyIntroScreen';
   static const String ageQuestionScreen = '/ageQuestionScreen';
+  static const String wearPurposeScreen = '/wearPurposeScreen';
+  static const String scanningFaceScreen = '/scanningFaceScreen';
 }

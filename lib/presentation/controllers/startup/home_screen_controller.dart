@@ -64,12 +64,12 @@ class HomeScreenController extends GetxController {
     // Replace with real navigation
     if (key == 'frame') {
       Get.toNamed(ScreenRoutes.ageQuestionScreen);
-      Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
       Get.toNamed(ScreenRoutes.exampleTryOnGlasses);
-      Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
-      Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     }
   }
 

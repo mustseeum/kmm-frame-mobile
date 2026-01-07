@@ -11,6 +11,7 @@ class AssetsConstants {
   static String iconBoth = '${dirImages}icon_both.png';
   static String iconFrame = '${dirImages}icon_frame.png';
   static String iconLens = '${dirImages}icon_lens.png';
+  static String faceIcon = '${dirImages}face_icon.png';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';

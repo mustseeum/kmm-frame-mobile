@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 
 class AgeController extends GetxController {
   // Options to display (strings)
@@ -18,7 +18,8 @@ class AgeController extends GetxController {
       selectedIndex.value = -1; // toggle off when tapped again (optional)
     } else {
       selectedIndex.value = idx;
-      debugPrint('Selected age option: ${options[idx]}');
+      // debugPrint('Selected age option: ${options[idx]}');
+      Get.toNamed(ScreenRoutes.wearPurposeScreen);
     }
   }
 

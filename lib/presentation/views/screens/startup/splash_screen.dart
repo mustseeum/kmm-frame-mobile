@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
-import 'package:kacamatamoo/presentation/controllers/splash_screen_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/startup/splash_screen_controller.dart';
 import 'package:lottie/lottie.dart';
 import 'package:kacamatamoo/core/constants/colors.dart';
 import 'package:kacamatamoo/core/utils/responsive.dart';

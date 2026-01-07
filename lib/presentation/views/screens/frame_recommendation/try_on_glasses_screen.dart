@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/presentation/controllers/try_on_glasses_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/frame_recommendation/try_on_glasses_controller.dart';
 
 class TryOnGlassesScreen extends StatelessWidget {
   TryOnGlassesScreen({super.key});

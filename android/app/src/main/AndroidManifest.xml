@@ -20,6 +20,10 @@
         android:name="android.hardware.camera.front"
         android:required="true" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:label="kacamatamoo"
         android:name="${applicationName}"
@@ -50,17 +54,13 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- ARCore meta-data (required for ARCore API) -->
-        <meta-data
-            android:name="com.google.ar.core"
-            android:value="optional" />
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
 
-        <!-- ✅ FACE AR ACTIVITY (THIS FIXES YOUR ERROR) -->
-        <activity
-            android:name=".FaceArActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <uses-native-library
+            android:name="libOpenCL-pixel.so"
+            android:required="false" />
     </application>
 
     <queries>

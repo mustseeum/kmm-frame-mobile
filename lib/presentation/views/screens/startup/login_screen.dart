@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/colors.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
-import 'package:kacamatamoo/presentation/controllers/login_screen_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/startup/login_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/heading_card_widget.dart';
 
 class LoginScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/presentation/controllers/privacy_intro_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/frame_recommendation/privacy_intro_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/global_header_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/privacy_intro_widget.dart';
 
