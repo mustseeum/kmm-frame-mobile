@@ -1,209 +1,280 @@
+import 'dart:math';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// face_camera import - adapt based on actual API if names differ
-import 'package:face_camera/face_camera.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/presentation/controllers/scanning_face/scan_face_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/circle_overlay_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
-class ScanFaceScreen extends StatelessWidget {
+class ScanFaceScreen extends GetView<ScanFaceController> {
   const ScanFaceScreen({super.key});
 
-  @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<ScanFaceController>();
-
+    final bgColor = const Color(
+      0xFFEFF8F7,
+    ); // pale teal background like the image
+    final dividerColor = const Color(
+      0xFF2AA6A6,
+    ); // thin accent line below header
     return Scaffold(
-      backgroundColor: Color(0xFFEFF7F7),
+      appBar: QuestionHeader(
+        trailing: Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: Text('Step 3 of 5', style: TextStyle(color: Colors.blue)),
+        ),
+      ),
+      backgroundColor: bgColor,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
-            // top bar (logo and step)
+            // Thin divider line under header
+            Container(height: 2, color: dividerColor),
+
+            // Title / explanatory text
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Row(
-                children: [
-                  Text(
-                    'KACAMATAMOO',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF0B1A2B)),
-                  ),
-                  Spacer(),
-                  Text('Step 1 of 4', style: TextStyle(color: Colors.black54)),
-                ],
+              padding: const EdgeInsets.symmetric(
+                vertical: 18.0,
+                horizontal: 24.0,
               ),
-            ),
-
-            Divider(color: Colors.tealAccent.shade700, thickness: 2, height: 2),
-
-            SizedBox(height: 24),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Text(
                 'We will measure your face shapes, skin tone, and eye measurements first!',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, color: Color(0xFF0B1A2B)),
+                style: TextStyle(
+                  fontSize: 24,
+                  color: const Color(0xFF06293D),
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
 
-            SizedBox(height: 16),
-
+            // Main content: circular camera preview centered with progress ring and percentage text below
             Expanded(
-              child: Center(
-                child: Obx(() {
-                  final showCam = ctrl.showCamera.value;
-                  return SizedBox(
-                    width: 320,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // camera + circular overlay
-                        Stack(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  // Choose a diameter similar to image: about 55-60% of width but also constrained by height
+                  final maxWidth = constraints.maxWidth;
+                  final maxHeight = constraints.maxHeight;
+                  final diameter = min(maxWidth * 0.55, maxHeight * 0.65);
+                  final ringPadding = 10.0; // space for progress ring stroke
+                  final ringSize = diameter + ringPadding * 2;
+
+                  return Obx(() {
+                    // Update overlay dimensions for face detection
+                    final circleRect = Rect.fromCircle(
+                      center: Offset(maxWidth / 2, maxHeight / 2),
+                      radius: diameter / 2,
+                    );
+                    controller.updateOverlay(circleRect, Size(maxWidth, maxHeight));
+
+                    // Build camera preview widget (or placeholder while initializing)
+                    Widget cameraCircle;
+                    final camCtrl = controller.cameraController;
+
+                    // Use controller.isScanning to determine whether to show camera or placeholder
+                    // IMPORTANT: use previewSize.width / previewSize.height as-is (do NOT swap).
+                    if (controller.isScanning.value &&
+                        camCtrl != null &&
+                        controller.cameraInitialized.value &&
+                        camCtrl.value.previewSize != null) {
+                      final previewSize = camCtrl.value.previewSize!;
+
+                      // Create the preview child sized using the previewSize (no swap).
+                      Widget previewChild = SizedBox(
+                        width: previewSize.width,
+                        height: previewSize.height,
+                        child: CameraPreview(camCtrl),
+                      );
+
+                      // Mirror the preview ONLY when controller.previewMirror is true.
+                      // Set previewMirror = false for left->left (natural, non-mirrored) behavior.
+                      if (controller.previewMirror.value == true) {
+                        previewChild = Transform(
                           alignment: Alignment.center,
-                          children: [
-                            // camera preview area (circular)
-                            Container(
-                              width: 320,
-                              height: 320,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.2),
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(
-                                child: showCam
-                                    // Use SmartFaceCamera and pass the FaceCameraController
-                                    ? SmartFaceCamera(
-                                        controller: ctrl.faceCameraController,
-                                        message: 'Center your face in the circle',
-                                      )
-                                    // placeholder avatar when camera not shown
-                                    : _buildAvatarPlaceholder(),
-                              ),
-                            ),
+                          transform: Matrix4.rotationY(pi),
+                          child: previewChild,
+                        );
+                      }
 
-                            // circular stroked border
-                            Positioned.fill(
-                              child: CircleOverlayWidget(
-                                borderColor: Colors.grey.shade600,
-                                borderWidth: 1.2,
-                              ),
+                      cameraCircle = ClipOval(
+                        child: SizedBox(
+                          width: diameter,
+                          height: diameter,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                            child: previewChild,
+                          ),
+                        ),
+                      );
+                    } else {
+                      // Placeholder avatar when camera not ready or not scanning
+                      cameraCircle = ClipOval(
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Image.asset(
+                              AssetsConstants.faceIcon,
+                              fit: BoxFit.contain,
                             ),
+                          ),
+                        ),
+                      );
+                    }
 
-                            // analyzing progress ring (when analyzing)
-                            if (ctrl.analyzing.value)
-                              Positioned(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      width: 140,
-                                      height: 140,
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          CircularProgressIndicator(
-                                            value: ctrl.progress.value / 100.0,
-                                            strokeWidth: 6,
-                                            color: Colors.deepOrangeAccent,
-                                            backgroundColor: Colors.orange.shade100,
-                                          ),
-                                          Container(
-                                            width: 80,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              // Progress ring + border
+                              SizedBox(
+                                width: ringSize,
+                                height: ringSize,
+                                child: CustomPaint(
+                                  painter: _RingPainter(
+                                    progress: controller.progress.value / 100.0,
+                                    borderColor: const Color(0xFFBFCFCF),
+                                    progressColor: const Color(0xFF0B413F),
+                                    strokeWidth: 2.0,
+                                  ),
+                                  child: SizedBox(
+                                    width: ringSize,
+                                    height: ringSize,
+                                    child: Center(child: cameraCircle),
+                                  ),
                                 ),
                               ),
-                          ],
+                            ],
+                          ),
                         ),
 
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
 
-                        Obx(() {
-                          if (ctrl.analyzing.value) {
-                            return Column(
+                        // Percentage + message (e.g. "89% - Analyzing your beautiful face!")
+                        if (controller.cameraInitialized.value)
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
                               children: [
-                                Text(
-                                  '${ctrl.progress.value}% - Analyzing your beautiful face!',
+                                TextSpan(
+                                  text: '${controller.progress.value.toInt()}%',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      color: Color(0xFF0B1A2B)),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                    color: const Color(0xFF06293D),
+                                  ),
                                 ),
-                                SizedBox(height: 12),
-                                Text(
-                                  'Please wait...',
-                                  style: TextStyle(color: Colors.black54),
+                                TextSpan(
+                                  text:
+                                      '  -  ${controller.faceState.value == FaceState.insideCircle ? 'Analyzing your beautiful face!' : controller.message.value}',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: const Color(0xFF06293D),
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
-                            );
-                          } else {
-                            return Column(
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    text: 'Please put your face ',
-                                    children: [
-                                      TextSpan(
-                                        text: 'Straight',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(text: ' in the circle'),
-                                    ],
-                                  ),
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(height: 18),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    ctrl.startScanning();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF0D3B35),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 36),
-                                    minimumSize: Size(double.infinity, 48),
-                                  ),
-                                  child: Text('Start Scanning', style: TextStyle(fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            );
-                          }
-                        }),
+                            ),
+                          ),
+
+                        const SizedBox(height: 20),
+
+                        // Start Scanning button (only visible when not scanning). When scanning it becomes disabled and shows "Scanning..."
+                        SizedBox(
+                          width: min(520.0, constraints.maxWidth * 0.6),
+                          child: ElevatedButton(
+                            onPressed: controller.isScanning.value
+                                ? null
+                                : () => controller.startScanning(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF052E2B),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 14.0,
+                                horizontal: 20.0,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              controller.isScanning.value
+                                  ? 'Scanning...'
+                                  : 'Start Scanning',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
-                    ),
-                  );
-                }),
+                    );
+                  });
+                },
               ),
             ),
-
-            SizedBox(height: 24),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildAvatarPlaceholder() {
-    return Container(
-      color: Colors.white.withValues(alpha: 0.0),
-      child: Center(
-        child: Image.asset(
-          AssetsConstants.faceIcon,
-          width: 220,
-          height: 220,
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
+/// Painter that draws a thin circular border and a progress arc around it.
+/// - [progress] is 0.0 .. 1.0
+class _RingPainter extends CustomPainter {
+  final double progress;
+  final Color borderColor;
+  final Color progressColor;
+  final double strokeWidth;
+
+  _RingPainter({
+    required this.progress,
+    required this.borderColor,
+    required this.progressColor,
+    this.strokeWidth = 3.0,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = (min(size.width, size.height) / 2) - strokeWidth;
+
+    // border (very thin)
+    final borderPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..color = borderColor;
+    canvas.drawCircle(center, radius, borderPaint);
+
+    // progress arc
+    if (progress > 0) {
+      final fg = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth + 2.0
+        ..strokeCap = StrokeCap.round
+        ..color = progressColor;
+      final startAngle = -pi / 2;
+      final sweep = 2 * pi * (progress.clamp(0.0, 1.0));
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        sweep,
+        false,
+        fg,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _RingPainter old) {
+    return old.progress != progress ||
+        old.borderColor != borderColor ||
+        old.progressColor != progressColor ||
+        old.strokeWidth != strokeWidth;
   }
 }

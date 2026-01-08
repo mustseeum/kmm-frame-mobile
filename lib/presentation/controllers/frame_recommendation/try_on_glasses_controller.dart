@@ -16,6 +16,18 @@ class TryOnGlassesController extends GetxController {
     _initCameraFlow();
   }
 
+  /// Initialize DeepAR controller
+  Future<void> initializeDeepAr() async {
+    try {
+      debugPrint('[TryOnGlassesController] Initializing DeepAR...');
+      await ensureDeepArInitialized();
+      debugPrint('[TryOnGlassesController] DeepAR initialized successfully');
+    } catch (e) {
+      debugPrint('[TryOnGlassesController] Error initializing DeepAR: $e');
+      rethrow;
+    }
+  }
+
   Future<void> _initCameraFlow() async {
     final granted = await requestCameraPermission();
     // if (granted) {

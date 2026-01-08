@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
+    <!-- ARCore requires OpenGL ES 3.0 -->
+    <uses-feature android:name="android.hardware.camera.ar" android:required="true" />
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="true" />
@@ -61,6 +65,9 @@
         <uses-native-library
             android:name="libOpenCL-pixel.so"
             android:required="false" />
+
+        <!-- ARCore metadata -->
+        <meta-data android:name="com.google.ar.core" android:value="required" />
     </application>
 
     <queries>

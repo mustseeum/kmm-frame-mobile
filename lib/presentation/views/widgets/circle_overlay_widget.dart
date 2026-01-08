@@ -1,45 +1,64 @@
 import 'package:flutter/material.dart';
 
 class CircleOverlayWidget extends StatelessWidget {
-  final Color borderColor;
+  final Rect circleRect;
   final double borderWidth;
+  final Color borderColor;
 
   const CircleOverlayWidget({
     super.key,
+    required this.circleRect,
+    this.borderWidth = 3.0,
     this.borderColor = Colors.white,
-    this.borderWidth = 2.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _CirclePainter(
-        borderColor: borderColor,
-        borderWidth: borderWidth,
+    return IgnorePointer(
+      child: CustomPaint(
+        size: Size.infinite,
+        painter: _CircleOverlayWidgetPainter(circleRect: circleRect, borderWidth: borderWidth, borderColor: borderColor),
       ),
-      child: Container(),
     );
   }
 }
 
-class _CirclePainter extends CustomPainter {
-  final Color borderColor;
+class _CircleOverlayWidgetPainter extends CustomPainter {
+  final Rect circleRect;
   final double borderWidth;
+  final Color borderColor;
 
-  _CirclePainter({required this.borderColor, required this.borderWidth});
+  _CircleOverlayWidgetPainter({
+    required this.circleRect,
+    required this.borderWidth,
+    required this.borderColor,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius =
-        (size.width < size.height ? size.width : size.height) / 2 - borderWidth;
-    final paint = Paint()
+    // dim background
+    final paint = Paint()..color = Colors.black.withOpacity(0.35);
+    canvas.drawRect(Offset.zero & size, paint);
+
+    // clear inside circle (make transparent)
+    final clearPaint = Paint()
+      ..blendMode = BlendMode.clear
+      ..style = PaintingStyle.fill;
+    canvas.saveLayer(Offset.zero & size, Paint()); // required for clear
+    canvas.drawCircle(circleRect.center, circleRect.width / 2, clearPaint);
+
+    canvas.restore();
+
+    // draw border
+    final border = Paint()
+      ..color = borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = borderWidth
-      ..color = borderColor;
-    canvas.drawCircle(center, radius, paint);
+      ..strokeWidth = borderWidth;
+    canvas.drawCircle(circleRect.center, circleRect.width / 2, border);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _CircleOverlayWidgetPainter oldDelegate) {
+    return oldDelegate.circleRect != circleRect;
+  }
 }

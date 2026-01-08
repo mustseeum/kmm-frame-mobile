@@ -63,12 +63,13 @@ class HomeScreenController extends GetxController {
   void onTapOption(String key) {
     // Replace with real navigation
     if (key == 'frame') {
-      Get.toNamed(ScreenRoutes.ageQuestionScreen);
+      Get.toNamed(ScreenRoutes.privacyIntroScreen);
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
-      Get.toNamed(ScreenRoutes.exampleTryOnGlasses);
+      Get.toNamed(ScreenRoutes.privacyIntroScreen);
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
+      Get.toNamed(ScreenRoutes.tryOnGlasses);
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     }
   }

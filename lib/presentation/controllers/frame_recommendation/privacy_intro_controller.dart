@@ -62,7 +62,7 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
       await Future.delayed(const Duration(milliseconds: 700));
 
       // Navigate to the next page. Replace '/camera' with your real route.
-      Get.toNamed(ScreenRoutes.tryOnGlasses);
+      Get.toNamed(ScreenRoutes.ageQuestionScreen);
     } finally {
       isLoading.value = false;
     }

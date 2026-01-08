@@ -12,8 +12,12 @@ class AssetsConstants {
   static String iconFrame = '${dirImages}icon_frame.png';
   static String iconLens = '${dirImages}icon_lens.png';
   static String faceIcon = '${dirImages}face_icon.png';
+  static String wayfarerThumb = '${dirImages}wayfarer_thumb.png';
+  static String roundThumb = '${dirImages}round_thumb.png';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';
+  static String testGlasses2 = '${dirModel3D}test_glasses_2.deepar';
+  static String testGlasses3 = '${dirModel3D}test_glasses_3.deepar';
 
 }

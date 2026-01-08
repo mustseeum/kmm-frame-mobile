@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/presentation/controllers/age_controller.dart';
+import 'package:kacamatamoo/presentation/controllers/frame_recommendation/age_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
@@ -24,10 +23,10 @@ class AgeQuestionScreen extends GetView<AgeController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48.0, vertical: 36),
+          padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: MediaQuery.of(context).size.height * 0.13),
           child: Column(
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 25),
               const Center(
                 child: Text(
                   'How old are you?',

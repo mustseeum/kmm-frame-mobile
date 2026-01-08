@@ -18,7 +18,7 @@ class WearPurposeScreen extends GetView<WearPurposeController> {
       appBar: QuestionHeader(
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: Text('Step 2 of 4', style: TextStyle(color: Colors.blue)),
+          child: Text('Step 2 of 5', style: TextStyle(color: Colors.blue)),
         ),
       ),
       body: SingleChildScrollView(

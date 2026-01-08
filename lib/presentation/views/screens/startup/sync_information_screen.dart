@@ -82,14 +82,14 @@ class SyncInfotmationScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           Obx(
                             () => InfoRow(
-                              label: 'Sync Status:',
+                              label: 'Store Address:',
                               value: ctrl.syncStatus.value,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Obx(
                             () => InfoRow(
-                              label: 'Items Synced:',
+                              label: 'Store Phone:',
                               value: ctrl.itemsSynced.value,
                             ),
                           ),
@@ -121,7 +121,7 @@ class SyncInfotmationScreen extends StatelessWidget {
                                   () => ElevatedButton(
                                     onPressed: ctrl.isSyncing.value
                                         ? null
-                                        : ctrl.retry,
+                                        : ctrl.logout,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF0F2E2C),
                                       padding: const EdgeInsets.symmetric(
@@ -132,7 +132,7 @@ class SyncInfotmationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     child: Text(
-                                      'Retry',
+                                      'Logout',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -171,25 +171,6 @@ class SyncInfotmationScreen extends StatelessWidget {
                           ),
 
                           const SizedBox(height: 12),
-
-                          // Logout (full width)
-                          ElevatedButton(
-                            onPressed: ctrl.logout,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF0F2E2C),
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: const Text(
-                              'Logout',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
