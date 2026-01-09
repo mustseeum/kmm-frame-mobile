@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/presentation/bindings/frame_recommendation/age_question_bindings.dart';
 import 'package:kacamatamoo/presentation/bindings/frame_recommendation/example_try_on_glasses_screen_binding.dart';
+import 'package:kacamatamoo/presentation/bindings/scan_result/scan_result_bindings.dart';
 import 'package:kacamatamoo/presentation/bindings/scanning_face/scan_face_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/login_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/home_screen_binding.dart';
@@ -11,6 +12,7 @@ import 'package:kacamatamoo/presentation/bindings/frame_recommendation/try_on_gl
 import 'package:kacamatamoo/presentation/bindings/startup/splash_screen_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/frame_recommendation/wear_question_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/glasses_try_on_example.dart';
+import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/scan_result_scree.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/scan_face_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/login_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/home_screen.dart';
@@ -72,6 +74,11 @@ class AppRoutes {
       name: ScreenRoutes.scanningFaceScreen,
       page: () =>  ScanFaceScreen(),
       bindings: [ScanBinding()],
+    ),
+    GetPage(
+      name: ScreenRoutes.scanResultScreen,
+      page: () =>  ScanResultScreen(),
+      bindings: [ScanResultBinding()],
     ),
   ];
 }

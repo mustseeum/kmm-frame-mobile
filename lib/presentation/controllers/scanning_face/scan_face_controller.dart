@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 
 enum FaceState {
   noFace,
@@ -405,8 +406,21 @@ class ScanFaceController extends GetxController {
       if (faceState.value == FaceState.insideCircle) {
         final increment = 100.0 / (holdSecondsToComplete * 1000 / tick.inMilliseconds);
         progress.value = (progress.value + increment).clamp(0.0, 100.0);
+        
+        // Navigate to result screen when progress reaches 100%
+        if (progress.value >= 100.0) {
+          _onScanComplete();
+        }
       }
     });
+  }
+
+  Future<void> _onScanComplete() async {
+    _stopProgressTimer();
+    await stopScanning();
+    
+    // Navigate to scan result screen
+    Get.toNamed(ScreenRoutes.scanResultScreen);
   }
 
   void _stopProgressTimer() {

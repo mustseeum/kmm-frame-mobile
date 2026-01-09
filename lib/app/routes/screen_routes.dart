@@ -12,4 +12,5 @@ class ScreenRoutes {
   static const String ageQuestionScreen = '/ageQuestionScreen';
   static const String wearPurposeScreen = '/wearPurposeScreen';
   static const String scanningFaceScreen = '/scanningFaceScreen';
+  static const String scanResultScreen = '/scanResultScreen';
 }

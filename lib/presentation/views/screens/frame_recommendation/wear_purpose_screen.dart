@@ -16,6 +16,7 @@ class WearPurposeScreen extends GetView<WearPurposeController> {
       backgroundColor: bg,
       // Top bar with logo on left and "Step 1 of 4" on right
       appBar: QuestionHeader(
+        showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
           child: Text('Step 2 of 5', style: TextStyle(color: Colors.blue)),

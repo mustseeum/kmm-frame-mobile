@@ -18,6 +18,7 @@ class ScanFaceScreen extends GetView<ScanFaceController> {
     ); // thin accent line below header
     return Scaffold(
       appBar: QuestionHeader(
+        showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
           child: Text('Step 3 of 5', style: TextStyle(color: Colors.blue)),

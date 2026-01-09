@@ -17,6 +17,7 @@ class TryOnGlassesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: QuestionHeader(
+        showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
           child: Text('Step 3 of 4', style: TextStyle(color: Colors.blue)),

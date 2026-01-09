@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:deepar_flutter/deepar_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:augen/augen.dart';
+// import 'package:augen/augen.dart';
 
 class FunctionHelper {
 	FunctionHelper._();
@@ -97,119 +97,119 @@ DeepArController getDeepArController() {
 
 // ---------- Augen AR helpers (global) ----------
 
-AugenController? _augenController;
+// AugenController? _augenController;
 
-/// Callback when AugenController is created from the view
-void onAugenViewCreated(AugenController controller) {
-	_augenController = controller;
-}
+// /// Callback when AugenController is created from the view
+// void onAugenViewCreated(AugenController controller) {
+// 	_augenController = controller;
+// }
 
-/// Initialize Augen AR session with configuration
-Future<bool> initializeAugenAR({
-	bool planeDetection = true,
-	bool lightEstimation = true,
-}) async {
-	if (_augenController == null) {
-		throw StateError('AugenController is not set. Call onAugenViewCreated() first.');
-	}
+// /// Initialize Augen AR session with configuration
+// Future<bool> initializeAugenAR({
+// 	bool planeDetection = true,
+// 	bool lightEstimation = true,
+// }) async {
+// 	if (_augenController == null) {
+// 		throw StateError('AugenController is not set. Call onAugenViewCreated() first.');
+// 	}
 
-	// Check AR support
-	final isSupported = await _augenController!.isARSupported();
-	if (!isSupported) {
-		debugPrint('AR is not supported on this device');
-		return false;
-	}
+// 	// Check AR support
+// 	final isSupported = await _augenController!.isARSupported();
+// 	if (!isSupported) {
+// 		debugPrint('AR is not supported on this device');
+// 		return false;
+// 	}
 
-	// Initialize AR session
-	await _augenController!.initialize(
-		ARSessionConfig(
-			planeDetection: planeDetection,
-			lightEstimation: lightEstimation,
-		),
-	);
+// 	// Initialize AR session
+// 	await _augenController!.initialize(
+// 		ARSessionConfig(
+// 			planeDetection: planeDetection,
+// 			lightEstimation: lightEstimation,
+// 		),
+// 	);
 
-	return true;
-}
+// 	return true;
+// }
 
-/// Get the current AugenController instance
-AugenController? getAugenController() {
-	return _augenController;
-}
+// /// Get the current AugenController instance
+// AugenController? getAugenController() {
+// 	return _augenController;
+// }
 
-/// Listen to detected planes stream
-Stream<List<ARPlane>>? getAugenPlanesStream() {
-	return _augenController?.planesStream;
-}
+// /// Listen to detected planes stream
+// Stream<List<ARPlane>>? getAugenPlanesStream() {
+// 	return _augenController?.planesStream;
+// }
 
-/// Dispose Augen AR controller
-void disposeAugenController() {
-	_augenController?.dispose();
-	_augenController = null;
-}
+// /// Dispose Augen AR controller
+// void disposeAugenController() {
+// 	_augenController?.dispose();
+// 	_augenController = null;
+// }
 
-/// Set up face tracking with glasses overlay
-/// TODO: Enable when augen package supports these methods
-Future<void> setupAugenFaceTracking({
-	String glassesModelPath = 'assets/models/test_image_asset.glb',
-	Vector3? glassesPosition,
-	Vector3? glassesScale,
-	bool detectLandmarks = true,
-	bool detectExpressions = true,
-	double minFaceSize = 0.1,
-	double maxFaceSize = 1.0,
-}) async {
-	if (_augenController == null) {
-		throw StateError('AugenController is not set. Call onAugenViewCreated() first.');
-	}
+// /// Set up face tracking with glasses overlay
+// /// TODO: Enable when augen package supports these methods
+// Future<void> setupAugenFaceTracking({
+// 	String glassesModelPath = 'assets/models/test_image_asset.glb',
+// 	Vector3? glassesPosition,
+// 	Vector3? glassesScale,
+// 	bool detectLandmarks = true,
+// 	bool detectExpressions = true,
+// 	double minFaceSize = 0.1,
+// 	double maxFaceSize = 1.0,
+// }) async {
+// 	if (_augenController == null) {
+// 		throw StateError('AugenController is not set. Call onAugenViewCreated() first.');
+// 	}
 
-	debugPrint('Face tracking setup - waiting for augen package implementation');
+// 	debugPrint('Face tracking setup - waiting for augen package implementation');
 	
-	// COMMENTED OUT: These methods are not yet implemented in augen package
-	/*
-	// Enable face tracking
-	await _augenController!.setFaceTrackingEnabled(true);
+// 	// COMMENTED OUT: These methods are not yet implemented in augen package
+// 	/*
+// 	// Enable face tracking
+// 	await _augenController!.setFaceTrackingEnabled(true);
 
-	// Configure face tracking
-	await _augenController!.setFaceTrackingConfig(
-		detectLandmarks: detectLandmarks,
-		detectExpressions: detectExpressions,
-		minFaceSize: minFaceSize,
-		maxFaceSize: maxFaceSize,
-	);
+// 	// Configure face tracking
+// 	await _augenController!.setFaceTrackingConfig(
+// 		detectLandmarks: detectLandmarks,
+// 		detectExpressions: detectExpressions,
+// 		minFaceSize: minFaceSize,
+// 		maxFaceSize: maxFaceSize,
+// 	);
 
-	// Listen for tracked faces and apply glasses
-	_augenController!.facesStream.listen((faces) {
-		for (final face in faces) {
-			if (face.isTracked && face.isReliable) {
-				// Add 3D glasses model to the tracked face
-				final glasses = ARNode.fromModel(
-					id: 'glasses_${face.id}',
-					modelPath: glassesModelPath,
-					position: glassesPosition ?? const Vector3(0, 0, 0.1), // 10cm in front of face
-					scale: glassesScale ?? const Vector3(0.1, 0.1, 0.1),
-				);
+// 	// Listen for tracked faces and apply glasses
+// 	_augenController!.facesStream.listen((faces) {
+// 		for (final face in faces) {
+// 			if (face.isTracked && face.isReliable) {
+// 				// Add 3D glasses model to the tracked face
+// 				final glasses = ARNode.fromModel(
+// 					id: 'glasses_${face.id}',
+// 					modelPath: glassesModelPath,
+// 					position: glassesPosition ?? const Vector3(0, 0, 0.1), // 10cm in front of face
+// 					scale: glassesScale ?? const Vector3(0.1, 0.1, 0.1),
+// 				);
 
-				_augenController!.addNodeToTrackedFace(
-					nodeId: 'glasses_${face.id}',
-					faceId: face.id,
-					node: glasses,
-				);
+// 				_augenController!.addNodeToTrackedFace(
+// 					nodeId: 'glasses_${face.id}',
+// 					faceId: face.id,
+// 					node: glasses,
+// 				);
 
-				// Get and log face landmarks
-				_augenController!.getFaceLandmarks(face.id).then((landmarks) {
-					for (final landmark in landmarks) {
-						debugPrint('Landmark ${landmark.name}: ${landmark.position}');
-					}
-				});
-			}
-		}
-	});
-	*/
+// 				// Get and log face landmarks
+// 				_augenController!.getFaceLandmarks(face.id).then((landmarks) {
+// 					for (final landmark in landmarks) {
+// 						debugPrint('Landmark ${landmark.name}: ${landmark.position}');
+// 					}
+// 				});
+// 			}
+// 		}
+// 	});
+// 	*/
 
-	debugPrint('Face tracking setup completed (placeholder)');
-}
+// 	debugPrint('Face tracking setup completed (placeholder)');
+// }
 
-/// Get faces stream
-Stream<List<ARFace>>? getAugenFacesStream() {
-	return _augenController?.facesStream;
-}
+// /// Get faces stream
+// Stream<List<ARFace>>? getAugenFacesStream() {
+// 	return _augenController?.facesStream;
+// }
