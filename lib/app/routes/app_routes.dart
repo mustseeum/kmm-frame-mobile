@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/question_bindings.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/wear_purpose_question_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/bindings/daily_eye_usage_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/bindings/daily_visual_activity_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/bindings/focus_switch_bindings.dart';
@@ -19,7 +20,6 @@ import 'package:kacamatamoo/presentation/views/screens/startup/bindings/home_scr
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/privacy_intro_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/bindings/sync_information_screen_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/bindings/splash_screen_binding.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/wear_question_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/pages/scan_result_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/bindings/scan_face_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/pages/scan_face_screen.dart';
@@ -65,47 +65,47 @@ class AppRoutes {
     ),
     GetPage(
       name: ScreenRoutes.ageQuestionScreen,
-      page: () =>  QuestionScreen(),
+      page: () => QuestionScreen(),
       bindings: [QuestionBindings()],
     ),
     GetPage(
       name: ScreenRoutes.wearPurposeScreen,
-      page: () =>  WearPurposeScreen(),
-      bindings: [WearQuestionBindings()],
+      page: () => WearPurposeScreen(),
+      bindings: [WearPurposeQuestionBindings()],
     ),
     GetPage(
       name: ScreenRoutes.scanningFaceScreen,
-      page: () =>  ScanFaceScreen(),
+      page: () => ScanFaceScreen(),
       bindings: [ScanBinding()],
     ),
     GetPage(
       name: ScreenRoutes.scanResultScreen,
-      page: () =>  ScanResultScreen(),
+      page: () => ScanResultScreen(),
       bindings: [ScanResultBinding()],
     ),
     GetPage(
       name: ScreenRoutes.lensPrescriptionScreen,
-      page: () =>  LensPrescriptionScreen(),
+      page: () => LensPrescriptionScreen(),
       bindings: [LensPrescriptionBindings()],
     ),
     GetPage(
       name: ScreenRoutes.dailyVisualActivityScreen,
-      page: () =>  DailyVisualActivityScreen(),
+      page: () => DailyVisualActivityScreen(),
       bindings: [DailyVisualActivityBindings()],
     ),
     GetPage(
       name: ScreenRoutes.dailyeyeusagescreen,
-      page: () =>  DailyEyeUsageScreen(),
+      page: () => DailyEyeUsageScreen(),
       bindings: [DailyEyeUsageBindings()],
     ),
     GetPage(
       name: ScreenRoutes.focusSwitchScreen,
-      page: () =>  FocusSwitchScreen(),
+      page: () => FocusSwitchScreen(),
       bindings: [FocusSwitchBindings()],
     ),
     GetPage(
       name: ScreenRoutes.typicalEnvironmentScreen,
-      page: () =>  TypicalEnvironmentScreen(),
+      page: () => TypicalEnvironmentScreen(),
       bindings: [TypicalEnvironmentBindings()],
     ),
   ];
