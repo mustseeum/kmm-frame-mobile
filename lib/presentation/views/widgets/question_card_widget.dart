@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 class QuestionCardWidget extends StatelessWidget {
   final String text;
@@ -15,7 +14,8 @@ class QuestionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = selected ? AppColors.fountainBlue50 : Colors.transparent;
+    final theme = Theme.of(context);
+    final borderColor = selected ? theme.colorScheme.primary : Colors.transparent;
     final shadow = selected
         ? [
             BoxShadow(
@@ -51,8 +51,8 @@ class QuestionCardWidget extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF0E2546),
+            style: theme.textTheme.titleLarge?.copyWith(
+              color: theme.colorScheme.secondary,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),

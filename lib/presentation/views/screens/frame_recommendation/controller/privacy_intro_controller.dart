@@ -7,6 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 class PrivacyIntroController extends GetxController {
   // Loading state for the Agree button (e.g., show spinner or disable)
   final isLoading = false.obs;
+  
+  // Track if user has read and agreed to privacy policy
+  final hasAgreedToPrivacy = false.obs;
 
   // URL for the privacy policy; replace with your real link
   final String privacyUrl = 'https://example.com/privacy';
@@ -38,6 +41,8 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
           showAgreeButton: true,
           requireScrollToEnd: true,
           onAgree: () {
+            // Set that user has agreed to privacy policy
+            hasAgreedToPrivacy.value = true;
             ScaffoldMessenger.of(
               Get.context!,
             ).showSnackBar(const SnackBar(content: Text('Agreed — thanks!')));
@@ -55,6 +60,16 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
   /// Called when the user taps "Agree & Continue".
   /// This toggles a loading state and then navigates to the next route.
   Future<void> agreeAndContinue() async {
+    // Don't proceed if user hasn't agreed to privacy policy
+    if (!hasAgreedToPrivacy.value) {
+      Get.snackbar(
+        'Privacy Policy Required',
+        'Please read and agree to the privacy policy first',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+    
     if (isLoading.value) return;
     isLoading.value = true;
     try {

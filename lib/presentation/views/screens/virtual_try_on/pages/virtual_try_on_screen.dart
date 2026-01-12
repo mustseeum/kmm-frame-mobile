@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:deepar_flutter/deepar_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/data/models/glasses_model/filter_data.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/controllers/try_on_glasses_controller.dart';
@@ -60,6 +59,7 @@ Widget buildFilters(BuildContext context) => SizedBox(
     scrollDirection: Axis.horizontal,
     itemCount: filters.length,
     itemBuilder: (context, index) {
+      final theme = Theme.of(context);
       final filter = filters[index];
       final effect = File(filter.filterPath).path;
       return GestureDetector(
@@ -72,7 +72,7 @@ Widget buildFilters(BuildContext context) => SizedBox(
             width: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.backgroundLight,
+              color: theme.colorScheme.surface,
               image: DecorationImage(
                 image: AssetImage(filter.imagePath),
                 fit: BoxFit.contain,

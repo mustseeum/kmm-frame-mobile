@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/utils/navigation_helper.dart';
 import 'package:kacamatamoo/core/utils/permission_helper.dart';
 import 'package:kacamatamoo/localization/localization_service.dart';
 
 enum Language { id, en }
 
-class HomeScreenController extends GetxController {
+class HomeScreenController extends BaseController {
   final Rx<Language> language = Language.en.obs;
 
   // Use .tr for all text to support dynamic language switching
@@ -51,21 +53,26 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  /// Request camera and storage permissions on initialization
+  /// Request camera, storage, microphone, and audio permissions on initialization
   Future<void> _requestInitialPermissions() async {
-    final result = await PermissionHelper.requestCameraAndStoragePermissions();
+    final cameraStorageResult = await PermissionHelper.requestCameraAndStoragePermissions();
+    final audioMicResult = await PermissionHelper.requestMicrophoneAndAudioPermissions();
 
-    final cameraGranted = result['camera'] ?? false;
-    final storageGranted = result['storage'] ?? false;
+    final cameraGranted = cameraStorageResult['camera'] ?? false;
+    final storageGranted = cameraStorageResult['storage'] ?? false;
+    final microphoneGranted = audioMicResult['microphone'] ?? false;
+    final audioGranted = audioMicResult['audio'] ?? false;
 
-    if (!cameraGranted || !storageGranted) {
-      final denied = <String>[];
-      if (!cameraGranted) denied.add('Camera');
-      if (!storageGranted) denied.add('Storage');
+    final denied = <String>[];
+    if (!cameraGranted) denied.add('Camera');
+    if (!storageGranted) denied.add('Storage');
+    if (!microphoneGranted) denied.add('Microphone');
+    if (!audioGranted) denied.add('Audio');
 
+    if (denied.isNotEmpty) {
       Get.snackbar(
         'Permissions Required',
-        '${denied.join(' and ')} access is needed for AR try-on feature',
+        '${denied.join(', ')} access is needed for AR try-on feature',
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 5),
         mainButton: TextButton(
@@ -94,18 +101,23 @@ class HomeScreenController extends GetxController {
   void onTapOption(String key) {
     // Replace with real navigation
     if (key == 'frame') {
-      Get.toNamed(ScreenRoutes.privacyIntroScreen);
+      Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'source': 'frame'});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
-      Get.toNamed(ScreenRoutes.privacyIntroScreen);
+      Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'source': 'lens'});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
-      Get.toNamed(ScreenRoutes.tryOnGlasses);
+      Navigation.navigateTo(ScreenRoutes.tryOnGlasses);
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   void goBack() {
     Get.back();
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

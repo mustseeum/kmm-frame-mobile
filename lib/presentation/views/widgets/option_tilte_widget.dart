@@ -6,6 +6,8 @@ class OptionTilteWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final Color titleColor;
+  final Color subtitleColor;
 
   const OptionTilteWidget({
     super.key,
@@ -14,6 +16,8 @@ class OptionTilteWidget extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.titleColor = const Color(0xFF0B1314),
+    this.subtitleColor = const Color(0xFF0B1314),
   });
 
   @override
@@ -35,7 +39,7 @@ class OptionTilteWidget extends StatelessWidget {
                 height: 46,
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
+                  color: Colors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.asset(assetIcon, fit: BoxFit.contain),
@@ -46,19 +50,33 @@ class OptionTilteWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w800)),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: titleColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                     const SizedBox(height: 6),
-                    Text(subtitle,
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w400, color: Color(0xFF0B1314))),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: subtitleColor,
+                      ),
+                    ),
                   ],
                 ),
               ),
               // Arrow
               const SizedBox(width: 8),
-              const Icon(Icons.arrow_forward_ios, size: 18, color: Color(0xFF0B1314)),
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 18,
+                color: Color(0xFF0B1314),
+              ),
             ],
           ),
         ),

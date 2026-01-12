@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/constants/assets_constants.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/app_colors.dart';
+import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/home_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/heading_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/option_tilte_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends BasePage<HomeScreenController> {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
+    final theme = Theme.of(context);
     final ctrl = Get.find<HomeScreenController>();
     return Scaffold(
-      backgroundColor: AppColors.primaryContainerLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -48,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 28,
+                          color: AppColors.sG800,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -63,9 +66,11 @@ class HomeScreen extends StatelessWidget {
                           // First tile (frame) - teal
                           Obx(
                             () => OptionTilteWidget(
-                              background: const Color(0xFF63C2BF),
+                              background: AppColors.p400,
                               assetIcon: AssetsConstants.iconFrame,
                               title: ctrl.optionFrameTitle(),
+                              titleColor: AppColors.surface,
+                              subtitleColor: AppColors.surface,
                               subtitle: ctrl.lorem(),
                               onTap: () => ctrl.onTapOption('frame'),
                             ),
@@ -75,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                           // Second tile (lens) - yellow
                           Obx(
                             () => OptionTilteWidget(
-                              background: const Color(0xFFF7DB55),
+                              background: AppColors.a300b,
                               assetIcon: AssetsConstants.iconLens,
                               title: ctrl.optionLensTitle(),
                               subtitle: ctrl.lorem(),
@@ -87,9 +92,11 @@ class HomeScreen extends StatelessWidget {
                           // Third tile (both) - teal
                           Obx(
                             () => OptionTilteWidget(
-                              background: const Color(0xFF63C2BF),
+                              background: AppColors.p400,
                               assetIcon: AssetsConstants.iconBoth,
                               title: ctrl.optionBothTitle(),
+                              titleColor: AppColors.surface,
+                              subtitleColor: AppColors.surface,
                               subtitle: ctrl.lorem(),
                               onTap: () => ctrl.onTapOption('both'),
                             ),
@@ -99,13 +106,11 @@ class HomeScreen extends StatelessWidget {
                           // Language row (white rounded)
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColors.onPrimary,
+                              color: theme.colorScheme.surface,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.onBackgroundLight.withValues(
-                                    alpha: 0.02,
-                                  ),
+                                  color: Colors.black.withOpacity(0.06),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
@@ -225,7 +230,7 @@ class HomeScreen extends StatelessWidget {
                         fontSize: FunctionHelper.isTablet(constraints)
                             ? 14
                             : 12,
-                        color: AppColors.colorText,
+                        color: theme.colorScheme.onSurface,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

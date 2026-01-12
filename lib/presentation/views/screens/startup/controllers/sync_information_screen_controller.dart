@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 
-class SyncInformationScreenController extends GetxController {
+class SyncInformationScreenController extends BaseController {
   final RxString store = 'Rawamangun'.obs;
   final RxString syncStatus = 'Syncing...'.obs;
   final RxString itemsSynced = "10 SKU's".obs;
@@ -82,5 +83,10 @@ class SyncInformationScreenController extends GetxController {
   void onClose() {
     _ticker?.cancel();
     super.onClose();
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

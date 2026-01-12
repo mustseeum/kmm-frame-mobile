@@ -39,6 +39,25 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+     androidResources {
+        // Read unityStreamingAssets from gradle.properties
+        val unityStreamingAssetsList = (project.findProperty("unityStreamingAssets") as? String)
+                ?.split(",")
+                ?.map { it.trim() }
+                ?: emptyList()
+
+        noCompress += listOf(
+        ".unity3d", ".ress", ".resource", ".obb", ".bundle", ".unityexp"
+        ) + unityStreamingAssetsList
+
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+}
+
+// Add this new added at 12/01/2026:
+dependencies {
+    implementation (project(":unityLibrary"))
 }
 
 flutter {

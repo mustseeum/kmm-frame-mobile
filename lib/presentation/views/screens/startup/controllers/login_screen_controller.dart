@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 
-class LoginScreenController extends GetxController {
+class LoginScreenController extends BaseController {
   // Observable login state
   final RxBool isLoading = false.obs;
   final RxBool isLoggedIn = false.obs;
@@ -40,5 +41,10 @@ class LoginScreenController extends GetxController {
   String _capitalize(String s) {
     if (s.isEmpty) return s;
     return s[0].toUpperCase() + s.substring(1);
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

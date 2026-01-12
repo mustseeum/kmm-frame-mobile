@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/sync_information_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/heading_card_widget.dart';
 
-class SyncInfotmationScreen extends StatelessWidget {
-  const SyncInfotmationScreen({super.key});
+class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
+  const SyncInformationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
+    final theme = Theme.of(context);
     final ctrl = Get.find<SyncInformationScreenController>();
     return Scaffold(
-      backgroundColor: AppColors.primaryContainerLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -66,7 +67,7 @@ class SyncInfotmationScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w800,
-                                color: const Color(0xFF0B1314),
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                           ),
@@ -184,7 +185,7 @@ class SyncInfotmationScreen extends StatelessWidget {
                         fontSize: FunctionHelper.isTablet(constraints)
                             ? 14
                             : 12,
-                        color: AppColors.colorText,
+                        color: theme.colorScheme.onSurface,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

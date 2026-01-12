@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 /// Reusable header widget to be used as `appBar`.
 /// Example:
@@ -63,8 +62,8 @@ class QuestionHeader extends StatelessWidget implements PreferredSizeWidget {
             child: trailing ??
                 Text(
                   stepText ?? '',
-                  style: const TextStyle(
-                    color: Color(0xFF0E2546),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 13,
                   ),
                 ),

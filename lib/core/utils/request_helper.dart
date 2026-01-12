@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/base/base_result.dart';
+import 'package:kacamatamoo/core/base/http_connection/base_result.dart';
 import 'package:kacamatamoo/core/network/models/parent_response.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 

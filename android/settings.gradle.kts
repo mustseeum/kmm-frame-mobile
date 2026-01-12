@@ -24,3 +24,6 @@ plugins {
 }
 
 include(":app")
+
+// Alternative syntax for android/settings.gradle.kts
+include(":unityLibrary")

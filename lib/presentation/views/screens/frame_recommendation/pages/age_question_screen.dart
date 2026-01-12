@@ -22,57 +22,65 @@ class AgeQuestionScreen extends GetView<AgeController> {
           child: Text('step_1_of_5'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: MediaQuery.of(context).size.height * 0.13),
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              Center(
-                child: Text(
-                  'how_old_are_you'.tr,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF0E2546),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: MediaQuery.of(context).size.height * 0.13),
+            child: Column(
+              children: [
+                const SizedBox(height: 25),
+                Center(
+                  child: Text(
+                    'how_old_are_you'.tr,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF0E2546),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 36),
-              // Grid of cards (2 columns)
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  // width available, we use two columns with spacing
-                  final double spacing = 20;
-                  final double totalSpacing = spacing;
-                  final double cardWidth =
-                      (constraints.maxWidth - totalSpacing) / 2;
+                const SizedBox(height: 36),
+                // Grid of cards (2 columns)
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    // width available, we use two columns with spacing
+                    final double spacing = 20;
+                    final double totalSpacing = spacing;
+                    final double cardWidth =
+                        (constraints.maxWidth - totalSpacing) / 2;
 
-                  return Wrap(
-                    runSpacing: 20,
-                    spacing: 20,
-                    alignment: WrapAlignment.center,
-                    children: List.generate(controller.options.length, (index) {
-                      return SizedBox(
-                        width: cardWidth,
-                        child: Obx(() {
-                          final isSelected =
-                              controller.selectedIndex.value == index;
-                          return QuestionCardWidget(
-                            text: controller.options[index],
-                            selected: isSelected,
-                            onTap: () => controller.select(index),
-                          );
-                        }),
-                      );
-                    }),
-                  );
-                },
-              ),
-            ],
+                    return Wrap(
+                      runSpacing: 20,
+                      spacing: 20,
+                      alignment: WrapAlignment.center,
+                      children: List.generate(controller.options.length, (index) {
+                        return SizedBox(
+                          width: cardWidth,
+                          child: Obx(() {
+                            final isSelected =
+                                controller.selectedIndex.value == index;
+                            return QuestionCardWidget(
+                              text: controller.options[index],
+                              selected: isSelected,
+                              onTap: () => controller.select(index),
+                            );
+                          }),
+                        );
+                      }),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

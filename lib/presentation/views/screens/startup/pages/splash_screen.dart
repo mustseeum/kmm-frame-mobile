@@ -1,19 +1,20 @@
 // lib/presentation/views/screens/splash_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/splash_screen_controller.dart';
 import 'package:lottie/lottie.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/core/utils/responsive.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends BasePage<SplashScreenController> {
   SplashScreen({super.key});
 
   final controller = Get.find<SplashScreenController>();
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
+    final theme = Theme.of(context);
     final isMobile = Responsive.isMobile(context);
     final isPortrait = Responsive.isPortrait(context);
 
@@ -23,7 +24,7 @@ class SplashScreen extends StatelessWidget {
     final subtitleFontSize = isMobile ? 13.0 : 15.0;
 
     return Scaffold(
-      backgroundColor: AppColors.primaryContainerLight, // #f8f8f7
+      backgroundColor: theme.colorScheme.primaryContainer,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -62,7 +63,7 @@ class SplashScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: subtitleFontSize,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.onBackgroundLight.withOpacity(0.8),
+                        color: theme.colorScheme.onSurface.withOpacity(0.7),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -75,7 +76,7 @@ class SplashScreen extends StatelessWidget {
                           '✨ self-reward edition ✨',
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.fountainBlue50, // cyan #62bebf
+                            color: theme.colorScheme.primary,
                           ),
                         ),
                       ),

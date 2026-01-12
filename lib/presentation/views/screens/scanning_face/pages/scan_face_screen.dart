@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/presentation/utils/painters/ring_painter.dart';
+import 'package:kacamatamoo/presentation/views/widgets/painters/ring_painter.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/controllers/scan_face_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 

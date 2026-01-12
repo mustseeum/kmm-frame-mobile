@@ -97,6 +97,25 @@ class PermissionHelper {
     return await Permission.microphone.isGranted;
   }
 
+  /// Request audio permission
+  static Future<bool> requestAudioPermission() async {
+    final status = await Permission.audio.request();
+    return status.isGranted;
+  }
+
+  /// Check if audio permission is granted
+  static Future<bool> hasAudioPermission() async {
+    return await Permission.audio.isGranted;
+  }
+
+  /// Request both microphone and audio permissions
+  static Future<Map<String, bool>> requestMicrophoneAndAudioPermissions() async {
+    final microphoneGranted = await requestMicrophonePermission();
+    final audioGranted = await requestAudioPermission();
+
+    return {'microphone': microphoneGranted, 'audio': audioGranted};
+  }
+
   /// Request notification permission (mainly for iOS 10+ and Android 13+)
   static Future<bool> requestNotificationPermission() async {
     final status = await Permission.notification.request();

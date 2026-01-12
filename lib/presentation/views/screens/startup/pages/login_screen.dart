@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/constants/app_colors.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/login_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/heading_card_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends BasePage<LoginScreenController> {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
+    final theme = Theme.of(context);
     final auth = Get.find<LoginScreenController>();
     final emailCtrl = TextEditingController();
     final passCtrl = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      backgroundColor: AppColors.primaryContainerLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -65,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                                     ? 32
                                     : 18,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.colorText,
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -76,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                                     ? 16
                                     : 18,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.colorText,
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -173,7 +174,7 @@ class LoginScreen extends StatelessWidget {
                               fontSize: FunctionHelper.isTablet(constraints)
                                   ? 14
                                   : 12,
-                              color: AppColors.colorText,
+                              color: theme.colorScheme.onSurface,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

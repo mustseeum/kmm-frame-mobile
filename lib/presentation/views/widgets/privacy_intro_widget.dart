@@ -17,9 +17,10 @@ class PrivacyIntroWidget extends StatelessWidget {
   final VoidCallback onAgree;
   final VoidCallback onPrivacyPolicyTap;
   final bool isLoading;
+  final bool isButtonEnabled;
 
   const PrivacyIntroWidget({
-    Key? key,
+    super.key,
     this.title = '',
     this.subtitle = '',
     this.firstInfoText = '',
@@ -34,7 +35,8 @@ class PrivacyIntroWidget extends StatelessWidget {
     required this.onAgree,
     required this.onPrivacyPolicyTap,
     this.isLoading = false,
-  }) : super(key: key);
+    this.isButtonEnabled = false,
+  });
 
   Widget _infoCard(BuildContext context, String text, Color cardColor) {
     return Container(
@@ -185,9 +187,10 @@ class PrivacyIntroWidget extends StatelessWidget {
         SizedBox(
           height: 56,
           child: ElevatedButton(
-            onPressed: isLoading ? null : onAgree,
+            onPressed: (isLoading || !isButtonEnabled) ? null : onAgree,
             style: ElevatedButton.styleFrom(
-              backgroundColor: buttonColor,
+              backgroundColor: isButtonEnabled ? buttonColor : Colors.grey,
+              disabledBackgroundColor: Colors.grey.shade400,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -207,12 +210,17 @@ class PrivacyIntroWidget extends StatelessWidget {
                       )
                     : Text(
                         btnText,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
+                          color: (isButtonEnabled || isLoading) ? Colors.white : Colors.grey.shade600,
                         ),
                       ),
-                const Icon(Icons.arrow_forward, size: 24),
+                Icon(
+                  Icons.arrow_forward,
+                  size: 24,
+                  color: (isButtonEnabled || isLoading) ? Colors.white : Colors.grey.shade600,
+                ),
               ],
             ),
           ),
@@ -223,11 +231,12 @@ class PrivacyIntroWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultIconColor = iconColor ?? const Color(0xFF083532);
-    final defaultTitleColor = titleColor ?? const Color(0xFF0E3B39);
-    final defaultSubtitleColor = subtitleColor ?? const Color(0xFF073233);
-    final defaultButtonColor = buttonColor ?? const Color(0xFF072524);
-    final defaultCardColor = cardColor ?? const Color(0xFFE6C94E);
+    final theme = Theme.of(context);
+    final defaultIconColor = iconColor ?? theme.colorScheme.secondary;
+    final defaultTitleColor = titleColor ?? theme.colorScheme.onSurface;
+    final defaultSubtitleColor = subtitleColor ?? theme.colorScheme.onSurfaceVariant;
+    final defaultButtonColor = buttonColor ?? theme.colorScheme.primary;
+    final defaultCardColor = cardColor ?? theme.colorScheme.tertiary;
 
     return LayoutBuilder(
       builder: (context, constraints) {

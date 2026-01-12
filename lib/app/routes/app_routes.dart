@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/age_question_bindings.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/pages/sync_information_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/bindings/try_on_glasses_screen_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/bindings/scan_result_bindings.dart';
-import 'package:kacamatamoo/presentation/bindings/startup/login_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/startup/home_screen_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/bindings/login_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/bindings/home_screen_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/privacy_intro_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/startup/sync_information_screen_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/startup/splash_screen_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/bindings/sync_information_screen_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/bindings/splash_screen_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/wear_question_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/pages/scan_result_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/bindings/scan_face_binding.dart';
@@ -18,7 +19,6 @@ import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/page
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/home_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/login_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/splash_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/startup/pages/sync_information_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen.dart';
 
 class AppRoutes {
@@ -35,7 +35,7 @@ class AppRoutes {
     ),
     GetPage(
       name: ScreenRoutes.syncScreen,
-      page: () => SyncInfotmationScreen(),
+      page: () => SyncInformationScreen(),
       bindings: [SyncInformationScreenBinding()],
     ),
     GetPage(
@@ -48,11 +48,6 @@ class AppRoutes {
       page: () => VirtualTryOnPage(),
       bindings: [VirtualTryOnPageBinding()],
     ),
-    // GetPage(
-    //   name: ScreenRoutes.tryOnGlasses,
-    //   page: () => TryOnGlassesScreen(),
-    //   bindings: [TryOnGlassesScreenBinding()],
-    // ),
     GetPage(
       name: ScreenRoutes.privacyIntroScreen,
       page: () => PrivacyIntroScreen(),
