@@ -2,13 +2,17 @@ import 'package:face_camera/face_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:kacamatamoo/app/app.dart';
 import 'package:kacamatamoo/core/network/bindings/initial_bindings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await FaceCamera.initialize(); //Add this
+  // Initialize GetStorage for persistent data
+  await GetStorage.init();
+  
+  await FaceCamera.initialize();
 
   try {
     await dotenv.load(fileName: ".env"); // Load environment variables
@@ -16,7 +20,7 @@ void main() async {
     throw Exception('Error loading .env file: $e'); // Print error if any
   }
 
-  // // Setelah binding Flutter aktif → baru boleh memanggil InitialBindings()
+  // Setelah binding Flutter aktif → baru boleh memanggil InitialBindings()
   InitialBindings().dependencies();
 
 

@@ -1,27 +1,25 @@
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
-import 'package:kacamatamoo/presentation/bindings/frame_recommendation/age_question_bindings.dart';
-import 'package:kacamatamoo/presentation/bindings/frame_recommendation/example_try_on_glasses_screen_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/scan_result/scan_result_bindings.dart';
-import 'package:kacamatamoo/presentation/bindings/scanning_face/scan_face_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/age_question_bindings.dart';
+import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/bindings/try_on_glasses_screen_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/bindings/scan_result_bindings.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/login_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/home_screen_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/frame_recommendation/privacy_intro_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/privacy_intro_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/sync_information_screen_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/frame_recommendation/try_on_glasses_screen_binding.dart';
 import 'package:kacamatamoo/presentation/bindings/startup/splash_screen_binding.dart';
-import 'package:kacamatamoo/presentation/bindings/frame_recommendation/wear_question_bindings.dart';
-import 'package:kacamatamoo/presentation/views/screens/glasses_try_on_example.dart';
-import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/scan_result_scree.dart';
-import 'package:kacamatamoo/presentation/views/screens/scanning_face/scan_face_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/startup/login_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/startup/home_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/privacy_intro_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/age_question_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/startup/sync_information_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/try_on_glasses_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/startup/splash_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/wear_purpose_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/bindings/wear_question_bindings.dart';
+import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/pages/scan_result_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/scanning_face/bindings/scan_face_binding.dart';
+import 'package:kacamatamoo/presentation/views/screens/scanning_face/pages/scan_face_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/pages/privacy_intro_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/pages/age_question_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/pages/wear_purpose_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/pages/home_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/pages/login_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/pages/splash_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/startup/pages/sync_information_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen.dart';
 
 class AppRoutes {
   static List<GetPage> pages = [
@@ -47,14 +45,14 @@ class AppRoutes {
     ),
     GetPage(
       name: ScreenRoutes.tryOnGlasses,
-      page: () => TryOnGlassesScreen(),
-      bindings: [TryOnGlassesScreenBinding()],
+      page: () => VirtualTryOnPage(),
+      bindings: [VirtualTryOnPageBinding()],
     ),
-    GetPage(
-      name: ScreenRoutes.exampleTryOnGlasses,
-      page: () => GlassesTryOnExample(),
-      bindings: [ExampleTryOnGlassesScreenBinding()],
-    ),
+    // GetPage(
+    //   name: ScreenRoutes.tryOnGlasses,
+    //   page: () => TryOnGlassesScreen(),
+    //   bindings: [TryOnGlassesScreenBinding()],
+    // ),
     GetPage(
       name: ScreenRoutes.privacyIntroScreen,
       page: () => PrivacyIntroScreen(),

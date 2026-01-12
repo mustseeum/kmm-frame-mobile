@@ -6,7 +6,6 @@ class ScreenRoutes {
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String about = '/about';
-  static const String exampleTryOnGlasses = '/exampleTryOnGlasses';
   static const String syncScreen = '/syncScreen';
   static const String privacyIntroScreen = '/privacyIntroScreen';
   static const String ageQuestionScreen = '/ageQuestionScreen';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 /// Reusable header widget to be used as `appBar`.
 /// Example:
@@ -38,12 +39,12 @@ class QuestionHeader extends StatelessWidget implements PreferredSizeWidget {
       elevation: elevation,
       titleSpacing: titleSpacing,
       toolbarHeight: height,
-      leading: showBack
-          ? IconButton(
-              onPressed: onBack ?? () => Navigator.maybePop(context),
-              icon: const Icon(Icons.arrow_back, color: Color(0xFF0E2546)),
-            )
-          : null,
+      // leading: showBack
+      //     ? IconButton(
+      //         onPressed: onBack ?? () => Navigator.maybePop(context),
+      //         icon: const Icon(Icons.arrow_back, color: AppColors.onSecondaryContainerLight),
+      //       )
+      //     : null,
       title: Row(
         children: [
           // Use Image.asset for your logo (ensure asset exists and is registered in pubspec.yaml)

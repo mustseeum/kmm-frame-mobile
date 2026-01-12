@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kacamatamoo/core/constants/colors.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 class QuestionCardWidget extends StatelessWidget {
   final String text;
@@ -15,7 +15,7 @@ class QuestionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = selected ? AppColors.secondary : Colors.transparent;
+    final borderColor = selected ? AppColors.fountainBlue50 : Colors.transparent;
     final shadow = selected
         ? [
             BoxShadow(

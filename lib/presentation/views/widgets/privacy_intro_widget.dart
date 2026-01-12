@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PrivacyIntroWidget extends StatelessWidget {
   final String title;
@@ -19,14 +20,12 @@ class PrivacyIntroWidget extends StatelessWidget {
 
   const PrivacyIntroWidget({
     Key? key,
-    this.title =
-        "You're about to use a privacy-friendly virtual try-on service",
-    this.subtitle = "We'll detect generic points on your face, and that's it!",
-    this.firstInfoText = 'No facial recognition or identification',
-    this.secondInfoText = 'No storage or sharing of your image',
-    this.privacyPolicyText =
-        'Please read our privacy policy before accessing the service',
-    this.buttonText = 'Agree & Continue',
+    this.title = '',
+    this.subtitle = '',
+    this.firstInfoText = '',
+    this.secondInfoText = '',
+    this.privacyPolicyText = '',
+    this.buttonText = '',
     this.iconColor,
     this.cardColor,
     this.titleColor,
@@ -80,7 +79,7 @@ class PrivacyIntroWidget extends StatelessWidget {
   // Centered vertically and horizontally
   Widget _leftGraphic(Color iconColor) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center, // center content vertically
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(Icons.verified_user, size: 220, color: iconColor),
@@ -90,11 +89,11 @@ class PrivacyIntroWidget extends StatelessWidget {
           children: [
             Icon(Icons.lock_outline, size: 18, color: iconColor),
             const SizedBox(width: 8),
-            Text('Encrypted', style: TextStyle(color: iconColor)),
+            Text('encrypted'.tr, style: TextStyle(color: iconColor)),
             const SizedBox(width: 20),
             Icon(Icons.visibility_off_outlined, size: 18, color: iconColor),
             const SizedBox(width: 8),
-            Text('Private', style: TextStyle(color: iconColor)),
+            Text('private'.tr, style: TextStyle(color: iconColor)),
           ],
         ),
       ],
@@ -108,16 +107,23 @@ class PrivacyIntroWidget extends StatelessWidget {
     Color buttonColor,
     Color cardColor,
   ) {
+    final titleText = title.isEmpty ? 'privacy_intro_title'.tr : title;
+    final subtitleText = subtitle.isEmpty ? 'privacy_intro_subtitle'.tr : subtitle;
+    final firstInfo = firstInfoText.isEmpty ? 'no_facial_recognition'.tr : firstInfoText;
+    final secondInfo = secondInfoText.isEmpty ? 'no_storage_sharing'.tr : secondInfoText;
+    final privacyText = privacyPolicyText.isEmpty ? 'read_privacy_policy'.tr : privacyPolicyText;
+    final btnText = buttonText.isEmpty ? 'agree_continue'.tr : buttonText;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 10),
         Text.rich(
           TextSpan(
-            text: title.split('privacy-friendly virtual try-on service')[0],
+            text: titleText.split('privacy-friendly virtual try-on service')[0],
             style: TextStyle(fontSize: 22, color: subtitleColor),
             children: [
-              if (title.contains('privacy-friendly virtual try-on service'))
+              if (titleText.contains('privacy-friendly virtual try-on service'))
                 TextSpan(
                   text: 'privacy-friendly virtual try-on service',
                   style: TextStyle(
@@ -125,14 +131,9 @@ class PrivacyIntroWidget extends StatelessWidget {
                     color: titleColor,
                   ),
                 ),
-              if (title
-                      .split('privacy-friendly virtual try-on service')
-                      .length >
-                  1)
+              if (titleText.split('privacy-friendly virtual try-on service').length > 1)
                 TextSpan(
-                  text: title.split(
-                    'privacy-friendly virtual try-on service',
-                  )[1],
+                  text: titleText.split('privacy-friendly virtual try-on service')[1],
                   style: TextStyle(fontSize: 22, color: subtitleColor),
                 ),
             ],
@@ -141,14 +142,14 @@ class PrivacyIntroWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          subtitle,
+          subtitleText,
           style: TextStyle(fontSize: 16, color: subtitleColor),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 28),
-        _infoCard(context, firstInfoText, cardColor),
+        _infoCard(context, firstInfo, cardColor),
         const SizedBox(height: 16),
-        _infoCard(context, secondInfoText, cardColor),
+        _infoCard(context, secondInfo, cardColor),
         const SizedBox(height: 18),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
@@ -164,7 +165,7 @@ class PrivacyIntroWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
               children: [
-                TextSpan(text: privacyPolicyText.split('privacy policy')[0]),
+                TextSpan(text: privacyText.split('privacy policy')[0]),
                 TextSpan(
                   text: 'privacy policy',
                   style: const TextStyle(
@@ -174,8 +175,8 @@ class PrivacyIntroWidget extends StatelessWidget {
                   recognizer: TapGestureRecognizer()
                     ..onTap = onPrivacyPolicyTap,
                 ),
-                if (privacyPolicyText.split('privacy policy').length > 1)
-                  TextSpan(text: privacyPolicyText.split('privacy policy')[1]),
+                if (privacyText.split('privacy policy').length > 1)
+                  TextSpan(text: privacyText.split('privacy policy')[1]),
               ],
             ),
           ),
@@ -205,7 +206,7 @@ class PrivacyIntroWidget extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        buttonText,
+                        btnText,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,

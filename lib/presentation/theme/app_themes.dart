@@ -1,74 +1,70 @@
 // lib/presentation/theme/app_theme.dart
 import 'package:flutter/material.dart';
-import 'package:kacamatamoo/core/constants/colors.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 class AppTheme {
   static final lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: ColorScheme.light(
-      primary: AppColors.primary,
-      onPrimary: AppColors.onPrimary,
-      primaryContainer: AppColors.primaryContainerLight,
-      onPrimaryContainer: AppColors.onPrimaryContainerLight,
+      primary: AppColors.fountainBlue500,
+      onPrimary: Colors.white,
+      primaryContainer: AppColors.fountainBlue100,
+      onPrimaryContainer: AppColors.fountainBlue900,
 
-      secondary: AppColors.secondary,
-      onSecondary: AppColors.onSecondary,
-      secondaryContainer: AppColors.secondaryContainerLight,
-      onSecondaryContainer: AppColors.onSecondaryContainerLight,
+      secondary: AppColors.fountainBlue400,
+      onSecondary: Colors.white,
+      secondaryContainer: AppColors.fountainBlue200,
+      onSecondaryContainer: AppColors.fountainBlue800,
 
-      background: AppColors.backgroundLight,
-      onBackground: AppColors.onBackgroundLight,
-      surface: AppColors.surfaceLight,
-      onSurface: AppColors.onSurfaceLight,
+      surface: Colors.white,
+      onSurface: AppColors.osloGray900,
 
-      error: AppColors.error,
-      onError: AppColors.onError,
-      errorContainer: AppColors.errorContainerLight,
-      onErrorContainer: AppColors.onErrorContainerLight,
+      error: const Color(0xFFD32F2F),
+      onError: Colors.white,
+      errorContainer: const Color(0xFFFFCDD2),
+      onErrorContainer: const Color(0xFFB71C1C),
 
-      outline: AppColors.outlineLight,
+      outline: AppColors.osloGray300,
     ),
-    scaffoldBackgroundColor: AppColors.backgroundLight,
-    textTheme: _textTheme(AppColors.onBackgroundLight, AppColors.hintLight),
-    inputDecorationTheme: _inputDecoration(AppColors.outlineLight, AppColors.primary, AppColors.hintLight),
-    elevatedButtonTheme: _elevatedButton(AppColors.primary, AppColors.onPrimary),
-    outlinedButtonTheme: _outlinedButton(AppColors.primary, AppColors.primary),
-    cardTheme: _cardTheme(AppColors.surfaceLight),
+    scaffoldBackgroundColor: AppColors.osloGray50,
+    textTheme: _textTheme(AppColors.osloGray900, AppColors.osloGray500),
+    inputDecorationTheme: _inputDecoration(AppColors.osloGray300, AppColors.fountainBlue500, AppColors.osloGray500),
+    elevatedButtonTheme: _elevatedButton(AppColors.fountainBlue500, Colors.white),
+    outlinedButtonTheme: _outlinedButton(AppColors.fountainBlue500, AppColors.fountainBlue500),
+    cardTheme: _cardTheme(Colors.white),
   );
 
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: ColorScheme.dark(
-      primary: AppColors.primary,
-      onPrimary: AppColors.onPrimary,
-      primaryContainer: AppColors.primaryContainerDark,
-      onPrimaryContainer: AppColors.onPrimaryContainerDark,
+      primary: AppColors.fountainBlue400,
+      onPrimary: AppColors.fountainBlue950,
+      primaryContainer: AppColors.fountainBlue800,
+      onPrimaryContainer: AppColors.fountainBlue100,
 
-      secondary: AppColors.secondary,
-      onSecondary: AppColors.onSecondary,
-      secondaryContainer: AppColors.secondaryContainerDark,
-      onSecondaryContainer: AppColors.onSecondaryContainerDark,
+      secondary: AppColors.fountainBlue300,
+      onSecondary: AppColors.fountainBlue950,
+      secondaryContainer: AppColors.fountainBlue700,
+      onSecondaryContainer: AppColors.fountainBlue200,
 
-      background: AppColors.backgroundDark,
-      onBackground: AppColors.onBackgroundDark,
-      surface: AppColors.surfaceDark,
-      onSurface: AppColors.onSurfaceDark,
+      surface: AppColors.osloGray900,
+      onSurface: AppColors.osloGray100,
 
-      error: AppColors.error,
-      onError: AppColors.onError,
-      errorContainer: AppColors.errorContainerDark,
-      onErrorContainer: AppColors.onErrorContainerDark,
+      error: const Color(0xFFEF5350),
+      onError: const Color(0xFF000000),
+      errorContainer: const Color(0xFFC62828),
+      onErrorContainer: const Color(0xFFFFCDD2),
 
-      outline: AppColors.outlineDark,
+      outline: AppColors.osloGray700,
     ),
-    scaffoldBackgroundColor: AppColors.backgroundDark,
-    textTheme: _textTheme(AppColors.onBackgroundDark, AppColors.hintDark),
-    inputDecorationTheme: _inputDecoration(AppColors.outlineDark, AppColors.primary, AppColors.hintDark),
-    elevatedButtonTheme: _elevatedButton(AppColors.primary, AppColors.onPrimary),
-    outlinedButtonTheme: _outlinedButton(AppColors.primary, AppColors.primary),
-    cardTheme: _cardTheme(AppColors.surfaceDark),
+    scaffoldBackgroundColor: AppColors.osloGray950,
+    textTheme: _textTheme(AppColors.osloGray100, AppColors.osloGray400),
+    inputDecorationTheme: _inputDecoration(AppColors.osloGray700, AppColors.fountainBlue400, AppColors.osloGray400),
+    elevatedButtonTheme: _elevatedButton(AppColors.fountainBlue400, AppColors.fountainBlue950),
+    outlinedButtonTheme: _outlinedButton(AppColors.fountainBlue400, AppColors.fountainBlue400),
+    cardTheme: _cardTheme(AppColors.osloGray900),
   );
 
   // --- Helpers ---

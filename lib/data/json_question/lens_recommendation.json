@@ -1,0 +1,42 @@
+{
+    "form_title": "Frame Recommendation Questionnaire",
+    "total_steps": 4,
+    "steps": [
+        {
+            "step_number": 1,
+            "title": "How old are you?",
+            "options": [
+                {
+                    "id": "age_6_17_04",
+                    "label": "6-17 years old"
+                },
+                {
+                    "id": "age_18_39_05",
+                    "label": "18-39 years old"
+                },
+                {
+                    "id": "age_40_50_06",
+                    "label": "40-50 years old"
+                },
+                {
+                    "id": "age_51_plus_07",
+                    "label": "51+ years old"
+                }
+            ]
+        },
+        {
+            "step_number": 2,
+            "title": "How can we identify you?",
+            "options": [
+                {
+                    "id": "men_01",
+                    "label": "Men"
+                },
+                {
+                    "id": "women_02",
+                    "label": "Women"
+                }
+            ]
+        }
+    ]
+}

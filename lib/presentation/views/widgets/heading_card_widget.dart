@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/core/constants/colors.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 
 class HeadingCardWidget extends StatelessWidget {
   final double containerWidth;
