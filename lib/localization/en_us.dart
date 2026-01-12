@@ -35,6 +35,13 @@ const enUS = {
   'step_4_of_5': 'Step 4 of 5',
   'how_old_are_you': 'How old are you?',
   'what_are_you_looking_for': 'What are you looking for?',
+
+  // Lens Recommendation
+  'have_prescription_before': 'Have you worn any kind of prescription before?',
+  'what_best_describes_your_main_daily_visual_activity': 'What best describes your main daily visual activity?',
+  'how_many_hours_per_day_do_you_use_your_eyes_intensively': 'How many hours per day do you use your eyes intensively?',
+  'how_often_do_you_switch_focus_or_environment_during_the_day': 'How often do you switch focus or environment during the day?',
+  'what_best_describes_your_typical_environment': 'What best describes your typical environment?',
   
   // Privacy Intro
   'privacy_intro_title': "You're about to use a privacy-friendly virtual try-on service",

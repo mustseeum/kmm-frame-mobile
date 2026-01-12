@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
@@ -8,7 +8,7 @@ import 'package:kacamatamoo/core/utils/navigation_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 import 'package:kacamatamoo/data/repositories/question_recommendation_repository.dart';
 
-class WearPurposeController extends BaseController {
+class LensPrescriptionController extends BaseController {
   final _repository = QuestionRecommendationRepository();
 
   // Options to display (loaded from data)
@@ -21,10 +21,10 @@ class WearPurposeController extends BaseController {
   List<Question?>? questionData = [];
   Question? ageQuestion;
 
+  String screenType = 'lens_recommendation';
+
   // Index of selected option (-1 means none)
   final selectedIndex = (-1).obs;
-
-  String screenType = 'frame';
 
   @override
   void onInit() {
@@ -37,17 +37,19 @@ class WearPurposeController extends BaseController {
       isLoading.value = true;
 
       // Load questionnaire from repository
-      final questionnaire = await _repository.loadQuestionnaire();
-
+      final questionnaire = await _repository.loadQuestionnaireLens();
+      debugPrint(
+        'Loaded lens recommendation data 3: ${json.encode(questionnaire)}',
+      );
       if (questionnaire != null) {
         questionData = questionnaire as List<Question?>?;
       }
-
-      ageQuestion = questionData?.firstWhere((q) => q?.id == 'gender');
+      // Find the age question (id: 'age', step: 1)
+      ageQuestion = questionData?.firstWhere((q) => q?.id == 'prescription_history');
 
       // Extract option values
       options.value = ageQuestion!.options.map((opt) => opt.value).toList();
-      debugPrint('Loaded frame recommendation data 4: ${json.encode(options)}');
+      debugPrint('Loaded lens recommendation data 4: ${json.encode(options)}');
 
       isLoading.value = false;
     } catch (e) {
@@ -61,23 +63,11 @@ class WearPurposeController extends BaseController {
       selectedIndex.value = -1; // toggle off when tapped again (optional)
     } else {
       selectedIndex.value = idx;
-      debugPrint('Selected age option: ${options[idx]}');
-      if (screenType == 'frame') {
-        Navigation.navigateToWithArguments(
-          ScreenRoutes.scanningFaceScreen,
-          arguments: {'selectedGender': options[idx], 'screenType': screenType},
-        );
-      } else if (screenType == 'lens') {
-        Navigation.navigateToWithArguments(
-          ScreenRoutes.lensPrescriptionScreen,
-          arguments: {'selectedGender': options[idx], 'screenType': screenType},
-        );
-      } else if (screenType == 'both') {
-        Navigation.navigateToWithArguments(
-          ScreenRoutes.scanningFaceScreen,
-          arguments: {'selectedGender': options[idx], 'screenType': screenType},
-        );
-      }
+      // debugPrint('Selected age option: ${options[idx]}');
+      Navigation.navigateToWithArguments(ScreenRoutes.dailyVisualActivityScreen, arguments: {
+        'selectedAge': options[idx],
+        'screenType': screenType,
+      });
     }
   }
 
@@ -88,7 +78,7 @@ class WearPurposeController extends BaseController {
   void handleArguments(Map<String, dynamic> arguments) {
     // TODO: implement handleArguments
     final type = arguments['screenType'] as String?;
-    debugPrint('WearPurposeController received screenType: $type');
+    debugPrint('AgeController received screenType: $type');
     if (type != null) {
       screenType = type;
     }

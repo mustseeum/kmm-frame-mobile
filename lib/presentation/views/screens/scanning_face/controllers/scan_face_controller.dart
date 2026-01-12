@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 
@@ -23,7 +24,7 @@ enum FaceState {
   permissionDenied,
 }
 
-class ScanFaceController extends GetxController {
+class ScanFaceController extends BaseController {
   CameraController? cameraController;
   CameraDescription? frontCamera;
   RxBool cameraInitialized = false.obs;
@@ -446,5 +447,10 @@ class ScanFaceController extends GetxController {
 
   void resetProgress() {
     progress.value = 0.0;
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

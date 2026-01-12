@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:kacamatamoo/data/models/questionnaire/question.dart';
+import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 
-part 'frame_questionnaire.g.dart';
+part 'lens_questionnaire.g.dart';
 @JsonSerializable()
 
-class FrameQuestionnaire {
+class LensQuestionnaire {
   final String formTitle;
   final String type;
   final String version;
   final int totalSteps;
   final List<Question> questions;
 
-  FrameQuestionnaire({
+  LensQuestionnaire({
     required this.formTitle,
     required this.type,
     required this.version,
@@ -19,8 +19,8 @@ class FrameQuestionnaire {
     required this.questions,
   });
 
-  factory FrameQuestionnaire.fromJson(Map<String, dynamic> json) =>
-      _$FrameQuestionnaireFromJson(json);
+  factory LensQuestionnaire.fromJson(Map<String, dynamic> json) =>
+      _$LensQuestionnaireFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FrameQuestionnaireToJson(this);
+  Map<String, dynamic> toJson() => _$LensQuestionnaireToJson(this);
 }

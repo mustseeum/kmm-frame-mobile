@@ -25,6 +25,7 @@ class FrameRecommendationDummyData {
         "options": [
           {"label": "men_01", "value": "Men"},
           {"label": "women_02", "value": "Women"},
+          {"label": "non_binary_03", "value": "I prefer not to say"},
         ],
       },
     ],

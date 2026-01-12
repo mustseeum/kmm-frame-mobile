@@ -1,20 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/controllers/scan_result_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/profile_card.dart';
 import 'package:kacamatamoo/presentation/views/widgets/info_tile.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
-class ScanResultScreen extends StatelessWidget {
+class ScanResultScreen extends BasePage<ScanResultController> {
   const ScanResultScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
     final controller = Get.find<ScanResultController>();
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF8F7),
+      backgroundColor: AppColors.p50,
       appBar: QuestionHeader(
         showBack: false,
         trailing: Padding(

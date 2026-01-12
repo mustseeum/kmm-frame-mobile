@@ -12,4 +12,9 @@ class ScreenRoutes {
   static const String wearPurposeScreen = '/wearPurposeScreen';
   static const String scanningFaceScreen = '/scanningFaceScreen';
   static const String scanResultScreen = '/scanResultScreen';
+  static const String lensPrescriptionScreen = '/lensPrescriptionScreen';
+  static const String dailyVisualActivityScreen = '/dailyVisualActivityScreen';
+  static const String dailyeyeusagescreen = '/dailyeyeusagescreen';
+  static const String focusSwitchScreen = '/focusSwitchScreen';
+  static const String typicalEnvironmentScreen = '/typicalEnvironmentScreen';
 }

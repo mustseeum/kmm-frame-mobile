@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
-import 'package:kacamatamoo/data/models/questionnaire/question.dart';
-import 'package:kacamatamoo/data/repositories/frame_recommendation_repository.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/utils/navigation_helper.dart';
+import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
+import 'package:kacamatamoo/data/repositories/question_recommendation_repository.dart';
 
-class AgeController extends GetxController {
-  final _repository = FrameRecommendationRepository();
+class FocusSwitchController extends BaseController {
+  final _repository = QuestionRecommendationRepository();
 
   // Options to display (loaded from data)
   final options = <String>[].obs;
@@ -18,6 +20,8 @@ class AgeController extends GetxController {
   // Question data
   List<Question?>? questionData = [];
   Question? ageQuestion;
+
+  String screenType = 'lens_recommendation';
 
   // Index of selected option (-1 means none)
   final selectedIndex = (-1).obs;
@@ -33,21 +37,19 @@ class AgeController extends GetxController {
       isLoading.value = true;
 
       // Load questionnaire from repository
-      final questionnaire = await _repository.loadQuestionnaire();
+      final questionnaire = await _repository.loadQuestionnaireLens();
       debugPrint(
-        'Loaded frame recommendation data 3: ${json.encode(questionnaire)}',
+        'Loaded lens recommendation data 3: ${json.encode(questionnaire)}',
       );
       if (questionnaire != null) {
         questionData = questionnaire as List<Question?>?;
       }
       // Find the age question (id: 'age', step: 1)
-      ageQuestion = questionData?.firstWhere((q) => q?.id == 'age');
+      ageQuestion = questionData?.firstWhere((q) => q?.id == 'focus_switch');
 
       // Extract option values
       options.value = ageQuestion!.options.map((opt) => opt.value).toList();
-      debugPrint(
-        'Loaded frame recommendation data 4: ${json.encode(options)}',
-      );
+      debugPrint('Loaded lens recommendation data 4: ${json.encode(options)}');
 
       isLoading.value = false;
     } catch (e) {
@@ -62,10 +64,23 @@ class AgeController extends GetxController {
     } else {
       selectedIndex.value = idx;
       // debugPrint('Selected age option: ${options[idx]}');
-      Get.toNamed(ScreenRoutes.wearPurposeScreen);
+      Navigation.navigateToWithArguments(ScreenRoutes.typicalEnvironmentScreen, arguments: {
+        'selectedAge': options[idx],
+        'screenType': screenType,
+      });
     }
   }
 
   String? get selectedOption =>
       (selectedIndex.value >= 0 ? options[selectedIndex.value] : null);
+
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
+    final type = arguments['screenType'] as String?;
+    debugPrint('AgeController received screenType: $type');
+    if (type != null) {
+      screenType = type;
+    }
+  }
 }

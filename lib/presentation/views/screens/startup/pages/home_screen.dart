@@ -144,71 +144,39 @@ class HomeScreen extends BasePage<HomeScreenController> {
                                     ),
                                   ),
                                 ),
-                                // Toggle chips for ID / EN
+                                // Language switch: ID / EN
                                 Obx(() {
                                   final lang = ctrl.language.value;
+                                  final isEnglish = lang == Language.en;
                                   return Row(
                                     children: [
-                                      // ID chip
-                                      GestureDetector(
-                                        onTap: () =>
-                                            ctrl.toggleLanguage(Language.id),
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 8,
-                                            horizontal: 12,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: lang == Language.id
-                                                ? const Color(0xFF00897B)
-                                                : Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            border: Border.all(
-                                              color: const Color(0xFF00897B),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            'ID',
-                                            style: TextStyle(
-                                              color: lang == Language.id
-                                                  ? Colors.white
-                                                  : const Color(0xFF00897B),
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
+                                      Text(
+                                        'ID',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: isEnglish ? FontWeight.w500 : FontWeight.w700,
+                                          color: isEnglish 
+                                              ? theme.colorScheme.onSurface.withOpacity(0.5)
+                                              : theme.colorScheme.primary,
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
-                                      GestureDetector(
-                                        onTap: () =>
-                                            ctrl.toggleLanguage(Language.en),
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 8,
-                                            horizontal: 12,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: lang == Language.en
-                                                ? const Color(0xFF00897B)
-                                                : Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                            border: Border.all(
-                                              color: const Color(0xFF00897B),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            'EN',
-                                            style: TextStyle(
-                                              color: lang == Language.en
-                                                  ? Colors.white
-                                                  : const Color(0xFF00897B),
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
+                                      Switch(
+                                        value: isEnglish,
+                                        onChanged: (value) {
+                                          ctrl.toggleLanguage(
+                                            value ? Language.en : Language.id,
+                                          );
+                                        },
+                                        activeThumbColor : theme.colorScheme.primary,
+                                      ),
+                                      Text(
+                                        'EN',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: isEnglish ? FontWeight.w700 : FontWeight.w500,
+                                          color: isEnglish 
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.onSurface.withOpacity(0.5),
                                         ),
                                       ),
                                     ],

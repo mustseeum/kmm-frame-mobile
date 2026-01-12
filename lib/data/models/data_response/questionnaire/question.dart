@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:kacamatamoo/data/models/questionnaire/options.dart';
+import 'package:kacamatamoo/data/models/data_response/questionnaire/options.dart';
 part 'question.g.dart';
 @JsonSerializable()
 class Question {

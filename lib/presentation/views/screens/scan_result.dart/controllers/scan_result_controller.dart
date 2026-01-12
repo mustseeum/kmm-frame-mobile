@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/data/models/scan_result/scan_result_model.dart';
 
-class ScanResultController extends GetxController {
+class ScanResultController extends BaseController {
   // Loading indicator if you want to perform async work when opening this screen
   final RxBool isLoading = false.obs;
 
@@ -56,5 +57,10 @@ class ScanResultController extends GetxController {
   void reset() {
     profile.value = null;
     completed.value = false;
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

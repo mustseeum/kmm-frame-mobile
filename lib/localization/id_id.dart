@@ -35,23 +35,37 @@ const idID = {
   'step_4_of_5': 'Langkah 4 dari 5',
   'how_old_are_you': 'Berapa usia Anda?',
   'what_are_you_looking_for': 'Apa yang Anda cari?',
-  
+
+  // Lens Recommendation
+  'lens_recommendation_questionnaire': 'Kuesioner Rekomendasi Lensa',
+  'what_best_describes_your_main_daily_visual_activity':
+      'Apa yang paling menggambarkan aktivitas visual harian utama Anda?',
+  'how_many_hours_per_day_do_you_use_your_eyes_intensively':
+      'Berapa jam per hari Anda menggunakan mata Anda secara intensif?',
+  'how_often_do_you_switch_focus_or_environment_during_the_day':
+      'Seberapa sering Anda mengalihkan fokus atau lingkungan selama hari?',
+  'what_best_describes_your_typical_environment':
+      'Apa yang paling menggambarkan lingkungan khas Anda?',
   // Privacy Intro
-  'privacy_intro_title': "Anda akan menggunakan layanan try-on virtual yang ramah privasi",
-  'privacy_intro_subtitle': "Kami akan mendeteksi titik generik di wajah Anda, dan itu saja!",
+  'privacy_intro_title':
+      "Anda akan menggunakan layanan try-on virtual yang ramah privasi",
+  'privacy_intro_subtitle':
+      "Kami akan mendeteksi titik generik di wajah Anda, dan itu saja!",
   'no_facial_recognition': 'Tanpa pengenalan atau identifikasi wajah',
   'no_storage_sharing': 'Tanpa penyimpanan atau berbagi gambar Anda',
-  'read_privacy_policy': 'Harap baca kebijakan privasi kami sebelum mengakses layanan',
+  'read_privacy_policy':
+      'Harap baca kebijakan privasi kami sebelum mengakses layanan',
   'agree_continue': 'Setuju & Lanjutkan',
   'encrypted': 'Terenkripsi',
   'private': 'Pribadi',
-  
+
   // Scan Face Screen
-  'scan_face_instruction': 'Kami akan mengukur bentuk wajah, warna kulit, dan ukuran mata Anda terlebih dahulu!',
+  'scan_face_instruction':
+      'Kami akan mengukur bentuk wajah, warna kulit, dan ukuran mata Anda terlebih dahulu!',
   'analyzing_face': 'Menganalisis wajah cantik Anda!',
   'start_scanning': 'Mulai Pemindaian',
   'scanning': 'Memindai...',
-  
+
   // Scan Result Screen
   'analyze_completed': 'Analisis selesai!',
   'face_profile': 'Profil Wajah',

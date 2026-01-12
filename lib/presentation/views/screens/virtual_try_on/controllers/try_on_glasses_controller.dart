@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 
-class VirtualTryOnPageController extends GetxController {
+class VirtualTryOnPageController extends BaseController {
   @override
   void onInit() {
     super.onInit();
@@ -58,5 +59,10 @@ class VirtualTryOnPageController extends GetxController {
 
   Future<void> stopFaceAr() async {
     await FaceArChannel.stopFaceAr();
+  }
+  
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
   }
 }

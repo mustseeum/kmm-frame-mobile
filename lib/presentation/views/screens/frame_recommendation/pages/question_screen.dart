@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/wear_purpose_controller.dart';
+import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/question_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
-class WearPurposeScreen extends BasePage<WearPurposeController> {
-  const WearPurposeScreen({super.key});
+class QuestionScreen extends BasePage<QuestionController> {
+  const QuestionScreen({super.key});
 
   @override
   Widget buildPage(BuildContext context) {
     // background color similar to screenshot
     const bg = Color(0xFFEFF9F8); // pale teal-ish
-    final controller = Get.find<WearPurposeController>();
+    final controller = Get.find<QuestionController>();
+
     return Scaffold(
       backgroundColor: bg,
-      // Top bar with logo on left and "Step 1 of 4" on right
-      appBar: QuestionHeader(
-        showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_2_of_5'.tr, style: TextStyle(color: Colors.blue)),
-        ),
+
+      // Wrap AppBar in PreferredSize to ensure it implements PreferredSizeWidget
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final bool showBack = controller.selectedIndex.value > 0;
+
+          return QuestionHeader(
+            showBack: showBack,
+            trailing: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Text(
+                'step_1_of_5'.tr,
+                style: const TextStyle(color: Colors.blue),
+              ),
+            ),
+          );
+        }),
       ),
+
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -37,9 +50,16 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
             child: Column(
               children: [
                 const SizedBox(height: 25),
+
+                // Title from data (ageQuestion.question) if available; fallback to localized text
+                // final q = controller.ageQuestion;
+                //   final title = (q != null && q.question.isNotEmpty) ? q.question : 'how_old_are_you'.tr;
                 Center(
                   child: Text(
-                    'what_are_you_looking_for'.tr,
+                    controller.ageQuestion?.question.isNotEmpty ?? false
+                        ? controller.ageQuestion!.question
+                        : 'how_old_are_you'.tr,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w800,
@@ -47,19 +67,20 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 36),
+
                 // Grid of cards (2 columns)
                 LayoutBuilder(
                   builder: (context, constraints) {
                     // width available, we use two columns with spacing
-                    final double spacing = 20;
-                    final double totalSpacing = spacing;
+                    const double spacing = 20;
                     final double cardWidth =
-                        (constraints.maxWidth - totalSpacing) / 2;
+                        (constraints.maxWidth - spacing) / 2;
 
                     return Wrap(
                       runSpacing: 20,
-                      spacing: 20,
+                      spacing: spacing,
                       alignment: WrapAlignment.center,
                       children: List.generate(controller.options.length, (
                         index,

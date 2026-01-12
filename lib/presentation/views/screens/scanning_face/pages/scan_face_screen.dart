@@ -3,18 +3,18 @@ import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/presentation/views/widgets/painters/ring_painter.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/controllers/scan_face_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
-class ScanFaceScreen extends GetView<ScanFaceController> {
+class ScanFaceScreen extends BasePage<ScanFaceController> {
   const ScanFaceScreen({super.key});
 
-  Widget build(BuildContext context) {
-    final bgColor = const Color(
-      0xFFEFF8F7,
-    ); // pale teal background like the image
+  @override
+  Widget buildPage(BuildContext context) {
+    final bgColor = Theme.of(context); // pale teal background like the image
     final dividerColor = const Color(
       0xFF2AA6A6,
     ); // thin accent line below header
@@ -26,7 +26,7 @@ class ScanFaceScreen extends GetView<ScanFaceController> {
           child: Text('step_3_of_5'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
-      backgroundColor: bgColor,
+      backgroundColor: bgColor.scaffoldBackgroundColor,
       body: SafeArea(
         bottom: false,
         child: Column(

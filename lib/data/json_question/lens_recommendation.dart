@@ -3,7 +3,7 @@ class LensRecommendationDummyData {
     "formTitle": "Lens Recommendation Questionnaire",
     "type": "lens",
     "version": "1.0",
-    "totalSteps": 4,
+    "totalSteps": 5,
     "questions": [
       {
         "id": "prescription_history",
@@ -11,14 +11,14 @@ class LensRecommendationDummyData {
         "question": "Have you worn any kind of prescription before?",
         "type": "single_choice",
         "options": [
-          {"label": "Yes, occasionally", "value": "yes_occasional"},
+          {"label": "yes_occasional", "value": "Yes, occasionally"},
           {
-            "label": "Yes, I wear glasses / contact lenses regularly",
-            "value": "yes_regular",
+            "label": "yes_regular",
+            "value": "Yes, I wear glasses / contact lenses regularly",
           },
           {
-            "label": "No, this would be my first pair",
-            "value": "no_first_time",
+            "label": "no_first_time",
+            "value": "No, this would be my first pair",
           },
         ],
       },
@@ -28,22 +28,22 @@ class LensRecommendationDummyData {
         "question": "What best describes your main daily visual activity?",
         "type": "single_choice",
         "options": [
-          {"label": "Screen-based and near work", "value": "screen_near"},
+          {"label": "screen_near", "value": "Screen-based and near work"},
           {
-            "label": "Reading or detailed manual work",
-            "value": "reading_detail",
+            "label": "reading_detailed_manual",
+            "value": "Reading or detailed manual work",
           },
           {
-            "label": "Mixed activities (near and far)",
-            "value": "mixed_near_far",
+            "label": "mixed_near_far",
+            "value": "Mixed activities (near and far)",
           },
           {
-            "label": "Mobility and distance focused activities",
-            "value": "mobility_distance",
+            "label": "mobility_distance",
+            "value": "Mobility and distance focused activities",
           },
           {
-            "label": "Physical, active, or sport-focused activities",
-            "value": "physical_active",
+            "label": "physical_active",
+            "value": "Physical, active, or sport-focused activities",
           },
         ],
       },
@@ -53,9 +53,9 @@ class LensRecommendationDummyData {
         "question": "How many hours per day do you use your eyes intensively?",
         "type": "single_choice",
         "options": [
-          {"label": "Less than 4 hours", "value": "less_than_4"},
-          {"label": "4–8 hours", "value": "4_to_8"},
-          {"label": "More than 8 hours", "value": "more_than_8"},
+          {"label": "less_than_4", "value": "Less than 4 hours"},
+          {"label": "4_to_8", "value": "4–8 hours"},
+          {"label": "more_than_8", "value": "More than 8 hours"},
         ],
       },
       {
@@ -66,12 +66,12 @@ class LensRecommendationDummyData {
         "type": "single_choice",
         "options": [
           {
-            "label": "Screen ↔ People ↔ Documents",
-            "value": "screen_people_documents",
+            "label": "screen_people_documents",
+            "value": "Screen ↔ People ↔ Documents",
           },
-          {"label": "Near ↔ Far vision", "value": "near_far"},
-          {"label": "Indoor ↔ Outdoor", "value": "indoor_outdoor"},
-          {"label": "Rarely switch focus", "value": "rarely_switch"},
+          {"label": "near_far", "value": "Near ↔ Far vision"},
+          {"label": "indoor_outdoor", "value": "Indoor ↔ Outdoor"},
+          {"label": "rarely_switch", "value": "Rarely switch focus"},
         ],
       },
       {
@@ -81,24 +81,24 @@ class LensRecommendationDummyData {
         "type": "single_choice",
         "options": [
           {
-            "label": "Air-conditioned indoor space",
-            "value": "air_conditioned_indoor",
+            "label": "air_conditioned_indoor",
+            "value": "Air-conditioned indoor space",
           },
           {
-            "label": "Bright or dim artificial lighting",
-            "value": "bright_dim_artificial",
+            "label": "bright_dim_artificial",
+            "value": "Bright or dim artificial lighting",
           },
           {
-            "label": "Strong reflections or glare",
-            "value": "strong_reflections_glare",
+            "label": "strong_reflections_glare",
+            "value": "Strong reflections or glare",
           },
           {
-            "label": "High contrast lighting",
-            "value": "high_contrast_lighting",
+            "label": "high_contrast_lighting",
+            "value": "High contrast lighting",
           },
           {
-            "label": "Hot, dusty or harsh outdoor conditions",
-            "value": "hot_dusty_harsh_outdoor",
+            "label": "hot_dusty_harsh_outdoor",
+            "value": "Hot, dusty or harsh outdoor conditions",
           },
         ],
       },

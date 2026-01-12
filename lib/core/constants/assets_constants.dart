@@ -4,7 +4,8 @@ class AssetsConstants {
   static String dirModel3D = 'assets/model_3d/';
 
   // Animation
-  static String animationLoading = '${dirAnimation}splash_moo.json';
+  static String splashMoo = '${dirAnimation}splash_moo.json';
+  static String loadingMoo = '${dirAnimation}loading_moo.json';
 
   // Images
   static String imageLogo = '${dirImages}kaca_mata_moo_logo.png';

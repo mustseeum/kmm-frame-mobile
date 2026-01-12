@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/wear_purpose_controller.dart';
+import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/daily_visual_activity_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/typical_environment_controller.dart';
 
-class WearPurposeScreen extends BasePage<WearPurposeController> {
-  const WearPurposeScreen({super.key});
+class TypicalEnvironmentScreen extends BasePage<TypicalEnvironmentController> {
+  const TypicalEnvironmentScreen({super.key});
 
   @override
   Widget buildPage(BuildContext context) {
     // background color similar to screenshot
-    const bg = Color(0xFFEFF9F8); // pale teal-ish
-    final controller = Get.find<WearPurposeController>();
+    final bg = Theme.of(context); // pale teal-ish
+    final controller = Get.find<DailyVisualActivityController>();
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: bg.scaffoldBackgroundColor,
       // Top bar with logo on left and "Step 1 of 4" on right
       appBar: QuestionHeader(
         showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: Text('step_2_of_5'.tr, style: TextStyle(color: Colors.blue)),
+          child: Text('step_5_of_5'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
       body: Obx(() {
@@ -39,7 +40,7 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
                 const SizedBox(height: 25),
                 Center(
                   child: Text(
-                    'what_are_you_looking_for'.tr,
+                    'what_best_describes_your_typical_environment'.tr,
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w800,

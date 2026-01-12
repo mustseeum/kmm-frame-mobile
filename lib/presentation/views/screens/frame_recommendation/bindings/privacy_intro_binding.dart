@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/privacy_intro_controller.dart';
 
-class PrivacyIntroBinding extends Bindings {
+class PrivacyIntroBinding extends BaseBinding {
   @override
-  void dependencies() {
+  void handleArguments() {
     // Lazy put the controller so it's created only when needed
     Get.lazyPut<PrivacyIntroController>(() => PrivacyIntroController());
   }

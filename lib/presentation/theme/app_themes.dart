@@ -33,7 +33,7 @@ class AppTheme {
       outline: AppColors.n200,
       outlineVariant: AppColors.n100,
     ),
-    scaffoldBackgroundColor: AppColors.n75, // Light gray background
+    scaffoldBackgroundColor: AppColors.p50, // Light teals background
     textTheme: _textTheme(AppColors.n700, AppColors.n400),
     inputDecorationTheme: _inputDecoration(AppColors.n200, AppColors.p500, AppColors.n400),
     elevatedButtonTheme: _elevatedButton(AppColors.p500, AppColors.n50),

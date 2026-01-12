@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/utils/navigation_helper.dart';
 
 class LoginScreenController extends BaseController {
   // Observable login state
@@ -22,7 +23,7 @@ class LoginScreenController extends BaseController {
       userName.value = _capitalize(name);
       isLoggedIn.value = true;
       // navigate to start screen
-      Get.offAllNamed('/syncScreen');
+      Navigation.navigateAndRemoveAll('/syncScreen');
     } catch (e) {
       // show error snackbar - in real app show localized friendly message
       Get.snackbar('Login failed', e.toString(),

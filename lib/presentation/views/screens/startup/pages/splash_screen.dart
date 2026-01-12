@@ -43,7 +43,7 @@ class SplashScreen extends BasePage<SplashScreenController> {
                       width: animationSize,
                       height: animationSize,
                       child: Lottie.asset(
-                        AssetsConstants.animationLoading,
+                        AssetsConstants.splashMoo,
                         repeat: false,
                         animate: true,
                         fit: BoxFit.contain,

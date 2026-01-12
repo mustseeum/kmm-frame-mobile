@@ -101,10 +101,10 @@ class HomeScreenController extends BaseController {
   void onTapOption(String key) {
     // Replace with real navigation
     if (key == 'frame') {
-      Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'source': 'frame'});
+      Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'screenType': key});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
-      Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'source': 'lens'});
+      Navigation.navigateToWithArguments(ScreenRoutes.ageQuestionScreen, arguments: {'screenType': key});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
       Navigation.navigateTo(ScreenRoutes.tryOnGlasses);

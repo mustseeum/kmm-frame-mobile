@@ -8,7 +8,7 @@ class SplashScreenController extends BaseController {
   @override
   void onReady() {
     Future.delayed(const Duration(milliseconds: 3000), () {
-      Navigation.navigateAndReplace(ScreenRoutes.login);
+      Navigation.navigateAndReplace(ScreenRoutes.home);
     });
   }
   

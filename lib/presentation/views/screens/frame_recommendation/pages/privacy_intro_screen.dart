@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/privacy_intro_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/global_header_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/privacy_intro_widget.dart';
@@ -19,6 +20,7 @@ class PrivacyIntroScreen extends BasePage<PrivacyIntroController> {
         child: const GlobalHeader(),
       ),
       body: Obx(() => PrivacyIntroWidget(
+        cardColor: AppColors.a400,
         onAgree: () => ctrl.agreeAndContinue(),
         onPrivacyPolicyTap: () => ctrl.openPrivacyPolicy(),
         isLoading: ctrl.isLoading.value,

@@ -54,7 +54,7 @@ class PrivacyIntroWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
             ),
             child: const Icon(
               Icons.check_circle_outline,
@@ -110,12 +110,20 @@ class PrivacyIntroWidget extends StatelessWidget {
     Color cardColor,
   ) {
     final titleText = title.isEmpty ? 'privacy_intro_title'.tr : title;
-    final subtitleText = subtitle.isEmpty ? 'privacy_intro_subtitle'.tr : subtitle;
-    final firstInfo = firstInfoText.isEmpty ? 'no_facial_recognition'.tr : firstInfoText;
-    final secondInfo = secondInfoText.isEmpty ? 'no_storage_sharing'.tr : secondInfoText;
-    final privacyText = privacyPolicyText.isEmpty ? 'read_privacy_policy'.tr : privacyPolicyText;
+    final subtitleText = subtitle.isEmpty
+        ? 'privacy_intro_subtitle'.tr
+        : subtitle;
+    final firstInfo = firstInfoText.isEmpty
+        ? 'no_facial_recognition'.tr
+        : firstInfoText;
+    final secondInfo = secondInfoText.isEmpty
+        ? 'no_storage_sharing'.tr
+        : secondInfoText;
+    final privacyText = privacyPolicyText.isEmpty
+        ? 'read_privacy_policy'.tr
+        : privacyPolicyText;
     final btnText = buttonText.isEmpty ? 'agree_continue'.tr : buttonText;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -133,9 +141,14 @@ class PrivacyIntroWidget extends StatelessWidget {
                     color: titleColor,
                   ),
                 ),
-              if (titleText.split('privacy-friendly virtual try-on service').length > 1)
+              if (titleText
+                      .split('privacy-friendly virtual try-on service')
+                      .length >
+                  1)
                 TextSpan(
-                  text: titleText.split('privacy-friendly virtual try-on service')[1],
+                  text: titleText.split(
+                    'privacy-friendly virtual try-on service',
+                  )[1],
                   style: TextStyle(fontSize: 22, color: subtitleColor),
                 ),
             ],
@@ -213,13 +226,17 @@ class PrivacyIntroWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: (isButtonEnabled || isLoading) ? Colors.white : Colors.grey.shade600,
+                          color: (isButtonEnabled || isLoading)
+                              ? Colors.white
+                              : Colors.grey.shade600,
                         ),
                       ),
                 Icon(
                   Icons.arrow_forward,
                   size: 24,
-                  color: (isButtonEnabled || isLoading) ? Colors.white : Colors.grey.shade600,
+                  color: (isButtonEnabled || isLoading)
+                      ? Colors.white
+                      : Colors.grey.shade600,
                 ),
               ],
             ),
@@ -234,7 +251,8 @@ class PrivacyIntroWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final defaultIconColor = iconColor ?? theme.colorScheme.secondary;
     final defaultTitleColor = titleColor ?? theme.colorScheme.onSurface;
-    final defaultSubtitleColor = subtitleColor ?? theme.colorScheme.onSurfaceVariant;
+    final defaultSubtitleColor =
+        subtitleColor ?? theme.colorScheme.onSurfaceVariant;
     final defaultButtonColor = buttonColor ?? theme.colorScheme.primary;
     final defaultCardColor = cardColor ?? theme.colorScheme.tertiary;
 

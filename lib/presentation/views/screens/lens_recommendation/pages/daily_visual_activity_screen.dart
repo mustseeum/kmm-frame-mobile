@@ -1,43 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/age_controller.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
+import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/daily_visual_activity_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
 
-class AgeQuestionScreen extends GetView<AgeController> {
-  const AgeQuestionScreen({super.key});
+class DailyVisualActivityScreen extends BasePage<DailyVisualActivityController> {
+  const DailyVisualActivityScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
     // background color similar to screenshot
-    const bg = Color(0xFFEFF9F8); // pale teal-ish
-
+    final bg = Theme.of(context); // pale teal-ish
+    final controller = Get.find<DailyVisualActivityController>();
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: bg.scaffoldBackgroundColor,
       // Top bar with logo on left and "Step 1 of 4" on right
       appBar: QuestionHeader(
         showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: Text('step_1_of_5'.tr, style: TextStyle(color: Colors.blue)),
+          child: Text('step_4_of_5'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
-        
+
         return SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: MediaQuery.of(context).size.height * 0.13),
+            padding: EdgeInsets.symmetric(
+              horizontal: 50.0,
+              vertical: MediaQuery.of(context).size.height * 0.13,
+            ),
             child: Column(
               children: [
                 const SizedBox(height: 25),
                 Center(
                   child: Text(
-                    'how_old_are_you'.tr,
+                    'what_best_describes_your_main_daily_visual_activity'.tr,
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w800,
@@ -59,7 +61,9 @@ class AgeQuestionScreen extends GetView<AgeController> {
                       runSpacing: 20,
                       spacing: 20,
                       alignment: WrapAlignment.center,
-                      children: List.generate(controller.options.length, (index) {
+                      children: List.generate(controller.options.length, (
+                        index,
+                      ) {
                         return SizedBox(
                           width: cardWidth,
                           child: Obx(() {

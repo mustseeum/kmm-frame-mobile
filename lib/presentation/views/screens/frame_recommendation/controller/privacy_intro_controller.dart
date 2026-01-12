@@ -43,9 +43,6 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
           onAgree: () {
             // Set that user has agreed to privacy policy
             hasAgreedToPrivacy.value = true;
-            ScaffoldMessenger.of(
-              Get.context!,
-            ).showSnackBar(const SnackBar(content: Text('Agreed — thanks!')));
           },
           onClose: () {
             // optional
