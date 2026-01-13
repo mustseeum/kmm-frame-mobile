@@ -10,7 +10,7 @@ class QuestionRecommendationRepository {
   /// Load and parse the frame recommendation questionnaire from data
   /// Load questionnaire questions.
   /// [type] can be 'frame' or 'lens' (defaults to 'frame').
-  Future<List<Question?>?> loadQuestionnaire({String type = 'frame'}) async {
+  Future<FrameQuestionnaire?> loadQuestionnaire({String type = 'frame'}) async {
     // Simulate async load (you can remove the delay if loading is instant)
     await Future.delayed(const Duration(milliseconds: 120));
 
@@ -19,29 +19,16 @@ class QuestionRecommendationRepository {
         : FrameRecommendationDummyData().frameQuestionData;
 
     if (raw == null) return null;
-    final qList = raw['questions'];
-    if (qList == null || qList is! List) return null;
 
     try {
-      final out = <Question?>[];
-      for (final dynamic q in qList) {
-        if (q is Map<String, dynamic>) {
-          // Use your model factory; adjust if it's named differently.
-          out.add(Question.fromJson(q));
-        } else if (q is Map) {
-          out.add(Question.fromJson(Map<String, dynamic>.from(q)));
-        } else {
-          out.add(null);
-        }
-      }
-      return out;
+      return FrameQuestionnaire.fromJson(raw);
     } catch (e) {
       // Forward error so controller can show snackbar / fallback
       return Future.error('Failed to parse questionnaire: $e');
     }
   }
 
-  Future<Object> loadQuestionnaireLens() async {
+  Future<FrameQuestionnaire?> loadQuestionnaireLens() async {
     final _dummyData = LensRecommendationDummyData();
     // Return cached data if available
 
@@ -53,13 +40,11 @@ class QuestionRecommendationRepository {
       FrameQuestionnaire jsonData = FrameQuestionnaire.fromJson(
         _dummyData.lensQuestionData,
       );
-      // Parse to model
-      List<Question?>? lensQuestions = jsonData.questions;
-
+      
       debugPrint(
-        'Loaded lens recommendation data 2: ${json.encode(lensQuestions)}',
+        'Loaded lens recommendation data 2: ${json.encode(jsonData)}',
       );
-      return lensQuestions;
+      return jsonData;
     } catch (e) {
       throw Exception('Failed to load lens recommendation data: $e');
     }

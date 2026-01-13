@@ -17,6 +17,10 @@ class WearPurposeController extends BaseController {
   // Loading state
   final isLoading = true.obs;
 
+  // Observable for totalSteps and currentStep
+  final totalSteps = 0.obs;
+  final currentStep = 0.obs;
+
   // Question data
   List<Question?>? questionData = [];
   Question? ageQuestion;
@@ -40,14 +44,19 @@ class WearPurposeController extends BaseController {
       final questionnaire = await _repository.loadQuestionnaire();
 
       if (questionnaire != null) {
-        questionData = questionnaire as List<Question?>?;
+        questionData = questionnaire.questions;
+        totalSteps.value = questionnaire.totalSteps;
       }
 
       ageQuestion = questionData?.firstWhere((q) => q?.id == 'gender');
 
-      // Extract option values
-      options.value = ageQuestion!.options.map((opt) => opt.value).toList();
-      debugPrint('Loaded frame recommendation data 4: ${json.encode(options)}');
+      // Set current step from the question data
+      if (ageQuestion != null) {
+        currentStep.value = ageQuestion!.step;
+        // Extract option values
+        options.value = ageQuestion!.options.map((opt) => opt.value).toList();
+        debugPrint('Loaded frame recommendation data 4: ${json.encode(options)}');
+      }
 
       isLoading.value = false;
     } catch (e) {

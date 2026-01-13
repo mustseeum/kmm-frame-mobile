@@ -25,8 +25,8 @@ class QuestionScreen extends BasePage<QuestionController> {
 
           return QuestionHeader(
             showBack: showBack,
-            currentStep: 1,
-            totalSteps: 5,
+            currentStep: controller.currentStep.value,
+            totalSteps: controller.totalSteps.value,
           );
         }),
       ),

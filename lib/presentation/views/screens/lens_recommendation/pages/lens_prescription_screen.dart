@@ -15,12 +15,12 @@ class LensPrescriptionScreen extends BasePage<LensPrescriptionController> {
     final controller = Get.find<LensPrescriptionController>();
     return Scaffold(
       backgroundColor: bg.scaffoldBackgroundColor,
-      // Top bar with logo on left and "Step 3 of 5" on right
-      appBar: QuestionHeader(
+      // Top bar with logo on left and dynamic step on right
+      appBar: Obx(() => QuestionHeader(
         showBack: false,
-        currentStep: 3,
-        totalSteps: 5,
-      ),
+        currentStep: controller.currentStep.value,
+        totalSteps: controller.totalSteps.value,
+      )),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());

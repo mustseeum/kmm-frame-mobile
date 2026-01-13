@@ -15,12 +15,12 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
     final controller = Get.find<WearPurposeController>();
     return Scaffold(
       backgroundColor: bg,
-      // Top bar with logo on left and "Step 2 of 5" on right
-      appBar: QuestionHeader(
+      // Top bar with logo on left and dynamic step on right
+      appBar: Obx(() => QuestionHeader(
         showBack: false,
-        currentStep: 2,
-        totalSteps: 5,
-      ),
+        currentStep: controller.currentStep.value,
+        totalSteps: controller.totalSteps.value,
+      )),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());

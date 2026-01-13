@@ -29,7 +29,9 @@ class QuestionController extends BaseController {
   // Loading state
   final isLoading = true.obs;
 
-  late final int totalSteps;
+  // Observable for totalSteps and currentStep
+  final totalSteps = 0.obs;
+  final currentStep = 0.obs;
 
   // Question data
   List<Question?>? questionData = [];
@@ -53,7 +55,8 @@ class QuestionController extends BaseController {
       );
       debugPrint('Loaded questionnaire data: ${json.encode(questionnaire)}');
       if (questionnaire != null) {
-        questionData = questionnaire as List<Question?>?;
+        questionData = questionnaire.questions;
+        totalSteps.value = questionnaire.totalSteps;
       }
 
       // Find the age question (id: 'age')
@@ -62,8 +65,9 @@ class QuestionController extends BaseController {
         orElse: () => null,
       );
 
-      // Extract option values (safely)
-      if (ageQuestion != null && ageQuestion!.options != null) {
+      // Set current step from the question data
+      if (ageQuestion != null) {
+        currentStep.value = ageQuestion!.step;
         options.value = ageQuestion!.options.map((opt) => opt.value).toList();
         debugPrint('Loaded options: ${json.encode(options)}');
       } else {

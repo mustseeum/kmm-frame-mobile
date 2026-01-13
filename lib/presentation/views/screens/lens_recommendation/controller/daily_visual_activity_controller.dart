@@ -17,6 +17,10 @@ class DailyVisualActivityController extends BaseController {
   // Loading state
   final isLoading = true.obs;
 
+  // Observable for totalSteps and currentStep
+  final totalSteps = 0.obs;
+  final currentStep = 0.obs;
+
   // Question data
   List<Question?>? questionData = [];
   Question? ageQuestion;
@@ -42,14 +46,19 @@ class DailyVisualActivityController extends BaseController {
         'Loaded lens recommendation data 3: ${json.encode(questionnaire)}',
       );
       if (questionnaire != null) {
-        questionData = questionnaire as List<Question?>?;
+        questionData = questionnaire.questions;
+        totalSteps.value = questionnaire.totalSteps;
       }
       
       ageQuestion = questionData?.firstWhere((q) => q?.id == 'daily_visual_activity');
 
-      // Extract option values
-      options.value = ageQuestion!.options.map((opt) => opt.value).toList();
-      debugPrint('Loaded lens recommendation data 4: ${json.encode(options)}');
+      // Set current step from the question data
+      if (ageQuestion != null) {
+        currentStep.value = ageQuestion!.step;
+        // Extract option values
+        options.value = ageQuestion!.options.map((opt) => opt.value).toList();
+        debugPrint('Loaded lens recommendation data 4: ${json.encode(options)}');
+      }
 
       isLoading.value = false;
     } catch (e) {
