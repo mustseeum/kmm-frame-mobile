@@ -29,7 +29,9 @@ import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/page
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/home_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/login_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/pages/splash_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/bindings/try_on_glasses_screen_v2_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen.dart';
+import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen_v2.dart';
 
 class AppRoutes {
   static List<GetPage> pages = [
@@ -55,8 +57,8 @@ class AppRoutes {
     ),
     GetPage(
       name: ScreenRoutes.tryOnGlasses,
-      page: () => VirtualTryOnPage(),
-      bindings: [VirtualTryOnPageBinding()],
+      page: () => VirtualTryOnPageV2(),
+      bindings: [VirtualTryOnV2Binding()],
     ),
     GetPage(
       name: ScreenRoutes.privacyIntroScreen,

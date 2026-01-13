@@ -13,8 +13,10 @@ class AssetsConstants {
   static String iconFrame = '${dirImages}icon_frame.png';
   static String iconLens = '${dirImages}icon_lens.png';
   static String faceIcon = '${dirImages}face_icon.png';
+  static String aviatorThumb = '${dirImages}aviator_thumb.png';
   static String wayfarerThumb = '${dirImages}wayfarer_thumb.png';
   static String roundThumb = '${dirImages}round_thumb.png';
+  static String hexagonThumb = '${dirImages}hexagon_glasses.jpg';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';
