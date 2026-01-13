@@ -36,6 +36,7 @@ class QuestionController extends BaseController {
   Question? ageQuestion;
 
   String screenType = 'frame';
+  String firstScreen = 'frame';
 
   @override
   void onInit() {
@@ -49,7 +50,7 @@ class QuestionController extends BaseController {
 
       // Load questionnaire from repository. The repository uses your dummy data.
       final questionnaire = await _repository.loadQuestionnaire(
-        type: screenType,
+        type: firstScreen,
       );
       debugPrint('Loaded questionnaire data: ${json.encode(questionnaire)}');
       if (questionnaire != null) {
@@ -96,10 +97,12 @@ class QuestionController extends BaseController {
   @override
   void handleArguments(Map<String, dynamic> arguments) {
     // handle incoming args (example: screenType)
+    final firstScreenId = arguments['firstScreen'] as String?;
     final type = arguments['screenType'] as String?;
     debugPrint('QuestionController received screenType: $type');
     if (type != null && type.isNotEmpty) {
       screenType = type;
+      firstScreen = firstScreenId ?? 'frame';
     }
   }
 }

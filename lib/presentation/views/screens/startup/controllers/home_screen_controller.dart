@@ -104,7 +104,7 @@ class HomeScreenController extends BaseController {
       Navigation.navigateToWithArguments(ScreenRoutes.privacyIntroScreen, arguments: {'screenType': key});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'lens') {
-      Navigation.navigateToWithArguments(ScreenRoutes.ageQuestionScreen, arguments: {'screenType': key});
+      Navigation.navigateToWithArguments(ScreenRoutes.ageQuestionScreen, arguments: {'screenType': key, 'firstScreen':'frame'});
       // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
     } else if (key == 'both') {
       Navigation.navigateTo(ScreenRoutes.tryOnGlasses);
