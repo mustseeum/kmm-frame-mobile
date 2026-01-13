@@ -20,7 +20,7 @@ class DailyVisualActivityScreen extends BasePage<DailyVisualActivityController> 
         showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: Text('step_4_of_5'.tr, style: TextStyle(color: Colors.blue)),
+          child: Text('step_4_of_7'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
       body: Obx(() {

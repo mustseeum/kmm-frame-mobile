@@ -64,6 +64,4 @@ class QuestionRecommendationRepository {
       throw Exception('Failed to load lens recommendation data: $e');
     }
   }
-
-  /// Clear the cached questionnaire (useful for testing or refreshing data)
 }

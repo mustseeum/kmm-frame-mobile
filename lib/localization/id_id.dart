@@ -37,6 +37,13 @@ const idID = {
   'what_are_you_looking_for': 'Apa yang Anda cari?',
 
   // Lens Recommendation
+  'step_1_of_7': 'Langkah 1 dari 7',
+  'step_2_of_7': 'Langkah 2 dari 7',
+  'step_3_of_7': 'Langkah 3 dari 7',
+  'step_4_of_7': 'Langkah 4 dari 7',
+  'step_5_of_7': 'Langkah 5 dari 7',
+  'step_6_of_7': 'Langkah 6 dari 7',
+  'step_7_of_7': 'Langkah 7 dari 7',
   'lens_recommendation_questionnaire': 'Kuesioner Rekomendasi Lensa',
   'what_best_describes_your_main_daily_visual_activity':
       'Apa yang paling menggambarkan aktivitas visual harian utama Anda?',

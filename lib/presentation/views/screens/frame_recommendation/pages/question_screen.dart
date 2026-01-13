@@ -28,7 +28,7 @@ class QuestionScreen extends BasePage<QuestionController> {
             trailing: Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Text(
-                'step_1_of_5'.tr,
+                controller.screenType=="lens" ? 'step_1_of_7'.tr : 'step_1_of_5'.tr,
                 style: const TextStyle(color: Colors.blue),
               ),
             ),

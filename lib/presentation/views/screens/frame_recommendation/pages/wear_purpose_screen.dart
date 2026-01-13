@@ -20,7 +20,7 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
         showBack: false,
         trailing: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: Text('step_2_of_5'.tr, style: TextStyle(color: Colors.blue)),
+          child: Text(controller.screenType=="lens" ? 'step_2_of_7'.tr : 'step_2_of_5'.tr, style: TextStyle(color: Colors.blue)),
         ),
       ),
       body: Obx(() {
