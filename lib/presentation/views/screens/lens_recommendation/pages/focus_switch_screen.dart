@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/daily_visual_activity_controller.dart';
+import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/focus_switch_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
-import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/focus_switch_controller.dart';
 
 class FocusSwitchScreen extends BasePage<FocusSwitchController> {
   const FocusSwitchScreen({super.key});
@@ -13,7 +12,7 @@ class FocusSwitchScreen extends BasePage<FocusSwitchController> {
   Widget buildPage(BuildContext context) {
     // background color similar to screenshot
     final bg = Theme.of(context); // pale teal-ish
-    final controller = Get.find<DailyVisualActivityController>();
+    final controller = Get.find<FocusSwitchController>();
     return Scaffold(
       backgroundColor: bg.scaffoldBackgroundColor,
       // Top bar with logo on left and "Step 1 of 4" on right
