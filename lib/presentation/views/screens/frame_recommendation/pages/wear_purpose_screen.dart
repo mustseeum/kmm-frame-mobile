@@ -15,13 +15,11 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
     final controller = Get.find<WearPurposeController>();
     return Scaffold(
       backgroundColor: bg,
-      // Top bar with logo on left and "Step 1 of 4" on right
+      // Top bar with logo on left and "Step 2 of 5" on right
       appBar: QuestionHeader(
         showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_2_of_5'.tr, style: TextStyle(color: Colors.blue)),
-        ),
+        currentStep: 2,
+        totalSteps: 5,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

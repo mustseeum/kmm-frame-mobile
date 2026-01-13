@@ -15,13 +15,11 @@ class LensPrescriptionScreen extends BasePage<LensPrescriptionController> {
     final controller = Get.find<LensPrescriptionController>();
     return Scaffold(
       backgroundColor: bg.scaffoldBackgroundColor,
-      // Top bar with logo on left and "Step 1 of 4" on right
+      // Top bar with logo on left and "Step 3 of 5" on right
       appBar: QuestionHeader(
         showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_3_of_5'.tr, style: TextStyle(color: Colors.blue)),
-        ),
+        currentStep: 3,
+        totalSteps: 5,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

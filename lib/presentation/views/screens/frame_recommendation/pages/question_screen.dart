@@ -25,13 +25,8 @@ class QuestionScreen extends BasePage<QuestionController> {
 
           return QuestionHeader(
             showBack: showBack,
-            trailing: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Text(
-                'step_1_of_5'.tr,
-                style: const TextStyle(color: Colors.blue),
-              ),
-            ),
+            currentStep: 1,
+            totalSteps: 5,
           );
         }),
       ),

@@ -33,6 +33,7 @@ const idID = {
   'step_2_of_5': 'Langkah 2 dari 5',
   'step_3_of_5': 'Langkah 3 dari 5',
   'step_4_of_5': 'Langkah 4 dari 5',
+  'step_5_of_5': 'Langkah 5 dari 5',
   'how_old_are_you': 'Berapa usia Anda?',
   'what_are_you_looking_for': 'Apa yang Anda cari?',
 

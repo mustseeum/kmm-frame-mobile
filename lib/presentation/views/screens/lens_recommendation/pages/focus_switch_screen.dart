@@ -15,13 +15,11 @@ class FocusSwitchScreen extends BasePage<FocusSwitchController> {
     final controller = Get.find<FocusSwitchController>();
     return Scaffold(
       backgroundColor: bg.scaffoldBackgroundColor,
-      // Top bar with logo on left and "Step 1 of 4" on right
+      // Top bar with logo on left and "Step 5 of 5" on right
       appBar: QuestionHeader(
         showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_5_of_5'.tr, style: TextStyle(color: Colors.blue)),
-        ),
+        currentStep: 5,
+        totalSteps: 5,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
