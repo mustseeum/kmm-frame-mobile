@@ -46,7 +46,7 @@ class DailyEyeUsageController extends BaseController {
       }
       
       ageQuestion = questionData?.firstWhere(
-        (q) => q?.id == 'daily_eye_usage ',
+        (q) => q?.id == 'daily_eye_usage',
       );
 
       // Extract option values
