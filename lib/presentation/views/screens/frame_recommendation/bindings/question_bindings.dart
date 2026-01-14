@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/frame_recommendation/controller/question_controller.dart';
-import 'package:kacamatamoo/data/repositories/question_recommendation_repository.dart';
+import 'package:kacamatamoo/data/repositories/question_recommendation/question_recommendation_repository.dart';
 
 class QuestionBindings extends BaseBinding {
   @override

@@ -5,3 +5,4 @@ enum PopupButtonType { cancel, ok, yes, no }
 enum PopupButtonAction { close, refresh, navigate, none }
 enum PopupButtonActionType { close, refresh, navigate, none }
 enum PopupButtonActionTypeWithData { close, refresh, navigate, none }
+enum ProductType { lens, frame, both }
