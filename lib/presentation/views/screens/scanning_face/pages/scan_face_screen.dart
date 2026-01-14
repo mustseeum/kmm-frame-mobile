@@ -7,7 +7,7 @@ import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/presentation/views/widgets/painters/ring_painter.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/controllers/scan_face_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
 
 class ScanFaceScreen extends BasePage<ScanFaceController> {
   const ScanFaceScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
-import 'package:kacamatamoo/presentation/views/widgets/privacy_policy_dialog.dart';
+import 'package:kacamatamoo/presentation/views/widgets/other/privacy_policy_dialog.dart';
 
 class PrivacyIntroController extends GetxController {
   // Loading state for the Agree button (e.g., show spinner or disable)

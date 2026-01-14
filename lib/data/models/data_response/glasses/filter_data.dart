@@ -1,5 +1,5 @@
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/data/models/data_response/glasses_model/filter_model.dart';
+import 'package:kacamatamoo/data/models/data_response/glasses/filter_model.dart';
 
 final filters = [
   FilterModel(

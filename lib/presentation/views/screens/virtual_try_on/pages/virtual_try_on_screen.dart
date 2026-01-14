@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
-import 'package:kacamatamoo/data/models/data_response/glasses_model/filter_data.dart';
+import 'package:kacamatamoo/data/models/data_response/glasses/filter_data.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/controllers/try_on_glasses_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
 
 class VirtualTryOnPage extends BasePage<VirtualTryOnPageController> {
   VirtualTryOnPage({super.key});

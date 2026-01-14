@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/controllers/scan_result_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/profile_card.dart';
-import 'package:kacamatamoo/presentation/views/widgets/info_tile.dart';
+import 'package:kacamatamoo/presentation/views/widgets/cards/profile_card.dart';
+import 'package:kacamatamoo/presentation/views/widgets/other/info_tile.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
 
 class ScanResultScreen extends BasePage<ScanResultController> {
   const ScanResultScreen({super.key});

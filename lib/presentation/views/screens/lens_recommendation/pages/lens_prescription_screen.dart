@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/presentation/views/screens/lens_recommendation/controller/lens_prescription_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/question_card_widget.dart';
-import 'package:kacamatamoo/presentation/views/widgets/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/question_card_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
 
 class LensPrescriptionScreen extends BasePage<LensPrescriptionController> {
   const LensPrescriptionScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/utils/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/sync_information_screen_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/heading_card_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 
 class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
   const SyncInformationScreen({super.key});
