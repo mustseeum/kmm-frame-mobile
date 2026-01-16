@@ -88,6 +88,7 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                   TextFormField(
                                     controller: emailCtrl,
                                     keyboardType: TextInputType.emailAddress,
+                                    onChanged: (value) => auth.email.value = value,
                                     decoration: InputDecoration(
                                       labelText: 'email'.tr,
                                       border: OutlineInputBorder(),
@@ -104,6 +105,7 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                   TextFormField(
                                     controller: passCtrl,
                                     obscureText: true,
+                                    onChanged: (value) => auth.password.value = value,
                                     decoration: InputDecoration(
                                       labelText: 'password'.tr,
                                       border: OutlineInputBorder(),
@@ -119,10 +121,10 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                   ),
                                   const SizedBox(height: 16),
                                   Obx(() {
+                                    final isEnabled = auth.isFormValid && !auth.isLoading.value;
                                     return ElevatedButton(
-                                      onPressed: auth.isLoading.value
-                                          ? null
-                                          : () {
+                                      onPressed: isEnabled
+                                          ? () {
                                               if (formKey.currentState
                                                       ?.validate() ??
                                                   false) {
@@ -131,7 +133,8 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                                   password: passCtrl.text,
                                                 );
                                               }
-                                            },
+                                            }
+                                          : null,
                                       style: ElevatedButton.styleFrom(
                                         minimumSize: const Size.fromHeight(48),
                                         shape: RoundedRectangleBorder(
@@ -139,6 +142,14 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                             12,
                                           ),
                                         ),
+                                        backgroundColor: isEnabled
+                                            ? theme.colorScheme.primary
+                                            : Colors.grey.shade300,
+                                        foregroundColor: isEnabled
+                                            ? Colors.white
+                                            : Colors.grey.shade500,
+                                        disabledBackgroundColor: Colors.grey.shade300,
+                                        disabledForegroundColor: Colors.grey.shade500,
                                       ),
                                       child: auth.isLoading.value
                                           ? const SizedBox(

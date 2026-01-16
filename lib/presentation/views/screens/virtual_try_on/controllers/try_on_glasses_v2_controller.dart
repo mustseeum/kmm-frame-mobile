@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:intl/intl.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 
 class GlassesModel {
@@ -45,12 +46,39 @@ class TransformData {
 }
 
 class VirtualTryOnV2Controller extends GetxController {
+  static final _fixedLocaleNumberFormatter = NumberFormat.decimalPatternDigits(
+    locale: 'en_gb',
+    decimalDigits: 2,
+  );
+
   CameraController? cameraController;
   List<CameraDescription>? cameras;
 
   final Rxn<Face> currentFace = Rxn<Face>();
   // kept for compatibility; we compute rotation per-frame in _inputImageFromCameraImage
   final RxBool isProcessing = false.obs;
+
+  // Unity AR properties
+  bool? _isUnityArSupportedOnDevice;
+  bool _isArSceneActive = false;
+  double _rotationSpeed = 30;
+  int _numberOfTaps = 0;
+
+  // Getters
+  bool? get isUnityArSupportedOnDevice => _isUnityArSupportedOnDevice;
+  bool get isArSceneActive => _isArSceneActive;
+  double get rotationSpeed => _rotationSpeed;
+  int get numberOfTaps => _numberOfTaps;
+
+  String get arStatusMessage {
+    if (_isUnityArSupportedOnDevice == null) {
+      return "checking...";
+    } else if (_isUnityArSupportedOnDevice!) {
+      return "supported";
+    } else {
+      return "not supported on this device";
+    }
+  }
 
   final faceDetector = FaceDetector(
     options: FaceDetectorOptions(
@@ -482,6 +510,33 @@ class VirtualTryOnV2Controller extends GetxController {
   void selectGlasses(GlassesModel g) {
     selectedGlasses.value = g;
     debugPrint('Selected glasses: ${g.id}');
+    update();
+  }
+
+  // Unity message handlers
+  void handleUnityMessage(String data) {
+    if (data == "touch") {
+      _numberOfTaps += 1;
+      update();
+    } else if (data == "scene_loaded") {
+      // Scene loaded, can send initial data
+      debugPrint('Unity scene loaded');
+    } else if (data == "ar:true") {
+      _isUnityArSupportedOnDevice = true;
+      update();
+    } else if (data == "ar:false") {
+      _isUnityArSupportedOnDevice = false;
+      update();
+    }
+  }
+
+  void updateRotationSpeed(double speed) {
+    _rotationSpeed = speed;
+    update();
+  }
+
+  void toggleArScene(bool value) {
+    _isArSceneActive = value;
     update();
   }
 
