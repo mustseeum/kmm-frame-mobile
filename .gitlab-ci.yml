@@ -16,7 +16,7 @@ variables:
   GOCACHE: $CI_PROJECT_DIR/.cache/go-build
   GOMODCACHE: $CI_PROJECT_DIR/.cache/go-mod
 
-image: ghcr.io/cirruslabs/flutter:stable
+image: ghcr.io/cirruslabs/flutter:3.10.4
 
 cache:
   key:
