@@ -16,7 +16,6 @@ variables:
   GOCACHE: $CI_PROJECT_DIR/.cache/go-build
   GOMODCACHE: $CI_PROJECT_DIR/.cache/go-mod
 
-image: ghcr.io/cirruslabs/flutter:3.10.4
 
 cache:
   key:
@@ -34,6 +33,7 @@ before_script:
 
 flutter_analyze:
   stage: analyze
+  image: ghcr.io/cirruslabs/flutter:3.10.4
   script:
     - flutter analyze
   rules:
@@ -43,6 +43,7 @@ flutter_analyze:
 
 flutter_test:
   stage: test
+  image: ghcr.io/cirruslabs/flutter:3.10.4
   script:
     - flutter test
   rules:
@@ -72,6 +73,7 @@ trivy-scan-fs:
 
 build_android:
   stage: build
+  image: ghcr.io/cirruslabs/flutter:3.10.4
   script:
     - flutter build apk --release
   artifacts:
@@ -108,7 +110,7 @@ trivy-scan-image:
 
 deploy:staging:
   stage: deploy
-  image: alpine:latest
+  image: alpine:3.22.2
   needs:
     - job: build_android
       artifacts: true
@@ -125,7 +127,7 @@ deploy:staging:
 
 deploy:production:
   stage: deploy
-  image: alpine:latest
+  image: alpine:3.22.2
   needs:
     - job: build_android
       artifacts: true
