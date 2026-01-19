@@ -21,17 +21,16 @@ class LoginBl with CacheManager {
         dataModel.access_token = response?.data['access_token'];
         dataModel.refresh_token = response?.data['refresh_token'];
         dataModel.user = DataUser.fromJson(response?.data['user'] ?? {});
-        // Save authentication data to cache
-        await saveLoginStatus(true);
         // Save token if exists in response
         if (response?.data != null && response?.data['token'] != null) {
           await saveAuthToken(dataModel.access_token ?? '');
         }
-
         // Save user data if exists in response
         if (response?.data != null) {
           await saveUserData(dataModel);
         }
+        // Save authentication data to cache
+        await saveLoginStatus(true);
       } else {
         throw Exception(response?.message ?? 'Login failed');
       }
