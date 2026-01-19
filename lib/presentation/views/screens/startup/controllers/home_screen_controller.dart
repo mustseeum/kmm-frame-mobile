@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
-import 'package:kacamatamoo/core/utils/navigation_helper.dart';
-import 'package:kacamatamoo/core/utils/permission_helper.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
+import 'package:kacamatamoo/core/utilities/permission_helper.dart';
 import 'package:kacamatamoo/localization/localization_service.dart';
 
 enum Language { id, en }

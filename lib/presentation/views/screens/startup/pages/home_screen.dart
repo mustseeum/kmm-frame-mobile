@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/home_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/other/option_tilte_widget.dart';

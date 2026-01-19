@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/core/utils/permission_helper.dart';
+import 'package:kacamatamoo/core/utilities/permission_helper.dart';
 
 /// Example usage of PermissionHelper in a screen
 class PermissionExampleScreen extends StatefulWidget {

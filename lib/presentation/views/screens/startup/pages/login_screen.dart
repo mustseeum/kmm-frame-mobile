@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/login_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 
@@ -50,7 +50,7 @@ class LoginScreen extends BasePage<LoginScreenController> {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.06),
+                              color: Colors.black.withValues(alpha: 0.06),
                               blurRadius: 20,
                               offset: const Offset(0, 8),
                             ),
@@ -88,7 +88,8 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                   TextFormField(
                                     controller: emailCtrl,
                                     keyboardType: TextInputType.emailAddress,
-                                    onChanged: (value) => auth.email.value = value,
+                                    onChanged: (value) =>
+                                        auth.email.value = value,
                                     decoration: InputDecoration(
                                       labelText: 'email'.tr,
                                       border: OutlineInputBorder(),
@@ -102,26 +103,71 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                         : null,
                                   ),
                                   const SizedBox(height: 12),
-                                  TextFormField(
-                                    controller: passCtrl,
-                                    obscureText: true,
-                                    onChanged: (value) => auth.password.value = value,
-                                    decoration: InputDecoration(
-                                      labelText: 'password'.tr,
-                                      border: OutlineInputBorder(),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 14,
+                                  Obx(
+                                    () => TextFormField(
+                                      controller: passCtrl,
+                                      obscureText:
+                                          !auth.isPasswordVisible.value,
+                                      onChanged: (value) =>
+                                          auth.password.value = value,
+                                      decoration: InputDecoration(
+                                        labelText: 'password'.tr,
+                                        border: OutlineInputBorder(),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 14,
+                                        ),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            auth.isPasswordVisible.value
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                          ),
+                                          onPressed: () {
+                                            auth.isPasswordVisible.value =
+                                                !auth.isPasswordVisible.value;
+                                          },
+                                        ),
                                       ),
+                                      validator: (v) =>
+                                          (v == null || v.length < 6)
+                                          ? 'password_warning'.tr
+                                          : null,
                                     ),
-                                    validator: (v) =>
-                                        (v == null || v.length < 6)
-                                        ? 'password_warning'.tr
-                                        : null,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Obx(
+                                    () => Row(
+                                      children: [
+                                        Checkbox(
+                                          value: auth.rememberMe.value,
+                                          onChanged: (value) {
+                                            auth.rememberMe.value =
+                                                value ?? false;
+                                          },
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            auth.rememberMe.value =
+                                                !auth.rememberMe.value;
+                                          },
+                                          child: Text(
+                                            'Remember me',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  theme.colorScheme.onSurface,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(height: 16),
                                   Obx(() {
-                                    final isEnabled = auth.isFormValid && !auth.isLoading.value;
+                                    final isEnabled =
+                                        auth.isFormValid &&
+                                        !auth.isLoading.value;
                                     return ElevatedButton(
                                       onPressed: isEnabled
                                           ? () {
@@ -148,8 +194,10 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                         foregroundColor: isEnabled
                                             ? Colors.white
                                             : Colors.grey.shade500,
-                                        disabledBackgroundColor: Colors.grey.shade300,
-                                        disabledForegroundColor: Colors.grey.shade500,
+                                        disabledBackgroundColor:
+                                            Colors.grey.shade300,
+                                        disabledForegroundColor:
+                                            Colors.grey.shade500,
                                       ),
                                       child: auth.isLoading.value
                                           ? const SizedBox(

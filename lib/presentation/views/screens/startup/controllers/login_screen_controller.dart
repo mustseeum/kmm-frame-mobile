@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
-import 'package:kacamatamoo/core/utils/navigation_helper.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/business_logic/login_bl.dart';
 import 'package:kacamatamoo/data/models/request/login_data_request.dart';
 
@@ -19,6 +19,8 @@ class LoginScreenController extends BaseController {
   // Observable form fields
   final RxString email = ''.obs;
   final RxString password = ''.obs;
+  final RxBool isPasswordVisible = false.obs;
+  final RxBool rememberMe = false.obs;
 
   // Check if form is valid (both fields are not empty)
   bool get isFormValid => email.value.isNotEmpty && password.value.isNotEmpty;

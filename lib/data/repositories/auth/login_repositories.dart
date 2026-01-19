@@ -6,7 +6,7 @@ import 'package:kacamatamoo/core/base/http_connection/base_repo.dart';
 import 'package:kacamatamoo/core/base/http_connection/base_result.dart';
 import 'package:kacamatamoo/core/constants/api_constants.dart';
 import 'package:kacamatamoo/core/network/models/parent_response.dart';
-import 'package:kacamatamoo/core/utils/request_helper.dart';
+import 'package:kacamatamoo/core/utilities/request_helper.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
 import 'package:kacamatamoo/data/models/request/login_data_request.dart';

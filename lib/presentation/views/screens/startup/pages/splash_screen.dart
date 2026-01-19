@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/splash_screen_controller.dart';
 import 'package:lottie/lottie.dart';
-import 'package:kacamatamoo/core/utils/responsive.dart';
+import 'package:kacamatamoo/core/utilities/responsive.dart';
 
 class SplashScreen extends BasePage<SplashScreenController> {
   SplashScreen({super.key});

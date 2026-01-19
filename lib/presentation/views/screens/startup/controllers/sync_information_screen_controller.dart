@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
 class SyncInformationScreenController extends BaseController with CacheManager{
@@ -71,8 +72,8 @@ class SyncInformationScreenController extends BaseController with CacheManager{
     // Clear session, token, etc. then navigate to login
     // For demo, show snackbar and reset state
     Get.snackbar('Logout', 'You have been logged out', snackPosition: SnackPosition.BOTTOM);
-    // Get.toNamed('/login');
-    Optionally: Get.offAllNamed(ScreenRoutes.login);
+    clearAuthData();
+    Navigation.navigateAndRemoveAll(ScreenRoutes.login);
   }
 
   String formattedDateTime(DateTime dt) {

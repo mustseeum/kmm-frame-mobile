@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/sync_information_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 

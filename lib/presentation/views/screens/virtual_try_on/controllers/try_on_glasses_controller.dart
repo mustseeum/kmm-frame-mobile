@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 
 class VirtualTryOnPageController extends BaseController {
   @override
@@ -17,16 +16,16 @@ class VirtualTryOnPageController extends BaseController {
   }
 
   /// Initialize DeepAR controller
-  Future<void> initializeDeepAr() async {
-    try {
-      debugPrint('[VirtualTryOnPageController] Initializing DeepAR...');
-      await ensureDeepArInitialized();
-      debugPrint('[VirtualTryOnPageController] DeepAR initialized successfully');
-    } catch (e) {
-      debugPrint('[VirtualTryOnPageController] Error initializing DeepAR: $e');
-      rethrow;
-    }
-  }
+  // Future<void> initializeDeepAr() async {
+  //   try {
+  //     debugPrint('[VirtualTryOnPageController] Initializing DeepAR...');
+  //     await ensureDeepArInitialized();
+  //     debugPrint('[VirtualTryOnPageController] DeepAR initialized successfully');
+  //   } catch (e) {
+  //     debugPrint('[VirtualTryOnPageController] Error initializing DeepAR: $e');
+  //     rethrow;
+  //   }
+  // }
 
   Future<void> _initCameraFlow() async {
     final granted = await requestCameraPermission();

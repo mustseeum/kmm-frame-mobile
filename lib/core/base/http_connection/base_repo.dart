@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:kacamatamoo/core/utils/request_helper.dart';
+import 'package:kacamatamoo/core/utilities/request_helper.dart';
 
 import 'base_result.dart';
 import 'package:dio/dio.dart' as dio;

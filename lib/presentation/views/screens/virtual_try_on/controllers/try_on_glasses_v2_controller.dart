@@ -12,38 +12,8 @@ import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-
-class GlassesModel {
-  final String id;
-  final String assetImage;
-  final double baseEyeDist;
-  // Per-model tuning (pixels or normalized scale)
-  final Offset anchorOffset; // x,y in pixels (applied after mapping)
-  final double rotationOffsetDeg; // fine tune rotation
-  final double scaleMultiplier; // multiply computed scale
-
-  GlassesModel({
-    required this.id,
-    required this.assetImage,
-    this.baseEyeDist = 60,
-    this.anchorOffset = Offset.zero,
-    this.rotationOffsetDeg = 0.0,
-    this.scaleMultiplier = 1.0,
-  });
-}
-
-/// Output transform for overlay
-class TransformData {
-  final Offset center; // center in screen coords (px)
-  final double rotation; // radians
-  final double scale; // multiplier
-
-  TransformData({
-    required this.center,
-    required this.rotation,
-    required this.scale,
-  });
-}
+import 'package:kacamatamoo/data/models/scan_result/glasses_model.dart';
+import 'package:kacamatamoo/data/models/scan_result/transform_data.dart';
 
 class VirtualTryOnV2Controller extends GetxController {
   static final _fixedLocaleNumberFormatter = NumberFormat.decimalPatternDigits(

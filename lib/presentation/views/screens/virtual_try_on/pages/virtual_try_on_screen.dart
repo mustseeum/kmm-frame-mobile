@@ -1,10 +1,8 @@
 import 'dart:io';
-
-import 'package:deepar_flutter/deepar_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/core/utils/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/glasses/filter_data.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/controllers/try_on_glasses_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
@@ -23,32 +21,32 @@ class VirtualTryOnPage extends BasePage<VirtualTryOnPageController> {
           child: Text('Step 3 of 4', style: TextStyle(color: Colors.blue)),
         ),
       ),
-      body: FutureBuilder<void>(
-        future: controller.initializeDeepAr(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [buildCameraPreview(context), buildFilters(context)],
-                ),
-              ),
-            );
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Initializing AR...', style: TextStyle(fontSize: 16)),
-                ],
-              ),
-            );
-          }
-        },
-      ),
+      // body: FutureBuilder<void>(
+      //   future: controller.initializeDeepAr(),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.done) {
+      //       return SingleChildScrollView(
+      //         child: Center(
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             children: [buildCameraPreview(context), buildFilters(context)],
+      //           ),
+      //         ),
+      //       );
+      //     } else {
+      //       return Center(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           children: [
+      //             CircularProgressIndicator(),
+      //             SizedBox(height: 16),
+      //             Text('Initializing AR...', style: TextStyle(fontSize: 16)),
+      //           ],
+      //         ),
+      //       );
+      //     }
+      //   },
+      // ),
     );
   }
 }
@@ -65,7 +63,7 @@ Widget buildFilters(BuildContext context) => SizedBox(
       final effect = File(filter.filterPath).path;
       return GestureDetector(
         onTap: () {
-          getDeepArController().switchEffect(effect);
+          // getDeepArController().switchEffect(effect);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -100,8 +98,8 @@ Widget buildCameraPreview(BuildContext context) {
         children: [
           SizedBox(
             width: diameter,
-            height: diameter,
-            child: DeepArPreview(getDeepArController()),
+            // height: diameter,
+            // child: DeepArPreview(getDeepArController()),
           ),
         ],
       ),
