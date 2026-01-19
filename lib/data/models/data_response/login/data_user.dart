@@ -5,28 +5,28 @@ part 'data_user.g.dart';
 
 @JsonSerializable()
 class DataUser {
-  final String uuid;
-  final String employee_id;
-  final String email;
-  final String employee_name;
-  final String role_id;
-  final String role_name;
-  final String role_code;
-  final int store_id;
-  final String store_name;
-  final String store_code;
+  String? uuid;
+  String? employee_id;
+  String? email;
+  String? employee_name;
+  String? role_id;
+  String? role_name;
+  String? role_code;
+  int? store_id;
+  String? store_name;
+  String? store_code;
 
   DataUser({
-    required this.uuid,
-    required this.employee_id,
-    required this.email,
-    required this.employee_name,
-    required this.role_id,
-    required this.role_name,
-    required this.role_code,
-    required this.store_id,
-    required this.store_name,
-    required this.store_code,
+    this.uuid,
+    this.employee_id,
+    this.email,
+    this.employee_name,
+    this.role_id,
+    this.role_name,
+    this.role_code,
+    this.store_id,
+    this.store_name,
+    this.store_code,
   });
 
   factory DataUser.fromJson(Map<String, dynamic> json) =>

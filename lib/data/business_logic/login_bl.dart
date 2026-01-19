@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:kacamatamoo/core/network/dio_module.dart';
 import 'package:kacamatamoo/core/network/models/parent_response.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
@@ -12,30 +15,36 @@ class LoginBl with CacheManager {
   );
 
   /// Call login API with email and password
-  Future<ParentResponse?> loginUser(LoginDataRequest request) async {
+  Future<LoginDataModel?> loginUser(LoginDataRequest request) async {
     try {
-      final LoginDataModel dataModel = LoginDataModel();
-      final response = await _repository.loginUser(request);
-
-      if (response?.success == true) {
-        dataModel.access_token = response?.data['access_token'];
-        dataModel.refresh_token = response?.data['refresh_token'];
-        dataModel.user = DataUser.fromJson(response?.data['user'] ?? {});
+      LoginDataModel dataModel = LoginDataModel();
+      final ParentResponse? response = await _repository.loginUser(request);
+      bool success = response?.success ?? false;
+      debugPrint("log-doLogin-response-LoginBl(1): ${json.encode(response)}");
+      if (success) {
+        dataModel = response?.data;
+         debugPrint(
+          "log-doLogin-response-LoginBl(2): ${json.encode(dataModel)}",
+        );
         // Save token if exists in response
-        if (response?.data != null && response?.data['token'] != null) {
+
+        if (dataModel != null && dataModel.access_token != null) {
           await saveAuthToken(dataModel.access_token ?? '');
         }
         // Save user data if exists in response
-        if (response?.data != null) {
+        if (dataModel != null) {
           await saveUserData(dataModel);
         }
         // Save authentication data to cache
         await saveLoginStatus(true);
       } else {
-        throw Exception(response?.message ?? 'Login failed');
+        throw Exception(response?.message ?? 'Login failed!!!');
       }
-      return response;
+      return dataModel;
     } catch (e) {
+      debugPrint(
+        "log-doLogin-response-LoginBl(1): ${json.encode(e.toString())}",
+      );
       rethrow;
     }
   }

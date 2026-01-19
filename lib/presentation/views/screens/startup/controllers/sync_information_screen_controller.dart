@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
-class SyncInformationScreenController extends BaseController {
+class SyncInformationScreenController extends BaseController with CacheManager{
   final RxString store = 'Rawamangun'.obs;
   final RxString syncStatus = 'Syncing...'.obs;
   final RxString itemsSynced = "10 SKU's".obs;

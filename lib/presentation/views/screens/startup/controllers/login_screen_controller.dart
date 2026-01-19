@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
@@ -36,15 +39,17 @@ class LoginScreenController extends BaseController {
 
       loginRequest.email = email;
       loginRequest.password = password;
-      
+
       // Call login API using _loginBl
       final response = await _loginBl.loginUser(loginRequest);
-      
+      debugPrint(
+        "log-doLogin-response-LoginScreenController: ${json.encode(response)}",
+      );
       // Check if login was successful
-      if (response?.success == true) {
+      if (response != null && response.access_token != null) {
         isLoggedIn.value = true;
       } else {
-        throw Exception(response?.message ?? 'Login failed');
+        throw Exception('Login failed');
       }
       // navigate to start screen
       Navigation.navigateAndRemoveAll(ScreenRoutes.syncScreen);

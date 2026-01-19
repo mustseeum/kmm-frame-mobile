@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/presentation/views/widgets/painters/ring_painter.dart';
+import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/presentation/views/screens/scanning_face/controllers/scan_face_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
+import 'package:face_scanning_id/face_scanning_id.dart';
 
 class ScanFaceScreen extends BasePage<ScanFaceController> {
   const ScanFaceScreen({super.key});
 
   @override
   Widget buildPage(BuildContext context) {
-    final bgColor = Theme.of(context); // pale teal background like the image
-    final dividerColor = const Color(
-      0xFF2AA6A6,
-    ); // thin accent line below header
+    final bgColor = Theme.of(context);
+    final dividerColor = const Color(0xFF2AA6A6);
+    
     return Scaffold(
       appBar: QuestionHeader(
         showBack: false,

@@ -68,6 +68,10 @@
 
         <!-- ARCore metadata -->
         <meta-data android:name="com.google.ar.core" android:value="required" />
+        <meta-data 
+            android:name="com.google.ar.core.min_apk_version" 
+            android:value="252570000"
+            tools:replace="android:value" />
     </application>
 
     <queries>

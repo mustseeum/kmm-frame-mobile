@@ -38,8 +38,9 @@ class LoginRepositories extends BaseRepo with CacheManager {
     return RequestHelper().responseHandler(
       response: response,
       onSuccess: () {
-        final LoginDataModel dataModel =
-            LoginDataModel.fromJson(parent?.data ?? {});
+        final LoginDataModel dataModel = LoginDataModel.fromJson(
+          parent?.data ?? {},
+        );
         parent?.data = dataModel;
         return parent;
       },

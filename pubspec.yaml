@@ -65,6 +65,9 @@ dependencies:
   vector_math: ^2.1.4
   flutter_hooks: ^0.20.5 # optional
 
+  # Face scanning package
+  face_scanning_id:
+    path: package/face_scanning_id
 dev_dependencies:
   flutter_test:
     sdk: flutter
