@@ -52,8 +52,13 @@ flutter_test:
     - if: '$CI_COMMIT_BRANCH == "main"'
 
 ################################################################################
-# SECURITY SCAN (Trivy FS)
+# SECURITY SCAN (Trivy & GitGuardian)
 ################################################################################
+
+gitguardian-scan:
+  image: gitguardian/ggshield:latest
+  stage: scan
+  script: ggshield secret scan ci
 
 trivy-scan-fs:
   stage: scan
