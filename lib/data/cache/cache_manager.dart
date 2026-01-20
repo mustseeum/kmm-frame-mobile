@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
-
-enum PreferenceKey { sample, userDM }
+import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
+import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
 
 mixin CacheManager {
   // sample to set data to shared preference
@@ -68,10 +71,12 @@ mixin CacheManager {
   }
 
   // Save user data (as JSON string or Map)
-  Future<bool> saveUserData(dynamic userData) async {
+  Future<bool> saveUserData(LoginDataModel userData) async {
     try {
       final storage = GetStorage();
-      await storage.write(CacheManagerKey.userData.name, userData);
+      final json = jsonEncode(userData.toJson());
+      final encrypt = FunctionHelper.aesEncrypt(json, aesKey);
+      await storage.write(CacheManagerKey.userData.name, encrypt);
       return true;
     } catch (e) {
       debugPrint('Error saving user data: ${e.toString()}');
@@ -80,16 +85,53 @@ mixin CacheManager {
   }
 
   // Get user data
-  dynamic getUserData() {
+  Future<LoginDataModel> getUserData() async {
+    final storage = GetStorage();
+    if (storage.hasData(CacheManagerKey.userData.name)) {
+      final data = storage.read(CacheManagerKey.userData.name);
+      final decrypt = FunctionHelper.aesDecrypt(data, aesKey);
+      final json = jsonDecode(decrypt);
+      return LoginDataModel.fromJson(json);
+    } else {
+      return LoginDataModel();
+    }
+  }
+
+  // Save user data (as JSON string or Map)
+  Future<bool> saveSessionData(SessionDm sessionData) async {
     try {
       final storage = GetStorage();
-      if (storage.hasData(CacheManagerKey.userData.name)) {
-        return storage.read(CacheManagerKey.userData.name);
-      }
-      return null;
+      final json = jsonEncode(sessionData.toJson());
+      final encrypt = FunctionHelper.aesEncrypt(json, aesKey);
+      await storage.write(CacheManagerKey.sessionData.name, encrypt);
+      return true;
     } catch (e) {
-      debugPrint('Error getting user data: ${e.toString()}');
-      return null;
+      debugPrint('Error saving session data: ${e.toString()}');
+      return false;
+    }
+  }
+
+  // Get session data
+  Future<SessionDm> getSessionData() async {
+    final storage = GetStorage();
+    if (storage.hasData(CacheManagerKey.sessionData.name)) {
+      final data = storage.read(CacheManagerKey.sessionData.name);
+      final decrypt = FunctionHelper.aesDecrypt(data, aesKey);
+      final json = jsonDecode(decrypt);
+      return SessionDm.fromJson(json);
+    } else {
+      return SessionDm();
+    }
+  }
+
+  Future<bool> clearSessionData() async {
+    try {
+      final storage = GetStorage();
+      await storage.remove(CacheManagerKey.sessionData.name);
+      return true;
+    } catch (e) {
+      debugPrint('Error clearing auth data: ${e.toString()}');
+      return false;
     }
   }
 
@@ -126,6 +168,7 @@ mixin CacheManager {
       await storage.remove(CacheManagerKey.authToken.name);
       await storage.remove(CacheManagerKey.userData.name);
       await storage.remove(CacheManagerKey.isLoggedIn.name);
+      await storage.remove(CacheManagerKey.sessionData.name);
       return true;
     } catch (e) {
       debugPrint('Error clearing auth data: ${e.toString()}');

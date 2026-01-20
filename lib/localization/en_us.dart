@@ -85,4 +85,14 @@ const enUS = {
   'color': 'Color',
   'retake_scan': 'Retake Scan',
   'try_on_myself': 'Try on Myself',
+  
+  // Sync Information Screen
+  'store_information': 'Store Information',
+  'store': 'Store',
+  'store_address': 'Store Address',
+  'store_phone': 'Store Phone',
+  'last_updated': 'Last Updated',
+  'current_time': 'Current Time',
+  'logout': 'Logout',
+  'continue': 'Continue',
 };

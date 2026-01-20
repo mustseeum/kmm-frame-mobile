@@ -6,24 +6,29 @@ import 'package:kacamatamoo/core/network/models/parent_response.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 import 'package:kacamatamoo/data/models/data_response/login/data_user.dart';
 import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
-import 'package:kacamatamoo/data/models/request/login_data_request.dart';
+import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
+import 'package:kacamatamoo/data/models/request/auth/login_data_request.dart';
+import 'package:kacamatamoo/data/models/request/session/session_data_request.dart';
 import 'package:kacamatamoo/data/repositories/auth/login_repositories.dart';
 
 class LoginBl with CacheManager {
   final LoginRepositories _repository = LoginRepositories(
     DioModule.getInstance(),
   );
+  ParentResponse? response = ParentResponse();
 
   /// Call login API with email and password
   Future<LoginDataModel?> loginUser(LoginDataRequest request) async {
     try {
       LoginDataModel dataModel = LoginDataModel();
-      final ParentResponse? response = await _repository.loginUser(request);
+      response = await _repository.loginUser(request);
       bool success = response?.success ?? false;
-      debugPrint("log-doLogin-response-LoginBl(1): ${json.encode(response)}");
+      debugPrint(
+        "log-doLogin-response-LoginBl(1): ${json.encode(response?.data)}",
+      );
       if (success) {
         dataModel = response?.data;
-         debugPrint(
+        debugPrint(
           "log-doLogin-response-LoginBl(2): ${json.encode(dataModel)}",
         );
         // Save token if exists in response
@@ -44,6 +49,46 @@ class LoginBl with CacheManager {
     } catch (e) {
       debugPrint(
         "log-doLogin-response-LoginBl(1): ${json.encode(e.toString())}",
+      );
+      rethrow;
+    }
+  }
+
+  Future<SessionDm> getSessionProduct(
+    String key,
+    String token,
+    SessionDataRequest sessionDataRequest,
+  ) async {
+    try {
+      SessionDm sessionDm = SessionDm();
+      response = await _repository.getSessionProduct(
+        key,
+        token,
+        sessionDataRequest,
+      );
+      bool success = response?.success ?? false;
+      debugPrint(
+        "log-doLogin-response-LoginBl(3): ${json.encode(response?.data)}",
+      );
+      if (success) {
+        if (sessionDm != null) {
+          await clearSessionData();
+        }
+        sessionDm = response?.data;
+        debugPrint(
+          "log-doLogin-response-LoginBl(2): ${json.encode(sessionDm)}",
+        );
+        // Save user data if exists in response
+        if (sessionDm != null) {
+          await saveSessionData(sessionDm);
+        }
+      } else {
+        throw Exception(response?.message ?? 'Login failed!!!');
+      }
+      return sessionDm;
+    } catch (e) {
+      debugPrint(
+        "log-doLogin-response-LoginBl(4): ${json.encode(e.toString())}",
       );
       rethrow;
     }

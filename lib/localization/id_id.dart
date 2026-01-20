@@ -90,4 +90,14 @@ const idID = {
   'color': 'Warna',
   'retake_scan': 'Pindai Ulang',
   'try_on_myself': 'Coba Sendiri',
+  
+  // Sync Information Screen
+  'store_information': 'Informasi Toko',
+  'store': 'Toko',
+  'store_address': 'Alamat Toko',
+  'store_phone': 'Telepon Toko',
+  'last_updated': 'Terakhir Diperbarui',
+  'current_time': 'Waktu Saat Ini',
+  'logout': 'Keluar',
+  'continue': 'Lanjutkan',
 };

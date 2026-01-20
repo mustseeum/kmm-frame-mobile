@@ -15,7 +15,7 @@ class KacamataMooApp extends StatelessWidget {
     final isDarkMode = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
 
     return GetMaterialApp(
-      title: 'KacamataMoo',
+      title: 'Kacamatamoo',
       debugShowCheckedModeBanner: false,
       // 🔹 Theme
       theme: AppTheme.lightTheme,

@@ -56,21 +56,23 @@ android {
 }
 
 // Add this new added at 12/01/2026:
-dependencies {
-    implementation (project(":unityLibrary")) {
-        // Exclude ARCore from Unity to avoid duplicate classes
-        exclude(group = "com.google.ar", module = "core")
-    }
-    // ARCore (Google Play Services for AR) library.
-    implementation("com.google.ar:core:1.52.0")
-
-    // Obj - a simple Wavefront OBJ file loader
-    implementation("de.javagl:obj:0.4.0")
-
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-}
-
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation (project(":unityLibrary")) 
+    // {
+    //     // Exclude ARCore from Unity to avoid duplicate classes
+    //     exclude(group = "com.google.ar", module = "core")
+    // }
+    // ARCore (Google Play Services for AR) library.
+    // implementation("com.google.ar:core:1.52.0")
+
+    // // Obj - a simple Wavefront OBJ file loader
+    // implementation("de.javagl:obj:0.4.0")
+
+    // implementation("androidx.appcompat:appcompat:1.6.1")
+    // implementation("com.google.android.material:material:1.11.0")
+}
+

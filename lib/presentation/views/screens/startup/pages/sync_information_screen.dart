@@ -63,7 +63,7 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                           // Title
                           Center(
                             child: Text(
-                              'Sync Information',
+                              'store_information'.tr,
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w800,
@@ -76,37 +76,28 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                           // Info rows
                           Obx(
                             () => InfoRow(
-                              label: 'Store:',
+                              label: 'store'.tr,
                               value: ctrl.store.value,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Obx(
                             () => InfoRow(
-                              label: 'Store Address:',
+                              label: 'store_address'.tr,
                               value: ctrl.syncStatus.value,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Obx(
                             () => InfoRow(
-                              label: 'Store Phone:',
+                              label: 'store_phone'.tr,
                               value: ctrl.itemsSynced.value,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Obx(
                             () => InfoRow(
-                              label: 'Last Updated:',
-                              value: ctrl.formattedDateTime(
-                                ctrl.lastUpdated.value,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Obx(
-                            () => InfoRow(
-                              label: 'Current Time:',
+                              label: 'current_time'.tr,
                               value: ctrl.formattedDateTime(
                                 ctrl.currentTime.value,
                               ),
@@ -133,7 +124,7 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                                       ),
                                     ),
                                     child: Text(
-                                      'Logout',
+                                      'logout'.tr,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -159,7 +150,7 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                                       ),
                                     ),
                                     child: Text(
-                                      'Continue',
+                                      'continue'.tr,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,

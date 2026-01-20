@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/business_logic/login_bl.dart';
-import 'package:kacamatamoo/data/models/request/login_data_request.dart';
+import 'package:kacamatamoo/data/models/request/auth/login_data_request.dart';
+import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
-class LoginScreenController extends BaseController {
+class LoginScreenController extends BaseController with CacheManager {
   // Observable login state
   final RxBool isLoading = false.obs;
   final RxBool isLoggedIn = false.obs;
@@ -24,6 +26,37 @@ class LoginScreenController extends BaseController {
 
   // Check if form is valid (both fields are not empty)
   bool get isFormValid => email.value.isNotEmpty && password.value.isNotEmpty;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadSavedEmail();
+    _setupRememberMeListener();
+  }
+
+  /// Load saved email if remember me was previously checked
+  void _loadSavedEmail() {
+    final savedEmail = getSavedEmail();
+    if (savedEmail != null && savedEmail.isNotEmpty) {
+      email.value = savedEmail;
+      rememberMe.value = true;
+    }
+  }
+
+  /// Setup listener for rememberMe checkbox changes
+  void _setupRememberMeListener() {
+    ever(rememberMe, (isChecked) {
+      if (isChecked) {
+        // Save email when remember me is checked
+        if (email.value.isNotEmpty) {
+          saveEmail(email.value);
+        }
+      } else {
+        // Remove email when remember me is unchecked
+        removeEmail();
+      }
+    });
+  }
 
   // Simple demo login - replace with your backend auth
   Future<void> login({required String email, required String password}) async {
@@ -50,6 +83,10 @@ class LoginScreenController extends BaseController {
       // Check if login was successful
       if (response != null && response.access_token != null) {
         isLoggedIn.value = true;
+        // Save email if remember me is checked
+        if (rememberMe.value) {
+          saveEmail(email);
+        }
       } else {
         throw Exception('Login failed');
       }
@@ -76,6 +113,44 @@ class LoginScreenController extends BaseController {
   String _capitalize(String s) {
     if (s.isEmpty) return s;
     return s[0].toUpperCase() + s.substring(1);
+  }
+
+  /// Save email to cache manager
+  Future<bool> saveEmail(String email) async {
+    try {
+      final storage = GetStorage();
+      await storage.write('rememberMeEmail', email);
+      return true;
+    } catch (e) {
+      debugPrint('Error saving email: ${e.toString()}');
+      return false;
+    }
+  }
+
+  /// Get saved email from cache manager
+  String? getSavedEmail() {
+    try {
+      final storage = GetStorage();
+      if (storage.hasData('rememberMeEmail')) {
+        return storage.read('rememberMeEmail');
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Error getting saved email: ${e.toString()}');
+      return null;
+    }
+  }
+
+  /// Remove email from cache manager
+  Future<bool> removeEmail() async {
+    try {
+      final storage = GetStorage();
+      await storage.remove('rememberMeEmail');
+      return true;
+    } catch (e) {
+      debugPrint('Error removing email: ${e.toString()}');
+      return false;
+    }
   }
 
   @override

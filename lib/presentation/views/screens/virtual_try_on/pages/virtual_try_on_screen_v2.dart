@@ -34,117 +34,39 @@ class VirtualTryOnPageV2 extends GetView<VirtualTryOnV2Controller> {
                       child: EmbedUnity(
                         onMessageFromUnity: (String data) {
                           // A message has been received from a Unity script
-                          controller.handleUnityMessage(data);
-                          if (data == "scene_loaded") {
-                            sendToUnity(
-                              "MyGameObject",
-                              "SpawnKacamata",
-                              "kacamata",
-                            );
-                          }
+                          // controller.handleUnityMessage(data);
+                          // if (data == "scene_loaded") {
+                          //   sendToUnity(
+                          //     "MyGameObject",
+                          //     "SpawnKacamata",
+                          //     "kacamata",
+                          //   );
+                          // }
                         },
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        "Flutter logo has been touched ${controller.numberOfTaps} times",
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.titleMedium,
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Send message to Unity
+                          sendToUnity(
+                            "MyGameObject",
+                            "SpawnKacamata",
+                            "kacamata",
+                          );
+                        },
+                        child: const Text("Set rotation speed"),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Text("Activate AR (${controller.arStatusMessage})"),
-                          Switch(
-                            value: controller.isArSceneActive,
-                            onChanged:
-                                controller.isUnityArSupportedOnDevice != null &&
-                                    controller.isUnityArSupportedOnDevice!
-                                ? (value) {
-                                    sendToUnity(
-                                      "SceneSwitcher",
-                                      "SwitchToScene",
-                                      controller.isArSceneActive
-                                          ? "FlutterEmbedExampleScene"
-                                          : "FlutterEmbedExampleSceneAR",
-                                    );
-                                    controller.toggleArScene(value);
-                                  }
-                                : null,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: Text("Speed"),
-                        ),
-                        Expanded(
-                          child: Slider(
-                            min: -200,
-                            max: 200,
-                            value: controller.rotationSpeed,
-                            onChanged: (value) {
-                              controller.updateRotationSpeed(value);
-                              sendToUnity(
-                                "MyGameObject",
-                                "SpawnKacamata",
-                                "kacamata",
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                pauseUnity();
-                              },
-                              child: const Text("Pause"),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                resumeUnity();
-                              },
-                              child: const Text("Resume"),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Navigate to another route if needed
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => const Route2()),
-                                // );
-                              },
-                              child: const Text(
-                                "Open route 2",
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16),
+                    //   child: Text(
+                    //     "Flutter logo has been touched ${controller.numberOfTaps} times",
+                    //     textAlign: TextAlign.center,
+                    //     style: theme.textTheme.titleMedium,
+                    //   ),
+                    // ),
                   ],
                 );
               },

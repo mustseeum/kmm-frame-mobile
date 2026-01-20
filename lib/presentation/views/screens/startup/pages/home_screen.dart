@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
+import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/home_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
@@ -110,7 +111,7 @@ class HomeScreen extends BasePage<HomeScreenController> {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.06),
+                                  color: Colors.black.withValues(alpha:  0.06),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
@@ -156,7 +157,7 @@ class HomeScreen extends BasePage<HomeScreenController> {
                                           fontSize: 14,
                                           fontWeight: isEnglish ? FontWeight.w500 : FontWeight.w700,
                                           color: isEnglish 
-                                              ? theme.colorScheme.onSurface.withOpacity(0.5)
+                                              ? theme.colorScheme.onSurface.withValues(alpha: 0.5)
                                               : theme.colorScheme.primary,
                                         ),
                                       ),
@@ -176,7 +177,7 @@ class HomeScreen extends BasePage<HomeScreenController> {
                                           fontWeight: isEnglish ? FontWeight.w700 : FontWeight.w500,
                                           color: isEnglish 
                                               ? theme.colorScheme.primary
-                                              : theme.colorScheme.onSurface.withOpacity(0.5),
+                                              : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                                         ),
                                       ),
                                     ],

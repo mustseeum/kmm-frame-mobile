@@ -13,18 +13,35 @@ class BaseRepo {
   final dio.Dio _dio;
 
   BaseRepo(this._dio) {
-    // Allow 2xx, 302, and 401 status codes
+    // Allow 2xx, 3xx redirects, and specific error codes for custom handling
     _dio.options.validateStatus = (status) {
       return (status != null && status >= 200 && status < 300) ||
-          status == 302 ||
-          status == 400 ||
-          status == 401 ||
-          status == 402 ||
-          status == 403 ||
-          status == 404 ||
-          status == 406 ||
-          status == 409 ||
-          status == 500;
+          status == 301 || // Moved Permanently
+          status == 302 || // Found (Temporary Redirect)
+          status == 400 || // Bad Request
+          status == 401 || // Unauthorized
+          status == 402 || // Payment Required
+          status == 403 || // Forbidden
+          status == 404 || // Not Found
+          status == 405 || // Method Not Allowed
+          status == 406 || // Not Acceptable
+          status == 408 || // Request Timeout
+          status == 409 || // Conflict
+          status == 410 || // Gone
+          status == 413 || // Payload Too Large
+          status == 415 || // Unsupported Media Type
+          status == 422 || // Unprocessable Entity
+          status == 429 || // Too Many Requests
+          status == 500 || // Internal Server Error
+          status == 502 || // Bad Gateway
+          status == 503 || // Service Unavailable
+          status == 504 || // Gateway Timeout
+          status == 521 || // Web Server Is Down (Cloudflare)
+          status == 522 || // Connection Timed Out (Cloudflare)
+          status == 523 || // Origin Is Unreachable (Cloudflare)
+          status == 524 || // A Timeout Occurred (Cloudflare)
+          status == 525 || // SSL Handshake Failed (Cloudflare)
+          status == 530;   // Custom Server Error
     };
   }
 
@@ -108,35 +125,125 @@ class BaseRepo {
         );
       }
 
-      // Handle 400 - 403
-      if (response.statusCode != null &&
-          response.statusCode! >= 400 &&
-          response.statusCode! <= 403) {
+      // Handle 400 Bad Request
+      if (response.statusCode == 400) {
         final errorDetails = response.data;
         final message = (response.data as Map<String, dynamic>)['message'];
-        print('400/403 $message');
-        // await RequestHelper().apiLevelNotMatch(message);
-        return BaseResult.failed(message: message, data: errorDetails);
-      }
-
-      // Handle 404 Not Found
-      if (response.statusCode! == 404) {
-        final errorDetails = response.data;
-        final message = (response.data as Map<String, dynamic>)['message'];
-        print('error: 404 $message');
-        // await RequestHelper().apiLevelNotMatch(message);
+        debugPrint('400 Bad Request: $message');
         if (showErrorDialogue) {
           await RequestHelper().showError(message);
         }
         return BaseResult.failed(message: message, data: errorDetails);
       }
 
-      // Handle 409
-      if (response.statusCode! == 409) {
+      // Handle 402 Payment Required
+      if (response.statusCode == 402) {
         final errorDetails = response.data;
         final message = (response.data as Map<String, dynamic>)['message'];
-        print('error: 409 $message');
-        // Show the error message in a dialog
+        debugPrint('402 Payment Required: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 403 Forbidden
+      if (response.statusCode == 403) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'];
+        debugPrint('403 Forbidden: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 404 Not Found
+      if (response.statusCode == 404) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'];
+        debugPrint('404 Not Found: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 405 Method Not Allowed
+      if (response.statusCode == 405) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'];
+        debugPrint('405 Method Not Allowed: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 408 Request Timeout
+      if (response.statusCode == 408) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'] ??
+            'Request Timeout';
+        debugPrint('408 Request Timeout: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.timeout(message);
+      }
+
+      // Handle 409 Conflict
+      if (response.statusCode == 409) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'];
+        debugPrint('409 Conflict: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 410 Gone
+      if (response.statusCode == 410) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'];
+        debugPrint('410 Gone: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 413 Payload Too Large
+      if (response.statusCode == 413) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'] ??
+            'Payload Too Large';
+        debugPrint('413 Payload Too Large: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 415 Unsupported Media Type
+      if (response.statusCode == 415) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'] ??
+            'Unsupported Media Type';
+        debugPrint('415 Unsupported Media Type: $message');
+        if (showErrorDialogue) {
+          await RequestHelper().showError(message);
+        }
+        return BaseResult.failed(message: message, data: errorDetails);
+      }
+
+      // Handle 429 Too Many Requests
+      if (response.statusCode == 429) {
+        final errorDetails = response.data;
+        final message = (response.data as Map<String, dynamic>)['message'] ??
+            'Too Many Requests. Please try again later.';
+        debugPrint('429 Too Many Requests: $message');
         if (showErrorDialogue) {
           await RequestHelper().showError(message);
         }
@@ -152,10 +259,8 @@ class BaseRepo {
           errorMessage = errorDetails['message'] as String? ?? errorMessage;
         }
 
-        // Log the error for debugging
-        debugPrint("500 Error: $errorMessage");
+        debugPrint("500 Internal Server Error: $errorMessage");
 
-        // Show the error message in a dialog
         if (showErrorDialogue) {
           await RequestHelper().showError(errorMessage);
         }
@@ -163,19 +268,161 @@ class BaseRepo {
         return BaseResult.failed(message: errorMessage, data: errorDetails);
       }
 
-      if (response.statusCode == 503) {
+      // Handle 502 Bad Gateway
+      if (response.statusCode == 502) {
         final errorDetails = response.data;
-        String errorMessage =
-            (response.data as Map<String, dynamic>)['message'];
+        String errorMessage = "Bad Gateway";
         if (errorDetails is Map<String, dynamic> &&
             errorDetails.containsKey('message')) {
           errorMessage = errorDetails['message'] as String? ?? errorMessage;
         }
 
-        // Log the error for debugging
-        debugPrint("500 Error: $errorMessage");
+        debugPrint("502 Bad Gateway: $errorMessage");
 
-        // Show the error message in a dialog
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.failed(message: errorMessage, data: errorDetails);
+      }
+
+      // Handle 503 Service Unavailable
+      if (response.statusCode == 503) {
+        final errorDetails = response.data;
+        String errorMessage = "Service Unavailable";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("503 Service Unavailable: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.failed(message: errorMessage, data: errorDetails);
+      }
+
+      // Handle 504 Gateway Timeout
+      if (response.statusCode == 504) {
+        final errorDetails = response.data;
+        String errorMessage = "Gateway Timeout";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("504 Gateway Timeout: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.timeout(errorMessage);
+      }
+
+      // Handle 521 Web Server Is Down (Cloudflare)
+      if (response.statusCode == 521) {
+        final errorDetails = response.data;
+        String errorMessage = "Web Server Is Down";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("521 Cloudflare - Web Server Is Down: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.failed(message: errorMessage, data: errorDetails);
+      }
+
+      // Handle 522 Connection Timed Out (Cloudflare)
+      if (response.statusCode == 522) {
+        final errorDetails = response.data;
+        String errorMessage = "Connection Timed Out";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("522 Cloudflare - Connection Timed Out: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.timeout(errorMessage);
+      }
+
+      // Handle 523 Origin Is Unreachable (Cloudflare)
+      if (response.statusCode == 523) {
+        final errorDetails = response.data;
+        String errorMessage = "Origin Is Unreachable";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("523 Cloudflare - Origin Is Unreachable: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.failed(message: errorMessage, data: errorDetails);
+      }
+
+      // Handle 524 A Timeout Occurred (Cloudflare)
+      if (response.statusCode == 524) {
+        final errorDetails = response.data;
+        String errorMessage = "A Timeout Occurred";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("524 Cloudflare - A Timeout Occurred: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.timeout(errorMessage);
+      }
+
+      // Handle 525 SSL Handshake Failed (Cloudflare)
+      if (response.statusCode == 525) {
+        final errorDetails = response.data;
+        String errorMessage = "SSL Handshake Failed";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("525 Cloudflare - SSL Handshake Failed: $errorMessage");
+
+        if (showErrorDialogue) {
+          await RequestHelper().showError(errorMessage);
+        }
+
+        return BaseResult.failed(message: errorMessage, data: errorDetails);
+      }
+
+      // Handle 530 Custom Server Error
+      if (response.statusCode == 530) {
+        final errorDetails = response.data;
+        String errorMessage = "Server Error";
+        if (errorDetails is Map<String, dynamic> &&
+            errorDetails.containsKey('message')) {
+          errorMessage = errorDetails['message'] as String? ?? errorMessage;
+        }
+
+        debugPrint("530 Custom Server Error: $errorMessage");
+
         if (showErrorDialogue) {
           await RequestHelper().showError(errorMessage);
         }

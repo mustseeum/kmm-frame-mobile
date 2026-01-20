@@ -1,15 +1,13 @@
 // ScanFaceController — platform-aware InputImage creation and robust conversion.
 // Compatible with google_mlkit_face_detection ^0.12.0 and google_mlkit_commons ^0.9.0
 import 'dart:async';
-import 'dart:math';
 import 'package:camera/camera.dart';
+import 'package:face_scanning_id/face_scanning_id.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';

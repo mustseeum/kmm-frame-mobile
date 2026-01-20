@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/http_connection/base_result.dart';
 import 'package:kacamatamoo/core/network/models/parent_response.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
 class RequestHelper with CacheManager {
@@ -44,6 +46,33 @@ class RequestHelper with CacheManager {
   Future<bool> unAuthenticated(int? statusCode, String? statusMessage) async {
     if (statusCode == 401) {
       debugPrint("Unauthorized User - $statusMessage");
+      
+      // Show dialog to inform user about unauthorized access
+      await Get.dialog(
+        AlertDialog(
+          title: const Text("Session Expired"),
+          content: Text(
+            statusMessage ?? "Your session has expired. Please login again.",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                // Close dialog
+                Get.back();
+                
+                // Clear all auth data
+                await clearAuthData();
+                
+                // Navigate to login screen
+                Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
+      
       return true;
     }
     return false;

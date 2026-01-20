@@ -4,5 +4,6 @@ class ApiConstants {
    // 🔹 Endpoints
   static const String login = 'auth/login';
   static const String logout = 'auth/logout';
+  static const String getSessionProduct = 'sessions/start';
   static const String privacyPoliciesActive = 'privacy-policies/active';
 }

@@ -56,14 +56,16 @@ dependencies:
   url_launcher: ^6.3.2
   path_provider: ^2.1.5
   face_camera: ^0.1.4
-  google_mlkit_face_detection: ^0.12.0
-  google_mlkit_commons: ^0.9.0
+  google_mlkit_face_detection: ^0.13.1
+  google_mlkit_commons: ^0.11.0
   flutter_embed_unity: ^1.4.0
   flutter_embed_unity_6000_0_android: ^1.2.3
   camera: ^0.11.0
   vector_math: ^2.1.4
   flutter_hooks: ^0.20.5 # optional
-  face_scanning_id: ^0.0.1
+  face_scanning_id: ^0.0.2
+  encrypt: ^5.0.3
+  flutter_widget_from_html: ^0.17.1
 
 dev_dependencies:
   flutter_test:
@@ -130,3 +132,5 @@ flutter:
 
 dependency_overrides:
   permission_handler: ^12.0.1
+  google_mlkit_face_detection: ^0.13.1
+  google_mlkit_commons: ^0.11.0

@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/network/dio_module.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 import 'package:kacamatamoo/data/repositories/question_recommendation/question_recommendation_repository.dart';
 
 class FocusSwitchController extends BaseController {
-  final _repository = QuestionRecommendationRepository();
+  final _repository = QuestionRecommendationRepository(DioModule.getInstance());
 
   // Options to display (loaded from data)
   final options = <String>[].obs;

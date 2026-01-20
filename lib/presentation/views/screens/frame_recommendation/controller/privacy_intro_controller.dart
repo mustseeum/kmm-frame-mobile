@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
+import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/data/business_logic/privacy_policies_bl.dart';
 import 'package:kacamatamoo/presentation/views/widgets/other/privacy_policy_dialog.dart';
 
-class PrivacyIntroController extends GetxController {
+class PrivacyIntroController extends BaseController {
   // Loading state for the Agree button (e.g., show spinner or disable)
   final isLoading = false.obs;
-  
+
   // Track if user has read and agreed to privacy policy
   final hasAgreedToPrivacy = false.obs;
 
   // URL for the privacy policy; replace with your real link
   final String privacyUrl = 'https://example.com/privacy';
-
+  final PrivacyPoliciesBl _privacyPoliciesBl = PrivacyPoliciesBl();
+  
+  @override
+  void onInit() {
+    super.onInit();
+    // Any initialization if needed
+    _getPrivacyPolicy();
+  }
   // Big sample text: paragraphs separated by blank lines.
   String get _sampleText => '''
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacus ipsum, tempus et condimentum quis, laoreet non nisl. Donec luctus turpis consequat, pulvinar lorem ut, sagittis diam. Nulla nibh nulla, condimentum et nunc id, ornare mattis elit. Maecenas facilisis sagittis arcu, eu tristique augue. Nulla ut metus in enim aliquet auctor eget non ex. Quisque at porttitor nunc.
@@ -65,7 +74,7 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
       );
       return;
     }
-    
+
     if (isLoading.value) return;
     isLoading.value = true;
     try {
@@ -76,6 +85,27 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
       Get.toNamed(ScreenRoutes.ageQuestionScreen);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  @override
+  void handleArguments(Map<String, dynamic> arguments) {
+    // TODO: implement handleArguments
+  }
+  
+  void _getPrivacyPolicy() async{
+    try {
+      final lang = Get.locale?.languageCode ?? 'en';
+      final response = await _privacyPoliciesBl.getPrivacyPolicies(lang);
+      
+      if (response.content != "") {
+        debugPrint('Privacy Policy fetched successfully');
+        // You can store or display the fetched privacy policy as needed
+      } else {
+        debugPrint('Failed to fetch Privacy Policy');
+      }
+    } catch (e) {
+      debugPrint('Error fetching Privacy Policy: $e');
     }
   }
 }

@@ -1,15 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
+import 'package:kacamatamoo/data/models/data_response/login/data_user.dart';
+import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
 
-class SyncInformationScreenController extends BaseController with CacheManager{
-  final RxString store = 'Rawamangun'.obs;
+class SyncInformationScreenController extends BaseController with CacheManager {
+  final RxString store = 'Syncing...'.obs;
   final RxString syncStatus = 'Syncing...'.obs;
-  final RxString itemsSynced = "10 SKU's".obs;
+  final RxString itemsSynced = "Syncing...".obs;
   final Rx<DateTime> lastUpdated = DateTime(2026, 1, 5, 8, 0, 0).obs;
 
   // current time will update every second for demo purposes
@@ -27,6 +31,19 @@ class SyncInformationScreenController extends BaseController with CacheManager{
     _simulateProgress();
   }
 
+  void _getStoreData() async {
+    // Simulate fetching store data from cache or API
+    LoginDataModel loginData = await getUserData();
+    DataUser? userData = loginData.user;
+    debugPrint('User Data: ${jsonEncode(userData)}');
+
+    if (loginData != null && loginData.user != null) {
+      store.value = userData?.store_name ?? "Syncing...";
+      syncStatus.value = userData?.store_address ?? 'Syncing...';
+      itemsSynced.value = userData?.store_phone ?? "Syncing...";
+    }
+  }
+
   void _startClock() {
     _ticker?.cancel();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -37,7 +54,7 @@ class SyncInformationScreenController extends BaseController with CacheManager{
   // Demo: change sync status after some seconds
   void _simulateProgress() {
     Future.delayed(const Duration(seconds: 6), () {
-      syncStatus.value = 'Last sync failed';
+      _getStoreData();
       isSyncing.value = false;
     });
   }
@@ -60,7 +77,6 @@ class SyncInformationScreenController extends BaseController with CacheManager{
     // navigate to next route or dismiss this screen
     // For demo we just update status and set lastUpdated
     lastUpdated.value = DateTime.now();
-    syncStatus.value = 'Ready';
     isSyncing.value = false;
     // replace with: Get.toNamed('/home'); etc.
     Get.toNamed(ScreenRoutes.home);
@@ -71,7 +87,11 @@ class SyncInformationScreenController extends BaseController with CacheManager{
   void logout() {
     // Clear session, token, etc. then navigate to login
     // For demo, show snackbar and reset state
-    Get.snackbar('Logout', 'You have been logged out', snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      'Logout',
+      'You have been logged out',
+      snackPosition: SnackPosition.BOTTOM,
+    );
     clearAuthData();
     Navigation.navigateAndRemoveAll(ScreenRoutes.login);
   }
@@ -86,7 +106,7 @@ class SyncInformationScreenController extends BaseController with CacheManager{
     _ticker?.cancel();
     super.onClose();
   }
-  
+
   @override
   void handleArguments(Map<String, dynamic> arguments) {
     // TODO: implement handleArguments

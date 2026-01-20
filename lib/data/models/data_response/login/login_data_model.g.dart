@@ -8,9 +8,11 @@ part of 'login_data_model.dart';
 
 LoginDataModel _$LoginDataModelFromJson(Map<String, dynamic> json) =>
     LoginDataModel(
-      access_token: json['access_token'] as String,
-      refresh_token: json['refresh_token'] as String,
-      user: DataUser.fromJson(json['user'] as Map<String, dynamic>),
+      access_token: json['access_token'] as String?,
+      refresh_token: json['refresh_token'] as String?,
+      user: json['user'] == null
+          ? null
+          : DataUser.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LoginDataModelToJson(LoginDataModel instance) =>
