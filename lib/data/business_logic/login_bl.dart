@@ -53,6 +53,41 @@ class LoginBl with CacheManager {
       rethrow;
     }
   }
+  // Future<ParentResponse?> logout(LoginDataRequest request) async {
+  //   try {
+  //     LoginDataModel dataModel = LoginDataModel();
+  //     response = await _repository.loginUser(request);
+  //     bool success = response?.success ?? false;
+  //     debugPrint(
+  //       "log-doLogin-response-LoginBl(1): ${json.encode(response?.data)}",
+  //     );
+  //     if (success) {
+  //       dataModel = response?.data;
+  //       debugPrint(
+  //         "log-doLogin-response-LoginBl(2): ${json.encode(dataModel)}",
+  //       );
+  //       // Save token if exists in response
+
+  //       if (dataModel != null && dataModel.access_token != null) {
+  //         await saveAuthToken(dataModel.access_token ?? '');
+  //       }
+  //       // Save user data if exists in response
+  //       if (dataModel != null) {
+  //         await saveUserData(dataModel);
+  //       }
+  //       // Save authentication data to cache
+  //       await saveLoginStatus(true);
+  //     } else {
+  //       throw Exception(response?.message ?? 'Login failed!!!');
+  //     }
+  //     return dataModel;
+  //   } catch (e) {
+  //     debugPrint(
+  //       "log-doLogin-response-LoginBl(1): ${json.encode(e.toString())}",
+  //     );
+  //     rethrow;
+  //   }
+  // }
 
   Future<SessionDm> getSessionProduct(
     String key,

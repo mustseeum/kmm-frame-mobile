@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
-import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
+import 'package:kacamatamoo/core/utilities/language_helper.dart';
 import 'package:kacamatamoo/core/utilities/permission_helper.dart';
-import 'package:kacamatamoo/data/business_logic/login_bl.dart';
-import 'package:kacamatamoo/data/cache/cache_manager.dart';
-import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
-import 'package:kacamatamoo/data/models/request/session/session_data_request.dart';
-import 'package:kacamatamoo/localization/localization_service.dart';
+import 'package:kacamatamoo/core/utilities/session_helper.dart';
 
-class HomeScreenController extends BaseController with CacheManager {
+class HomeScreenController extends BaseController {
   final Rx<Language> language = Language.en.obs;
+  final SessionHelper _sessionHelper = SessionHelper();
 
-  final LoginBl _loginBl = LoginBl();
-
-  // Use .tr for all text to support dynamic language switching
-  // Keep language.value reference so Obx can track changes
-  String titleWhenAI() {
-    // Reference observable to trigger Obx updates
-    language.value;
+  // Text getters for UI with language tracking
+  String get titleWhenAI {
+    language.value; // Track language changes
     return 'ai_help_your_style'.tr;
   }
 
-  String optionFrameTitle() {
+  String get optionFrameTitle {
     language.value;
     return 'title_menu_one'.tr;
   }
 
-  String optionLensTitle() {
+  String get optionLensTitle {
     language.value;
     return 'title_menu_two'.tr;
   }
 
-  String optionBothTitle() {
+  String get optionBothTitle {
     language.value;
     return 'title_menu_three'.tr;
   }
 
-  String lorem() => 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum';
+  String get lorem {
+    language.value;
+    return 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum';
+  }
 
   @override
   void onInit() {
@@ -50,12 +45,7 @@ class HomeScreenController extends BaseController with CacheManager {
 
   /// Load the saved language preference
   void _loadSavedLanguage() {
-    final currentLang = LocalizationService.getCurrentLanguage();
-    if (currentLang == 'id_ID') {
-      language.value = Language.id;
-    } else {
-      language.value = Language.en;
-    }
+    language.value = LanguageHelper.loadSavedLanguage();
   }
 
   /// Request camera, storage, microphone, and audio permissions on initialization
@@ -91,76 +81,28 @@ class HomeScreenController extends BaseController with CacheManager {
   }
 
   /// Change language and persist the choice
-  void toggleLanguage(Language lang) async {
+  Future<void> toggleLanguage(Language lang) async {
     language.value = lang;
-
-    // Persist language choice and update app locale
-    if (lang == Language.id) {
-      await LocalizationService.changeLocale('id_ID');
-    } else {
-      await LocalizationService.changeLocale('en_US');
-    }
-
-    // Refresh the UI to reflect language change
+    await LanguageHelper.changeLanguage(lang);
     update();
   }
 
-  void onTapOption(String key) {
-    // Replace with real navigation
-    getSessionProduct(key);
-  }
-
-  void goBack() {
-    Get.back();
+  /// Handle option selection and start session
+  Future<void> onTapOption(String key) async {
+    try {
+      await _sessionHelper.getSessionProductAndNavigate(key);
+    } catch (e) {
+      debugPrint('Error in onTapOption: $e');
+      Get.snackbar(
+        'Error',
+        'Failed to start session. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   @override
   void handleArguments(Map<String, dynamic> arguments) {
     // TODO: implement handleArguments
-  }
-
-  void getSessionProduct(String key) async {
-    // get language preference
-    final currentLang = language.value;
-    String langCode = currentLang == Language.id ? 'id' : 'en';
-    debugPrint('Current Language: $langCode');
-    if (key == 'frame') {
-      key = SessionParam.FRAME_ONLY.name;
-    } else if (key == 'lens') {
-      key = SessionParam.LENS_ONLY.name;
-    } else if (key == 'both') {
-      key = SessionParam.BOTH.name;
-    }
-    LoginDataModel? loginDM = await getUserData();
-    SessionDataRequest sessionDataRequest = SessionDataRequest(
-      activity_type: key,
-    );
-    String? token = loginDM.access_token ?? '';
-    final response = await _loginBl.getSessionProduct(
-      key,
-      token,
-      sessionDataRequest,
-    );
-    debugPrint('Session Product Response: ${response.toString()}');
-    if (response != null && response.session_id != "") {
-      if (key == SessionParam.FRAME_ONLY.name) {
-        Navigation.navigateToWithArguments(
-          ScreenRoutes.privacyIntroScreen,
-          arguments: {'screenType': key},
-        );
-        // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
-      } else if (key == SessionParam.LENS_ONLY.name) {
-        Navigation.navigateToWithArguments(
-          ScreenRoutes.ageQuestionScreen,
-          arguments: {'screenType': key, 'firstScreen': 'frame'},
-        );
-        // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
-      } else if (key == SessionParam.BOTH.name) {
-        Navigation.navigateTo(ScreenRoutes.tryOnGlasses);
-        // Get.snackbar('Selected', key, snackPosition: SnackPosition.BOTTOM);
-      }
-    } else {
-      throw Exception('Login failed');
-    }
   }
 }

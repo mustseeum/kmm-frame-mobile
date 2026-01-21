@@ -25,15 +25,15 @@ class PrivacyPoliciesRepository extends BaseRepo {
       headers: {'Authorization': 'Bearer $token', 'User-Language': lang},
     );
     debugPrint(
-      "$pageId(1)-log-doLogin-response: ${json.encode(response.data)}",
+      "$pageId(1)-log-fetchPrivacyPolicies-response: ${json.encode(response.data)}",
     );
 
     try {
       parent = ParentResponse.fromJson(response.data);
-      debugPrint("$pageId(2)-log-doLogin-response: ${json.encode(parent)}");
+      debugPrint("$pageId(2)-log-fetchPrivacyPolicies-response: ${json.encode(parent)}");
     } catch (e) {
       debugPrint(
-        "$pageId(3)-log-doLogin-response: ${json.encode(e.toString())}",
+        "$pageId(3)-log-fetchPrivacyPolicies-response: ${json.encode(e.toString())}",
       );
       rethrow;
     }

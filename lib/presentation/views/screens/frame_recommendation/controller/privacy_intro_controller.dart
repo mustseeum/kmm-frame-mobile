@@ -16,20 +16,21 @@ class PrivacyIntroController extends BaseController {
   final String privacyUrl = 'https://example.com/privacy';
   final PrivacyPoliciesBl _privacyPoliciesBl = PrivacyPoliciesBl();
   
+  // Big sample text: paragraphs separated by blank lines.
+  final _sampleText = '''
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacus ipsum, tempus et condimentum quis, laoreet non nisl. Donec luctus turpis consequat, pulvinar lorem ut, sagittis diam. Nulla nibh nulla, condimentum et nunc id, ornare mattis elit. Maecenas facilisis sagittis arcu, eu tristique augue. Nulla ut metus in enim aliquet auctor eget non ex. Quisque at porttitor nunc.
+
+Nam accumsan massa nec libero auctor, eu pulvinar leo sodales. Pellentesque sodales quam felis, sed fringilla purus vulputate eu. Mauris consectetur neque eget egestas aliquet. Mauris consequat sollicitudin suscipit. Ut in ornare mi, lobortis mollis leo. Nulla porta urna ut lacus placerat, vitae tempus odio sagittis. Proin tempus augue sem, a efficitur lectus vehicula hendrerit.
+
+Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis dictum, ex mauris tristique tellus, vitae mattis sem erat non augue. Donec quis nibh mollis, suscipit justo vel, laoreet purus. Duis ac metus id lacus dapibus cursus. Vestibulum eu ligula id tortor posuere viverra.
+'''.obs;
+  
   @override
   void onInit() {
     super.onInit();
     // Any initialization if needed
     _getPrivacyPolicy();
   }
-  // Big sample text: paragraphs separated by blank lines.
-  String get _sampleText => '''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacus ipsum, tempus et condimentum quis, laoreet non nisl. Donec luctus turpis consequat, pulvinar lorem ut, sagittis diam. Nulla nibh nulla, condimentum et nunc id, ornare mattis elit. Maecenas facilisis sagittis arcu, eu tristique augue. Nulla ut metus in enim aliquet auctor eget non ex. Quisque at porttitor nunc.
-
-Nam accumsan massa nec libero auctor, eu pulvinar leo sodales. Pellentesque sodales quam felis, sed fringilla purus vulputate eu. Mauris consectetur neque eget egestas aliquet. Mauris consequat sollicitudin suscipit. Ut in ornare mi, lobortis mollis leo. Nulla porta urna ut lacus placerat, vitae tempus odio sagittis. Proin tempus augue sem, a efficitur lectus vehicula hendrerit.
-
-Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis dictum, ex mauris tristique tellus, vitae mattis sem erat non augue. Donec quis nibh mollis, suscipit justo vel, laoreet purus. Duis ac metus id lacus dapibus cursus. Vestibulum eu ligula id tortor posuere viverra.
-''';
 
   /// Open the privacy policy link in the browser.
   Future<void> openPrivacyPolicy() async {
@@ -45,7 +46,7 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
           title: 'Privacy Policy',
           width: 716,
           height: 745,
-          contentText: _sampleText,
+          contentText: _sampleText.value,
           showAgreeButton: true,
           requireScrollToEnd: true,
           onAgree: () {
@@ -100,6 +101,7 @@ Praesent a felis non risus congue pulvinar. Integer finibus, justo non sagittis 
       
       if (response.content != "") {
         debugPrint('Privacy Policy fetched successfully');
+        _sampleText.value = response.content ?? '';
         // You can store or display the fetched privacy policy as needed
       } else {
         debugPrint('Failed to fetch Privacy Policy');

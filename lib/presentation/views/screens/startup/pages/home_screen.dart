@@ -5,6 +5,7 @@ import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/controllers/home_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 import 'package:kacamatamoo/presentation/views/widgets/other/option_tilte_widget.dart';
@@ -39,7 +40,7 @@ class HomeScreen extends BasePage<HomeScreenController> {
                     HeadingCardWidget(
                       containerWidth: containerWidth,
                       isTablet: FunctionHelper.isTablet(constraints),
-                      onTap: () => ctrl.goBack(),
+                      onTap: () => Navigation.goBack(),
                     ),
 
                     const SizedBox(height: 28),
@@ -47,7 +48,7 @@ class HomeScreen extends BasePage<HomeScreenController> {
                     // Heading
                     Obx(
                       () => Text(
-                        ctrl.titleWhenAI(),
+                        ctrl.titleWhenAI,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 28,
@@ -69,10 +70,10 @@ class HomeScreen extends BasePage<HomeScreenController> {
                             () => OptionTilteWidget(
                               background: AppColors.p400,
                               assetIcon: AssetsConstants.iconFrame,
-                              title: ctrl.optionFrameTitle(),
+                              title: ctrl.optionFrameTitle,
                               titleColor: AppColors.surface,
                               subtitleColor: AppColors.surface,
-                              subtitle: ctrl.lorem(),
+                              subtitle: ctrl.lorem,
                               onTap: () => ctrl.onTapOption('frame'),
                             ),
                           ),
@@ -83,8 +84,8 @@ class HomeScreen extends BasePage<HomeScreenController> {
                             () => OptionTilteWidget(
                               background: AppColors.a300b,
                               assetIcon: AssetsConstants.iconLens,
-                              title: ctrl.optionLensTitle(),
-                              subtitle: ctrl.lorem(),
+                              title: ctrl.optionLensTitle,
+                              subtitle: ctrl.lorem,
                               onTap: () => ctrl.onTapOption('lens'),
                             ),
                           ),
@@ -95,10 +96,10 @@ class HomeScreen extends BasePage<HomeScreenController> {
                             () => OptionTilteWidget(
                               background: AppColors.p400,
                               assetIcon: AssetsConstants.iconBoth,
-                              title: ctrl.optionBothTitle(),
+                              title: ctrl.optionBothTitle,
                               titleColor: AppColors.surface,
                               subtitleColor: AppColors.surface,
-                              subtitle: ctrl.lorem(),
+                              subtitle: ctrl.lorem,
                               onTap: () => ctrl.onTapOption('both'),
                             ),
                           ),

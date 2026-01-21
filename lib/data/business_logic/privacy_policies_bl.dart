@@ -25,6 +25,9 @@ class PrivacyPoliciesBl with CacheManager {
 
       if (isSuccess) {
         PrivacyPoliciesDm privacyPoliciesDm = response?.data;
+        debugPrint(
+          "log-getPrivacyPolicies-response-PrivacyPoliciesBl(2): ${json.encode(privacyPoliciesDm)}",
+        );
         return privacyPoliciesDm;
       } else {
         throw Exception(
@@ -33,7 +36,7 @@ class PrivacyPoliciesBl with CacheManager {
       }
     } catch (e) {
       debugPrint(
-        "log-doLogin-response-LoginBl(1): ${json.encode(e.toString())}",
+        "log-getPrivacyPolicies-response-PrivacyPoliciesBl(1): ${json.encode(e.toString())}",
       );
       rethrow;
     }
