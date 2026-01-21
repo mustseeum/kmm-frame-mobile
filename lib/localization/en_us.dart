@@ -35,17 +35,23 @@ const enUS = {
   'step_4_of_5': 'Step 4 of 5',
 
   'how_old_are_you': 'How old are you?',
+  'how_can_we_identify_you': 'How can we identify you?',
   'what_are_you_looking_for': 'What are you looking for?',
 
   // Lens Recommendation
-  'step_1_of_7': 'Step 1 of 7',
-  'step_2_of_7': 'Step 2 of 7',
-  'step_3_of_7': 'Step 3 of 7',
-  'step_4_of_7': 'Step 4 of 7',
-  'step_5_of_7': 'Step 5 of 7',
-  'step_6_of_7': 'Step 6 of 7',
-  'step_7_of_7': 'Step 7 of 7',
-
+  'step_1_of_12': 'Step 1 of 12',
+  'step_2_of_12': 'Step 2 of 12',
+  'step_3_of_12': 'Step 3 of 12',
+  'step_4_of_12': 'Step 4 of 12',
+  'step_5_of_12': 'Step 5 of 12',
+  'step_6_of_12': 'Step 6 of 12',
+  'step_7_of_12': 'Step 7 of 12',
+  'step_8_of_12': 'Step 8 of 12',
+  'step_9_of_12': 'Step 9 of 12',
+  'step_10_of_12': 'Step 10 of 12',
+  'step_11_of_12': 'Step 11 of 12',
+  'step_12_of_12': 'Step 12 of 12',
+  
   'have_prescription_before': 'Have you worn any kind of prescription before?',
   'what_best_describes_your_main_daily_visual_activity': 'What best describes your main daily visual activity?',
   'how_many_hours_per_day_do_you_use_your_eyes_intensively': 'How many hours per day do you use your eyes intensively?',

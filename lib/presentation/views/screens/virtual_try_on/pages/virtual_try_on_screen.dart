@@ -5,7 +5,6 @@ import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/utilities/function_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/glasses/filter_data.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/controllers/try_on_glasses_controller.dart';
-import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
 
 class VirtualTryOnPage extends BasePage<VirtualTryOnPageController> {
   VirtualTryOnPage({super.key});
@@ -14,13 +13,6 @@ class VirtualTryOnPage extends BasePage<VirtualTryOnPageController> {
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      appBar: QuestionHeader(
-        showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('Step 3 of 4', style: TextStyle(color: Colors.blue)),
-        ),
-      ),
       // body: FutureBuilder<void>(
       //   future: controller.initializeDeepAr(),
       //   builder: (context, snapshot) {

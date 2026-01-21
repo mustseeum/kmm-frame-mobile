@@ -17,11 +17,14 @@ class ScanResultScreen extends BasePage<ScanResultController> {
     final controller = Get.find<ScanResultController>();
     return Scaffold(
       backgroundColor: AppColors.p50,
-      appBar: QuestionHeader(
-        showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_4_of_5'.tr, style: TextStyle(color: Colors.blue)),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: QuestionHeader(
+          showBack: false,
+          trailing: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Text('step_4_of_5'.tr, style: TextStyle(color: Colors.blue)),
+          ),
         ),
       ),
       body: SafeArea(
@@ -40,7 +43,6 @@ class ScanResultScreen extends BasePage<ScanResultController> {
             ),
             child: Column(
               children: [
-                Container(height: 2, color: const Color(0xFF2AA6A6)),
                 const SizedBox(height: 18),
 
                 Text(

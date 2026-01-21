@@ -12,9 +12,14 @@ class ScreenRoutes {
   static const String wearPurposeScreen = '/wearPurposeScreen';
   static const String scanningFaceScreen = '/scanningFaceScreen';
   static const String scanResultScreen = '/scanResultScreen';
-  static const String lensPrescriptionScreen = '/lensPrescriptionScreen';
-  static const String dailyVisualActivityScreen = '/dailyVisualActivityScreen';
-  static const String dailyeyeusagescreen = '/dailyeyeusagescreen';
-  static const String focusSwitchScreen = '/focusSwitchScreen';
-  static const String typicalEnvironmentScreen = '/typicalEnvironmentScreen';
+  static const String minusPowerScreen = '/minusPowerScreen'; // #1
+  static const String plusPowerScreen = '/plusPowerScreen'; // #2
+  static const String astigmatismScreen = '/astigmatismScreen'; // #3
+  static const String wearingPurposeScreen = '/wearingPurposeScreen'; // #4
+  static const String importantDistanceScreen = '/importantDistanceScreen'; // #5
+  static const String digitalEyeFatigueScreen = '/digitalEyeFatigueScreen'; // #6
+  static const String uvProtectionImportanceScreen = '/uvProtectionImportanceScreen'; // #7
+  static const String lightSensitivityScreen = '/lightSensitivityScreen'; // #8
+  static const String impactResistanceImportanceScreen = '/impactResistanceImportanceScreen'; // #9
+  static const String budgetPreferenceScreen = '/budgetPreferenceScreen'; // #10
 }

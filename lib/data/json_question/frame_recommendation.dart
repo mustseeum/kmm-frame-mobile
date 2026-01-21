@@ -11,10 +11,11 @@ class FrameRecommendationDummyData {
         "question": "How old are you?",
         "type": "single_choice",
         "options": [
-          {"label": "age_6_17_04", "value": "6-17 years old"},
-          {"label": "age_18_39_05", "value": "18-39 years old"},
-          {"label": "age_40_50_06", "value": "40-50 years old"},
-          {"label": "age_51_plus_07", "value": "51+ years old"},
+          {"label": "under_18_04", "value": "Under 18 years old"},
+          {"label": "age_18_25_05", "value": "18-25 years old"},
+          {"label": "age_26_39_06", "value": "26-39 years old"},
+          {"label": "age_40_50_07", "value": "40-50 years old"},
+          {"label": "age_51_plus_08", "value": "Over 51 years old"},
         ],
       },
       {

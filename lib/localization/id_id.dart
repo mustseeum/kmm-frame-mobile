@@ -37,13 +37,19 @@ const idID = {
   'what_are_you_looking_for': 'Apa yang Anda cari?',
 
   // Lens Recommendation
-  'step_1_of_7': 'Langkah 1 dari 7',
-  'step_2_of_7': 'Langkah 2 dari 7',
-  'step_3_of_7': 'Langkah 3 dari 7',
-  'step_4_of_7': 'Langkah 4 dari 7',
-  'step_5_of_7': 'Langkah 5 dari 7',
-  'step_6_of_7': 'Langkah 6 dari 7',
-  'step_7_of_7': 'Langkah 7 dari 7',
+  'step_1_of_12': 'Langkah 1 dari 12',
+  'step_2_of_12': 'Langkah 2 dari 12',
+  'step_3_of_12': 'Langkah 3 dari 12',
+  'step_4_of_12': 'Langkah 4 dari 12',
+  'step_5_of_12': 'Langkah 5 dari 12',
+  'step_6_of_12': 'Langkah 6 dari 12',
+  'step_7_of_12': 'Langkah 7 dari 12',
+  'step_8_of_12': 'Langkah 8 dari 12',
+  'step_9_of_12': 'Langkah 9 dari 12',
+  'step_10_of_12': 'Langkah 10 dari 12',
+  'step_11_of_12': 'Langkah 11 dari 12',
+  'step_12_of_12': 'Langkah 12 dari 12',
+  
   'lens_recommendation_questionnaire': 'Kuesioner Rekomendasi Lensa',
   'what_best_describes_your_main_daily_visual_activity':
       'Apa yang paling menggambarkan aktivitas visual harian utama Anda?',
@@ -90,7 +96,7 @@ const idID = {
   'color': 'Warna',
   'retake_scan': 'Pindai Ulang',
   'try_on_myself': 'Coba Sendiri',
-  
+
   // Sync Information Screen
   'store_information': 'Informasi Toko',
   'store': 'Toko',

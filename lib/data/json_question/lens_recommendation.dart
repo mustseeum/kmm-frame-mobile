@@ -3,103 +3,151 @@ class LensRecommendationDummyData {
     "formTitle": "Lens Recommendation Questionnaire",
     "type": "lens",
     "version": "1.0",
-    "totalSteps": 5,
+    "totalSteps": 12,
     "questions": [
       {
-        "id": "prescription_history",
-        "step": 1,
-        "question": "Have you worn any kind of prescription before?",
-        "type": "single_choice",
-        "options": [
-          {"label": "yes_occasional", "value": "Yes, occasionally"},
-          {
-            "label": "yes_regular",
-            "value": "Yes, I wear glasses / contact lenses regularly",
-          },
-          {
-            "label": "no_first_time",
-            "value": "No, this would be my first pair",
-          },
-        ],
-      },
-      {
-        "id": "daily_visual_activity",
-        "step": 2,
-        "question": "What best describes your main daily visual activity?",
-        "type": "single_choice",
-        "options": [
-          {"label": "screen_near", "value": "Screen-based and near work"},
-          {
-            "label": "reading_detailed_manual",
-            "value": "Reading or detailed manual work",
-          },
-          {
-            "label": "mixed_near_far",
-            "value": "Mixed activities (near and far)",
-          },
-          {
-            "label": "mobility_distance",
-            "value": "Mobility and distance focused activities",
-          },
-          {
-            "label": "physical_active",
-            "value": "Physical, active, or sport-focused activities",
-          },
-        ],
-      },
-      {
-        "id": "daily_eye_usage",
+        "id": "minus_power",
         "step": 3,
-        "question": "How many hours per day do you use your eyes intensively?",
+        "question": "Do you have minus power (distance) for any of your eyes?",
         "type": "single_choice",
         "options": [
-          {"label": "less_than_4", "value": "Less than 4 hours"},
-          {"label": "4_to_8", "value": "4–8 hours"},
-          {"label": "more_than_8", "value": "More than 8 hours"},
+          {"label": "not_sure", "value": "Not Sure"},
+          {"label": "0.00_to_-2.00", "value": "0.00 to -2.00"},
+          {"label": "-2.00_to_-4.00", "value": "-2.00 to -4.00"},
+          {"label": "-4.00_to_-6.00", "value": "-4.00 to -6.00"},
+          {"label": "below_-6.00", "value": "Below -6.00"},
         ],
       },
       {
-        "id": "focus_switch",
+        "id": "plus_power",
         "step": 4,
         "question":
-            "How often do you switch focus or environment during the day?",
+            "Do you have plus power (reading support) for any of your eyes?",
         "type": "single_choice",
         "options": [
-          {
-            "label": "screen_people_documents",
-            "value": "Screen ↔ People ↔ Documents",
-          },
-          {"label": "near_far", "value": "Near ↔ Far vision"},
-          {"label": "indoor_outdoor", "value": "Indoor ↔ Outdoor"},
-          {"label": "rarely_switch", "value": "Rarely switch focus"},
+          {"label": "not_sure", "value": "Not Sure"},
+          {"label": "0.00", "value": "0.00"},
+          {"label": "+0.50_to_+1.00", "value": "+0.50 to +1.00"},
+          {"label": "+1.00_to_+2.00", "value": "+1.00 to +2.00"},
+          {"label": "above_+2.00", "value": "Above +2.00"},
         ],
       },
       {
-        "id": "typical_environment",
+        "id": "astigmatism",
         "step": 5,
-        "question": "What best describes your typical environment?",
+        "question": "Do you have astigmatism (cylinder)?",
+        "type": "single_choice",
+        "options": [
+          {"label": "not_sure", "value": "Not Sure"},
+          {"label": "0.00", "value": "0.00"},
+          {"label": "−0.25_to_−1.00", "value": "−0.25 to −1.00"},
+          {"label": "−1.00_to_−2.00", "value": "−1.00 to −2.00"},
+          {"label": "Below_−2.00", "value": "Below −2.00"},
+        ],
+      },
+      {
+        "id": "wearing_purpose",
+        "step": 6,
+        "question": "Where do you use/will you use your glasses the most?",
+        "type": "single_choice",
+        "options": [
+          {"label": "mostly_indoor", "value": "Mostly outdoor"},
+          {"label": "mostly_indoor", "value": "Mostly indoor"},
+          {"label": "balance", "value": "Balance"},
+          {"label": "screen_focused", "value": "Screen-focused"},
+        ],
+      },
+      {
+        "id": "important_distance",
+        "step": 7,
+        "question": "Which distance is most important for you to see clearly?",
         "type": "single_choice",
         "options": [
           {
-            "label": "air_conditioned_indoor",
-            "value": "Air-conditioned indoor space",
+            "label": "near_distance_clarity",
+            "value": "Long distance clarity (e.g., driving, outdoor)",
           },
           {
-            "label": "bright_dim_artificial",
-            "value": "Bright or dim artificial lighting",
+            "label": "intermediate_distance_clarity",
+            "value": "Intermediate distance focus",
           },
           {
-            "label": "strong_reflections_glare",
-            "value": "Strong reflections or glare",
+            "label": "near_distance_clarity",
+            "value": "Near distance clarity (e.g., reading, screen use)",
           },
           {
-            "label": "high_contrast_lighting",
-            "value": "High contrast lighting",
+            "label": "all_distance_clarity",
+            "value":
+                "Balanced: All distance are equally important (e.g., no compromise)",
           },
+        ],
+      },
+      {
+        "id": "digital_eye_fatigue",
+        "step": 8,
+        "question":
+            "How frequently do you experience eye fatigue during prolonged use of digital devices (phones, computers, tablets)?",
+        "type": "single_choice",
+        "options": [
+          {"label": "never", "value": "Never"},
+          {"label": "sometimes", "value": "Sometimes"},
+          {"label": "often", "value": "Often"},
+          {"label": "almost_always", "value": "Almost Always"},
+        ],
+      },
+      {
+        "id": "uv_protection_importance",
+        "step": 9,
+        "question":
+            "How important is protection from sunlight and UV rays for you?",
+        "type": "single_choice",
+        "options": [
+          {"label": "not_important", "value": "Not important"},
+          {"label": "slightly_important", "value": "Slightly important"},
+          {"label": "important", "value": "Important"},
+          {"label": "very_important", "value": "Very important"},
+          {"label": "extremely_important", "value": "Extremely important"},
+        ],
+      },
+      {
+        "id": "light_sensitivity",
+        "step": 10,
+        "question":
+            "How sensitive are your eyes to bright lights or glare (for example, headlights or strong lighting)?",
+        "type": "single_choice",
+        "options": [
+          {"label": "never", "value": "Never"},
+          {"label": "sometimes", "value": "Sometimes"},
+          {"label": "often", "value": "Often"},
+          {"label": "almost_always", "value": "Almost Always"},
+        ],
+      },
+      {
+        "id": "impact_resistance_importance",
+        "step": 11,
+        "question":
+            "How important is it for your lenses to be strong and resistant to impact (for sports, kids, or active use)?",
+        "type": "single_choice",
+        "options": [
+          {"label": "not_needed", "value": "Not needed"},
+          {"label": "nice_to_have", "value": "Nice to have"},
+          {"label": "somewhat_important", "value": "Somewhat important"},
+          {"label": "very_important", "value": "Very important"},
+          {"label": "must_have", "value": "Must have"},
+        ],
+      },
+      {
+        "id": "budget_preference",
+        "step": 12,
+        "question": "Which best describes what you want?",
+        "type": "single_choice",
+        "options": [
+          {"label": "most_affordable", "value": "Most affordable"},
           {
-            "label": "hot_dusty_harsh_outdoor",
-            "value": "Hot, dusty or harsh outdoor conditions",
+            "label": "good_quality_reasonable_price",
+            "value": "Good quality, reasonable price",
           },
+          {"label": "premium_performance", "value": "Premium performance"},
         ],
       },
     ],

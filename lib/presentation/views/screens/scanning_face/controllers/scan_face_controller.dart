@@ -1,6 +1,8 @@
 // ScanFaceController — platform-aware InputImage creation and robust conversion.
 // Compatible with google_mlkit_face_detection ^0.12.0 and google_mlkit_commons ^0.9.0
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:face_scanning_id/face_scanning_id.dart';
 import 'package:flutter/foundation.dart';
@@ -8,11 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/data/cache/cache_manager.dart';
+import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
+import 'package:kacamatamoo/data/models/request/questionnaire/answers.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
-class ScanFaceController extends BaseController {
+class ScanFaceController extends BaseController with CacheManager {
   CameraController? cameraController;
   CameraDescription? frontCamera;
   RxBool cameraInitialized = false.obs;
@@ -47,6 +54,12 @@ class ScanFaceController extends BaseController {
 
   final int processEveryNframes = 1;
   int _frameCounter = 0;
+
+  // Questionnaire answers
+  String? selectedAge;
+  String? selectedGender;
+  String? screenType;
+  String? capturedImagePath;
 
   @override
   void onInit() {
@@ -140,7 +153,7 @@ class ScanFaceController extends BaseController {
     try {
       final sensorOrientation =
           cameraController?.description.sensorOrientation ?? 0;
-          
+
       // Create InputImage using helper function
       final inputImage = FunctionHelper.createInputImageFromCameraImage(
         image,
@@ -266,10 +279,30 @@ class ScanFaceController extends BaseController {
 
   Future<void> _onScanComplete() async {
     _stopProgressTimer();
+    final SessionDm session = await getSessionData();
+    String sessionId = session.session_id ?? '';
+    // Capture the image before stopping camera completely
+    await _captureImage();
+
     await stopScanning();
 
-    // Navigate to scan result screen
-    Get.toNamed(ScreenRoutes.scanResultScreen);
+    // Create Answers model with all questionnaire data and image
+    final answers = Answers(
+      session_id: sessionId,
+      age_range: selectedAge,
+      gender_identity: selectedGender,
+      looking_for: screenType,
+      image: capturedImagePath != null ? File(capturedImagePath!) : null,
+    );
+
+    // Navigate to scan result screen with answers
+    debugPrint(
+      'Navigating to ScanResultScreen with answers: ${json.encode(answers.toJson())}, imagePath: $capturedImagePath',
+    );
+    // Get.toNamed(
+    //   ScreenRoutes.scanResultScreen,
+    //   arguments: {'answers': answers, 'imagePath': capturedImagePath},
+    // );
   }
 
   void _stopProgressTimer() {
@@ -281,8 +314,46 @@ class ScanFaceController extends BaseController {
     progress.value = 0.0;
   }
 
+  /// Capture image from camera when scan is complete
+  Future<void> _captureImage() async {
+    try {
+      if (cameraController == null || !cameraController!.value.isInitialized) {
+        debugPrint('Camera not initialized, cannot capture image');
+        return;
+      }
+
+      // Stop image stream temporarily to take picture
+      await cameraController!.stopImageStream();
+
+      // Get temporary directory
+      final directory = await getTemporaryDirectory();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final imagePath = path.join(directory.path, 'face_scan_$timestamp.jpg');
+
+      // Take picture
+      final XFile picture = await cameraController!.takePicture();
+
+      // Copy to our desired path
+      await File(picture.path).copy(imagePath);
+
+      capturedImagePath = imagePath;
+      debugPrint('Image captured successfully: $capturedImagePath');
+    } catch (e, st) {
+      debugPrint('Error capturing image: $e');
+      debugPrint('Stack trace: $st');
+    }
+  }
+
   @override
   void handleArguments(Map<String, dynamic> arguments) {
-    // TODO: implement handleArguments
+    // Get questionnaire answers from previous screen
+    selectedAge = arguments['selectedAge'] as String?;
+    selectedGender = arguments['selectedGender'] as String?;
+    screenType = arguments['screenType'] as String?;
+
+    debugPrint('ScanFaceController received:');
+    debugPrint('  selectedAge: $selectedAge');
+    debugPrint('  selectedGender: $selectedGender');
+    debugPrint('  screenType: $screenType');
   }
 }

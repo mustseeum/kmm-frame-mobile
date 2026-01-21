@@ -21,7 +21,6 @@ class QuestionRecommendationRepository extends BaseRepo {
         ? LensRecommendationDummyData().lensQuestionData
         : FrameRecommendationDummyData().frameQuestionData;
 
-    if (raw == null) return null;
     final qList = raw['questions'];
     if (qList == null || qList is! List) return null;
 

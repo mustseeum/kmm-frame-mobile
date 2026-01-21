@@ -15,68 +15,64 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
     final dividerColor = const Color(0xFF2AA6A6);
     
     return Scaffold(
-      appBar: QuestionHeader(
-        showBack: false,
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text('step_3_of_5'.tr, style: TextStyle(color: Colors.blue)),
+      backgroundColor: bgColor.scaffoldBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: QuestionHeader(
+          backgroundColor: bgColor.appBarTheme.backgroundColor ?? Colors.white,
+          dividerColor: dividerColor,
+          showDivider: true,
         ),
       ),
-      backgroundColor: bgColor.scaffoldBackgroundColor,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            // Thin divider line under header
-            Container(height: 2, color: dividerColor),
-
-            // Title / explanatory text
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 18.0,
-                horizontal: 24.0,
-              ),
-              child: Text(
-                'scan_face_instruction'.tr,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Color(0xFF06293D),
-                  fontWeight: FontWeight.w400,
-                ),
+      body: Column(
+        children: [
+      
+          // Title / explanatory text
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 18.0,
+              horizontal: 24.0,
+            ),
+            child: Text(
+              'scan_face_instruction'.tr,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 24,
+                color: Color(0xFF06293D),
+                fontWeight: FontWeight.w400,
               ),
             ),
-
-            // Main content: circular camera preview centered with progress ring and percentage text below
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // Calculate dimensions in controller
-                  controller.calculateDimensions(
-                    constraints.maxWidth,
-                    constraints.maxHeight,
+          ),
+      
+          // Main content: circular camera preview centered with progress ring and percentage text below
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Calculate dimensions in controller
+                controller.calculateDimensions(
+                  constraints.maxWidth,
+                  constraints.maxHeight,
+                );
+      
+                return Obx(() {
+                  return ScanFaceWidget(
+                    diameter: controller.diameter.value,
+                    ringSize: controller.ringSize.value,
+                    cameraController: controller.cameraController,
+                    isScanning: controller.isScanning.value,
+                    cameraInitialized: controller.cameraInitialized.value,
+                    previewMirror: controller.previewMirror.value,
+                    progress: controller.progress.value,
+                    message: controller.displayMessage,
+                    placeholderIcon: AssetsConstants.faceIcon,
+                    onUpdateOverlay: controller.updateOverlay,
+                    onStartScanning: controller.startScanning,
                   );
-
-                  return Obx(() {
-                    return ScanFaceWidget(
-                      diameter: controller.diameter.value,
-                      ringSize: controller.ringSize.value,
-                      cameraController: controller.cameraController,
-                      isScanning: controller.isScanning.value,
-                      cameraInitialized: controller.cameraInitialized.value,
-                      previewMirror: controller.previewMirror.value,
-                      progress: controller.progress.value,
-                      message: controller.displayMessage,
-                      placeholderIcon: AssetsConstants.faceIcon,
-                      onUpdateOverlay: controller.updateOverlay,
-                      onStartScanning: controller.startScanning,
-                    );
-                  });
-                },
-              ),
+                });
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
