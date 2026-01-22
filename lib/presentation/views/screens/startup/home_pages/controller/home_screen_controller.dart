@@ -55,19 +55,19 @@ class HomeScreenController extends BaseController {
   Future<void> _requestInitialPermissions() async {
     final cameraStorageResult =
         await PermissionHelper.requestCameraAndStoragePermissions();
-    final audioMicResult =
-        await PermissionHelper.requestMicrophoneAndAudioPermissions();
+    // final audioMicResult =
+    //     await PermissionHelper.requestMicrophoneAndAudioPermissions();
 
     final cameraGranted = cameraStorageResult['camera'] ?? false;
     final storageGranted = cameraStorageResult['storage'] ?? false;
-    final microphoneGranted = audioMicResult['microphone'] ?? false;
-    final audioGranted = audioMicResult['audio'] ?? false;
+    // final microphoneGranted = audioMicResult['microphone'] ?? false;
+    // final audioGranted = audioMicResult['audio'] ?? false;
 
     final denied = <String>[];
     if (!cameraGranted) denied.add('Camera');
     if (!storageGranted) denied.add('Storage');
-    if (!microphoneGranted) denied.add('Microphone');
-    if (!audioGranted) denied.add('Audio');
+    // if (!microphoneGranted) denied.add('Microphone');
+    // if (!audioGranted) denied.add('Audio');
 
     if (denied.isNotEmpty) {
       Get.snackbar(

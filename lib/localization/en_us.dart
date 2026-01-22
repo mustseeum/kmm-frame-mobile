@@ -4,6 +4,7 @@ const enUS = {
   'loading': 'Loading...',
   'error': 'Error',
   'camera_permission_denied': 'Camera permission denied',
+  'are_you_sure_you_want_to_logout': 'Are you sure you want to logout?',
 
   // Login Page
   'login':'Login',

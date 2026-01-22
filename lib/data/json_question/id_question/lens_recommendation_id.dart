@@ -1,4 +1,4 @@
-class LensRecommendationDummyData {
+class LensRecommendationIDDummyData {
   var lensQuestionData = {
     "formTitle": "Lens Recommendation Questionnaire",
     "type": "lens",

@@ -1,4 +1,4 @@
-class FrameRecommendationDummyData {
+class FrameRecommendationIDDummyData {
   var frameQuestionData = {
     "formTitle": "Frame Recommendation Questionnaire",
     "type": "frame",

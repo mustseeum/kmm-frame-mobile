@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/network/dio_module.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 import 'package:kacamatamoo/data/repositories/question_recommendation/question_recommendation_repository.dart';
@@ -39,9 +40,11 @@ class AstigmatismController extends BaseController {
   Future<void> _loadQuestionData() async {
     try {
       isLoading.value = true;
-
+      final String langCode = GlobalFunctionHelper.languageStringCode();
       // Load questionnaire from repository
-      final questionnaire = await _repository.loadQuestionnaireLens();
+      final questionnaire = await _repository.loadQuestionnaireLens(
+        language: langCode,
+      );
       debugPrint(
         'Loaded lens recommendation data 3: ${json.encode(questionnaire)}',
       );

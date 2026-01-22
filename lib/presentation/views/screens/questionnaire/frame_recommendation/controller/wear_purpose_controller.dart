@@ -6,6 +6,7 @@ import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/core/network/dio_module.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 import 'package:kacamatamoo/data/repositories/question_recommendation/question_recommendation_repository.dart';
@@ -21,7 +22,7 @@ class WearPurposeController extends BaseController {
 
   // Question data
   List<Question?>? questionData = [];
-  Question? ageQuestion;
+  Question? questions;
 
   // Index of selected option (-1 means none)
   final selectedIndex = (-1).obs;
@@ -38,18 +39,20 @@ class WearPurposeController extends BaseController {
   Future<void> _loadQuestionData() async {
     try {
       isLoading.value = true;
-
+      final String langCode = GlobalFunctionHelper.languageStringCode();
       // Load questionnaire from repository
-      final questionnaire = await _repository.loadQuestionnaire();
+      final questionnaire = await _repository.loadQuestionnaire(
+        language: langCode,
+      );
 
       if (questionnaire != null) {
         questionData = questionnaire as List<Question?>?;
       }
 
-      ageQuestion = questionData?.firstWhere((q) => q?.id == 'gender');
+      questions = questionData?.firstWhere((q) => q?.id == 'gender');
 
       // Extract option values
-      options.value = ageQuestion!.options.map((opt) => opt.value).toList();
+      options.value = questions!.options.map((opt) => opt.value).toList();
       debugPrint('Loaded frame recommendation data 4: ${json.encode(options)}');
 
       isLoading.value = false;
@@ -74,7 +77,8 @@ class WearPurposeController extends BaseController {
             'screenType': screenType,
           },
         );
-      } else if (screenType == 'lens' || screenType == SessionParam.LENS_ONLY.name) {
+      } else if (screenType == 'lens' ||
+          screenType == SessionParam.LENS_ONLY.name) {
         Navigation.navigateToWithArguments(
           ScreenRoutes.minusPowerScreen,
           arguments: {
@@ -103,10 +107,10 @@ class WearPurposeController extends BaseController {
   void handleArguments(Map<String, dynamic> arguments) {
     final type = arguments['screenType'] as String?;
     final age = arguments['selectedAge'] as String?;
-    
+
     debugPrint('WearPurposeController received screenType: $type');
     debugPrint('WearPurposeController received selectedAge: $age');
-    
+
     if (type != null) {
       screenType = type;
     }

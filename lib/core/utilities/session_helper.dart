@@ -56,29 +56,32 @@ class SessionHelper with CacheManager {
 
     // Validate response and navigate
     if (response != null && response.session_id != "") {
-      _navigateBasedOnSessionType(sessionParam);
+      _navigateBasedOnSessionType(sessionParam:sessionParam);
     } else {
       throw Exception('Failed to get session product');
     }
   }
 
   /// Navigates to the appropriate screen based on session type
-  void _navigateBasedOnSessionType(SessionParam sessionParam) {
+  void _navigateBasedOnSessionType({SessionParam? sessionParam}) {
     switch (sessionParam) {
       case SessionParam.FRAME_ONLY:
         Navigation.navigateToWithArguments(
           ScreenRoutes.privacyIntroScreen,
-          arguments: {'screenType': sessionParam.name},
+          arguments: {'screenType': sessionParam?.name},
         );
         break;
       case SessionParam.LENS_ONLY:
         Navigation.navigateToWithArguments(
           ScreenRoutes.ageQuestionScreen,
-          arguments: {'screenType': sessionParam.name, 'firstScreen': 'frame'},
+          arguments: {'screenType': sessionParam?.name, 'firstScreen': 'frame'},
         );
         break;
       case SessionParam.BOTH:
         Navigation.navigateTo(ScreenRoutes.tryOnGlasses);
+        break;
+      default:
+        debugPrint('Invalid or null session parameter');
         break;
     }
   }

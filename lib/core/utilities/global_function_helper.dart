@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kacamatamoo/core/constants/constants.dart';
+import 'package:kacamatamoo/core/utilities/language_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:crypto/crypto.dart';
@@ -7,6 +9,11 @@ import 'package:path/path.dart' as path;
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
+
+import 'package:kacamatamoo/data/json_question/en_question/frame_recommendation.dart';
+import 'package:kacamatamoo/data/json_question/en_question/lens_recommendation.dart';
+import 'package:kacamatamoo/data/json_question/id_question/frame_recommendation_id.dart';
+import 'package:kacamatamoo/data/json_question/id_question/lens_recommendation_id.dart';
 
 class GlobalFunctionHelper {
   GlobalFunctionHelper._();
@@ -119,7 +126,7 @@ class GlobalFunctionHelper {
 
       // Get app documents directory
       final directory = await getApplicationDocumentsDirectory();
-      
+
       // Create subdirectory if specified
       String targetDirPath = directory.path;
       if (subDirectory != null && subDirectory.isNotEmpty) {
@@ -131,14 +138,14 @@ class GlobalFunctionHelper {
       }
 
       // Generate file name if not provided
-      final String targetFileName = fileName ?? 
-          'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
-      
+      final String targetFileName =
+          fileName ?? 'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
       final String targetPath = path.join(targetDirPath, targetFileName);
 
       // Copy file to target location
       await sourceFile.copy(targetPath);
-      
+
       debugPrint('Image saved to local storage: $targetPath');
       return targetPath;
     } catch (e, st) {
@@ -164,7 +171,7 @@ class GlobalFunctionHelper {
     try {
       // Get app documents directory
       final directory = await getApplicationDocumentsDirectory();
-      
+
       // Create subdirectory if specified
       String targetDirPath = directory.path;
       if (subDirectory != null && subDirectory.isNotEmpty) {
@@ -176,15 +183,15 @@ class GlobalFunctionHelper {
       }
 
       // Generate file name if not provided
-      final String targetFileName = fileName ?? 
-          'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
-      
+      final String targetFileName =
+          fileName ?? 'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
       final String targetPath = path.join(targetDirPath, targetFileName);
 
       // Write bytes to file
       final File targetFile = File(targetPath);
       await targetFile.writeAsBytes(bytes);
-      
+
       debugPrint('Image bytes saved to local storage: $targetPath');
       return targetPath;
     } catch (e, st) {
@@ -206,7 +213,7 @@ class GlobalFunctionHelper {
   }) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      
+
       String targetDirPath = directory.path;
       if (subDirectory != null && subDirectory.isNotEmpty) {
         targetDirPath = path.join(directory.path, subDirectory);
@@ -239,7 +246,7 @@ class GlobalFunctionHelper {
   }) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      
+
       String targetDirPath = directory.path;
       if (subDirectory != null && subDirectory.isNotEmpty) {
         targetDirPath = path.join(directory.path, subDirectory);
@@ -274,7 +281,7 @@ class GlobalFunctionHelper {
   }) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      
+
       String targetDirPath = directory.path;
       if (subDirectory != null && subDirectory.isNotEmpty) {
         targetDirPath = path.join(directory.path, subDirectory);
@@ -327,5 +334,39 @@ class GlobalFunctionHelper {
         .trim();
 
     return formatted;
+  }
+
+  /// Get the appropriate questionnaire data based on language and type.
+  ///
+  /// Returns the correct data source for Indonesian or English.
+  ///
+  /// [language] - Language code ('id', 'id_ID', 'en', 'en_US').
+  /// [type] - Question type ('frame' or 'lens').
+  ///
+  /// Returns the questionnaire data map.
+  static Map<String, dynamic> getQuestionnaireDataByLanguage({
+    required String language,
+    required String type,
+  }) {
+    final isIndonesian = language == 'id' || language == 'id_ID';
+
+    if (type == 'lens') {
+      return isIndonesian
+          ? LensRecommendationIDDummyData().lensQuestionData
+          : LensRecommendationDummyData().lensQuestionData;
+    } else {
+      // type == 'frame'
+      return isIndonesian
+          ? FrameRecommendationIDDummyData().frameQuestionData
+          : FrameRecommendationDummyData().frameQuestionData;
+    }
+  }
+
+  static languageStringCode() {
+    Language language = LanguageHelper.loadSavedLanguage();
+    final String langCode = LanguageHelper.getLanguageCode(
+      language,
+    ); // default to English
+    return langCode;
   }
 }

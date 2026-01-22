@@ -22,6 +22,8 @@ class QuestionHeader extends StatelessWidget {
   final bool showDivider;
   final Color? dividerColor;
   final double dividerHeight;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
   const QuestionHeader({
     super.key,
@@ -37,6 +39,8 @@ class QuestionHeader extends StatelessWidget {
     this.showDivider = true,
     this.dividerColor,
     this.dividerHeight = 2.0,
+    this.fontSize = 14.0,
+    this.fontWeight = FontWeight.w400,
   });
 
   @override
@@ -89,9 +93,10 @@ class QuestionHeader extends StatelessWidget {
                         trailing ??
                         Text(
                           stepText ?? '',
-                          style: const TextStyle(
-                            color: Color(0xFF0E2546),
-                            fontSize: 13,
+                          style: TextStyle(
+                            color: Color(0xFF2B3A39),
+                            fontSize: fontSize,
+                            fontWeight: fontWeight,
                           ),
                         ),
                   ),
@@ -115,7 +120,8 @@ void _showEndSessionDialog(BuildContext context) async {
     context: context,
     title: 'End Session',
     content: 'Are you sure you want to end\nthe current session?',
-    iconAssetPath: AssetsConstants.warningAlert, // Or use iconAssetPath for custom icon
+    iconAssetPath:
+        AssetsConstants.warningAlert, // Or use iconAssetPath for custom icon
     iconBackgroundColor: const Color(0xFFFEE4E2),
     iconColor: const Color(0xFFD92D20),
     primaryButtonText: 'End Session',

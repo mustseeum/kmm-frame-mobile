@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/constants/constants.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
+import 'package:kacamatamoo/core/utilities/language_helper.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 import 'package:kacamatamoo/data/repositories/question_recommendation/question_recommendation_repository.dart';
@@ -47,10 +50,11 @@ class QuestionController extends BaseController {
   Future<void> _loadQuestionData() async {
     try {
       isLoading.value = true;
-
+      final String langCode = GlobalFunctionHelper.languageStringCode();
       // Load questionnaire from repository. The repository uses your dummy data.
       final questionnaire = await _repository.loadQuestionnaire(
         type: firstScreen,
+        language: langCode,
       );
       debugPrint('Loaded questionnaire data: ${json.encode(questionnaire)}');
       if (questionnaire != null) {

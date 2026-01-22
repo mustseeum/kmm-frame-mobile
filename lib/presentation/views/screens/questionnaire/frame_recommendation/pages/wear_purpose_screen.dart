@@ -47,7 +47,9 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
                     const SizedBox(height: 25),
                     Center(
                       child: Text(
-                        'how_can_we_identify_you'.tr,
+                        controller.questions?.question.isNotEmpty ?? false
+                        ? controller.questions!.question
+                        :'how_can_we_identify_you'.tr,
                         style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w800,

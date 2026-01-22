@@ -71,7 +71,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
     // simulate network sync
     await Future.delayed(const Duration(seconds: 2));
     // success example
-    itemsSynced.value = "12 SKU's";
+    itemsSynced.value = "Syncing...";
     lastUpdated.value = DateTime.now();
     syncStatus.value = 'Sync completed';
     isSyncing.value = false;
@@ -90,38 +90,10 @@ class SyncInformationScreenController extends BaseController with CacheManager {
 
   /// user taps Logout
   void logout() async {
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text("Logout"),
-    //     content: const Text(
-    //       "Are you sure you want to logout?",
-    //     ),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back(); // Close dialog
-    //         },
-    //         child: const Text("Cancel"),
-    //       ),
-    //       TextButton(
-    //         onPressed: () async {
-    //           await loginBl.logout();
-    //           // Navigate to login screen
-    //           Navigation.navigateAndRemoveAll(ScreenRoutes.login);
-    //         },
-    //         child: const Text(
-    //           "Logout",
-    //           style: TextStyle(color: CupertinoColors.destructiveRed),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   barrierDismissible: false,
-    // );
     final result = await CustomDialogWidget.show(
       context: Get.context!,
       title: '',
-      content: 'Are you sure you want to logout?',
+      content: 'are_you_sure_you_want_to_logout'.tr,
       iconData: Icons.error_outline, // Or use iconAssetPath for custom icon
       iconBackgroundColor: const Color(0xFFFEE4E2),
       iconColor: const Color(0xFFD92D20),

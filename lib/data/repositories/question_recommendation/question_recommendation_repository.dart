@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kacamatamoo/core/base/http_connection/base_repo.dart';
-import 'package:kacamatamoo/data/json_question/en_question/frame_recommendation.dart';
-import 'package:kacamatamoo/data/json_question/en_question/lens_recommendation.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/frame_questionnaire.dart';
 import 'package:kacamatamoo/data/models/data_response/questionnaire/question.dart';
 
@@ -13,13 +12,19 @@ class QuestionRecommendationRepository extends BaseRepo {
   /// Load and parse the frame recommendation questionnaire from data
   /// Load questionnaire questions.
   /// [type] can be 'frame' or 'lens' (defaults to 'frame').
-  Future<List<Question?>?> loadQuestionnaire({String type = 'frame'}) async {
+  /// [language] can be 'id', 'id_ID', 'en', or 'en_US' (defaults to 'en').
+
+  Future<List<Question?>?> loadQuestionnaire({
+    String type = 'frame',
+    String language = 'en',
+  }) async {
     // Simulate async load (you can remove the delay if loading is instant)
     await Future.delayed(const Duration(milliseconds: 120));
 
-    final raw = type == 'lens'
-        ? LensRecommendationDummyData().lensQuestionData
-        : FrameRecommendationDummyData().frameQuestionData;
+    final raw = GlobalFunctionHelper.getQuestionnaireDataByLanguage(
+      language: language,
+      type: type,
+    );
 
     final qList = raw['questions'];
     if (qList == null || qList is! List) return null;
@@ -43,17 +48,21 @@ class QuestionRecommendationRepository extends BaseRepo {
     }
   }
 
-  Future<Object> loadQuestionnaireLens() async {
-    final _dummyData = LensRecommendationDummyData();
+  Future<Object> loadQuestionnaireLens({String language = 'en'}) async {
     // Return cached data if available
 
     try {
-      // Get data from dummy data class
+      // Get data from dummy data class based on language
+      final questionData = GlobalFunctionHelper.getQuestionnaireDataByLanguage(
+        language: language,
+        type: 'lens',
+      );
+      
       debugPrint(
-        'Loaded lens recommendation data 1: ${json.encode(_dummyData.lensQuestionData)}',
+        'Loaded lens recommendation data 1: ${json.encode(questionData)}',
       );
       FrameQuestionnaire jsonData = FrameQuestionnaire.fromJson(
-        _dummyData.lensQuestionData,
+        questionData,
       );
       // Parse to model
       List<Question?>? lensQuestions = jsonData.questions;
