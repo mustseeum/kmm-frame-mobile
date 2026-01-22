@@ -14,11 +14,13 @@ class QuestionScreen extends BasePage<QuestionController> {
     const bg = Color(0xFFEFF9F8); // pale teal-ish
     final controller = Get.find<QuestionController>();
 
-    return Scaffold(
-      backgroundColor: bg,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: bg,
 
-      // Wrap AppBar in PreferredSize to ensure it implements PreferredSizeWidget
-      appBar: PreferredSize(
+        // Wrap AppBar in PreferredSize to ensure it implements PreferredSizeWidget
+        appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: QuestionHeader(
           trailing: Padding(
@@ -103,6 +105,7 @@ class QuestionScreen extends BasePage<QuestionController> {
           ),
         );
       }),
+      ),
     );
   }
 }

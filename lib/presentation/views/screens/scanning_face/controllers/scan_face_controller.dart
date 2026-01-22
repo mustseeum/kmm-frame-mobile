@@ -10,14 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/data/business_logic/ml_scan_processing_bl.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
 import 'package:kacamatamoo/data/models/request/questionnaire/answers.dart';
+import 'package:kacamatamoo/data/models/request/questionnaire/answers_data_request.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 
 class ScanFaceController extends BaseController with CacheManager {
   CameraController? cameraController;
@@ -37,6 +39,8 @@ class ScanFaceController extends BaseController with CacheManager {
   Timer? _progressTimer;
   Rx<FaceState> faceState = FaceState.noFace.obs;
   RxString message = 'Face not detected'.obs;
+  final Answers answers = Answers();
+  final AnswersDataRequest answersDataRequest = AnswersDataRequest();
 
   /// Returns the appropriate display message based on face state.
   String get displayMessage {
@@ -60,6 +64,8 @@ class ScanFaceController extends BaseController with CacheManager {
   String? selectedGender;
   String? screenType;
   String? capturedImagePath;
+
+  final MLScanProcessingBl _mlScanProcessingBl = MLScanProcessingBl();
 
   @override
   void onInit() {
@@ -103,6 +109,9 @@ class ScanFaceController extends BaseController with CacheManager {
     resetProgress();
     faceState.value = FaceState.noFace;
     message.value = 'Face not detected';
+    
+    // Restart the progress timer in case it was stopped
+    _startProgressTimer();
 
     final status = await Permission.camera.request();
     if (!status.isGranted) {
@@ -135,6 +144,7 @@ class ScanFaceController extends BaseController with CacheManager {
     isScanning.value = false;
     cameraInitialized.value = false;
     await _stopCamera();
+    resetProgress();
     message.value = 'Face not detected';
   }
 
@@ -279,30 +289,84 @@ class ScanFaceController extends BaseController with CacheManager {
 
   Future<void> _onScanComplete() async {
     _stopProgressTimer();
-    final SessionDm session = await getSessionData();
-    String sessionId = session.session_id ?? '';
-    // Capture the image before stopping camera completely
-    await _captureImage();
+    
+    try {
+      final SessionDm session = await getSessionData();
+      String sessionId = session.session_id ?? '';
+      // Capture the image before stopping camera completely
+      await _captureImage();
 
-    await stopScanning();
+      await stopScanning();
 
-    // Create Answers model with all questionnaire data and image
-    final answers = Answers(
-      session_id: sessionId,
-      age_range: selectedAge,
-      gender_identity: selectedGender,
-      looking_for: screenType,
-      image: capturedImagePath != null ? File(capturedImagePath!) : null,
-    );
+      // Create Answers model with all questionnaire data and image
+      answers.session_id = sessionId;
+      answers.looking_for = selectedGender == "Men"
+          ? 'men_eyewear'
+          : 'women_eyewear';
+      answers.age_range = GlobalFunctionHelper.formatAgeString(selectedAge);
+      answers.gender_identity = selectedGender == "I prefer not to say"
+          ? 'prefer_not_to_say'
+          : selectedGender?.toLowerCase();
 
-    // Navigate to scan result screen with answers
-    debugPrint(
-      'Navigating to ScanResultScreen with answers: ${json.encode(answers.toJson())}, imagePath: $capturedImagePath',
-    );
-    // Get.toNamed(
-    //   ScreenRoutes.scanResultScreen,
-    //   arguments: {'answers': answers, 'imagePath': capturedImagePath},
-    // );
+      answersDataRequest.answers = answers;
+      answersDataRequest.image = capturedImagePath != null
+          ? File(capturedImagePath!)
+          : null;
+
+      // Navigate to scan result screen with answers
+      debugPrint(
+        'Navigating to ScanResultScreen with answers: ${json.encode(answersDataRequest.toJson())}, imagePath: $capturedImagePath',
+      );
+
+      // send data to ML processing
+      isLoading.value = true;
+      await _mlScanProcessing(answersDataRequest);
+    } catch (e, st) {
+      debugPrint('Error in _onScanComplete: $e');
+      debugPrint('Stack trace: $st');
+      
+      // Ensure camera is stopped and state is reset even on error
+      await stopScanning();
+      isLoading.value = false;
+      
+      Get.snackbar(
+        'Error',
+        'Failed to complete scan. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> _mlScanProcessing(AnswersDataRequest answersDataRequest) async {
+    try {
+      final result = await _mlScanProcessingBl.processFaceScan(
+        answersDataRequest,
+      );
+      if (result == null) {
+        debugPrint('ML scanning processing returned null result');
+        Get.snackbar(
+          'Error',
+          'Failed to process face scan. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      } else {
+        // Navigate to result screen with ML processing result
+        debugPrint(
+          'Navigating to ScanResultScreen with ML processing result, result: ${json.encode(json.encode(result))} ',
+        );
+        // Get.toNamed(
+        //   ScreenRoutes.scanResultScreen,
+        //   arguments: {'result': result, 'imagePath': capturedImagePath},
+        // );
+      }
+      debugPrint('ML Scanning Processing Result: $result');
+    } catch (e, st) {
+      debugPrint('Error in ML scanning processing: $e');
+      debugPrint('Stack trace: $st');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void _stopProgressTimer() {

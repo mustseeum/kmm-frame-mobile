@@ -13,9 +13,11 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
     // background color similar to screenshot
     const bg = Color(0xFFEFF9F8); // pale teal-ish
     final controller = Get.find<WearPurposeController>();
-    return Scaffold(
-      backgroundColor: bg,
-      body: Obx(() {
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: bg,
+        body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -93,6 +95,7 @@ class WearPurposeScreen extends BasePage<WearPurposeController> {
           ),
         );
       }),
+      ),
     );
   }
 }

@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
+import 'package:kacamatamoo/data/business_logic/login_bl.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 import 'package:kacamatamoo/data/models/data_response/login/data_user.dart';
 import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
+import 'package:kacamatamoo/presentation/views/widgets/custom_dialog_widget.dart';
 
 class SyncInformationScreenController extends BaseController with CacheManager {
   final RxString store = 'Syncing...'.obs;
@@ -19,6 +22,8 @@ class SyncInformationScreenController extends BaseController with CacheManager {
   // current time will update every second for demo purposes
   final Rx<DateTime> currentTime = DateTime.now().obs;
   Timer? _ticker;
+
+  final LoginBl loginBl = LoginBl();
 
   // Example result flags
   final RxBool isSyncing = true.obs;
@@ -84,16 +89,63 @@ class SyncInformationScreenController extends BaseController with CacheManager {
   }
 
   /// user taps Logout
-  void logout() {
-    // Clear session, token, etc. then navigate to login
-    // For demo, show snackbar and reset state
-    Get.snackbar(
-      'Logout',
-      'You have been logged out',
-      snackPosition: SnackPosition.BOTTOM,
+  void logout() async {
+    // Get.dialog(
+    //   AlertDialog(
+    //     title: const Text("Logout"),
+    //     content: const Text(
+    //       "Are you sure you want to logout?",
+    //     ),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: () {
+    //           Get.back(); // Close dialog
+    //         },
+    //         child: const Text("Cancel"),
+    //       ),
+    //       TextButton(
+    //         onPressed: () async {
+    //           await loginBl.logout();
+    //           // Navigate to login screen
+    //           Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+    //         },
+    //         child: const Text(
+    //           "Logout",
+    //           style: TextStyle(color: CupertinoColors.destructiveRed),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   barrierDismissible: false,
+    // );
+    final result = await CustomDialogWidget.show(
+      context: Get.context!,
+      title: '',
+      content: 'Are you sure you want to logout?',
+      iconData: Icons.error_outline, // Or use iconAssetPath for custom icon
+      iconBackgroundColor: const Color(0xFFFEE4E2),
+      iconColor: const Color(0xFFD92D20),
+      primaryButtonText: 'Logout',
+      secondaryButtonText: 'Cancel',
+      primaryButtonColor: const Color(0xFFD92D20),
+      onPrimaryPressed: () {
+        Navigator.of(Get.context!).pop(true);
+        // Handle logout logic here
+        print('User logged out');
+      },
+      onSecondaryPressed: () {
+        Navigator.of(Get.context!).pop(false);
+        print('Cancelled');
+      },
     );
-    clearAuthData();
-    Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+
+    if (result == true) {
+      // User confirmed
+      await loginBl.logout();
+      // Navigate to login screen
+      Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+      print('User confirmed action');
+    }
   }
 
   String formattedDateTime(DateTime dt) {

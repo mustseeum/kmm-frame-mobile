@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/store_information_pages/controller/sync_information_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 
@@ -27,22 +27,22 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                     // Top Logo Card (rounded rectangle with shadow)
                     // heading logo and title
                     HeadingCardWidget(
-                      containerWidth: FunctionHelper.getContainerWidth(
+                      containerWidth: GlobalFunctionHelper.getContainerWidth(
                         constraints,
                       ),
-                      isTablet: FunctionHelper.isTablet(constraints),
+                      isTablet: GlobalFunctionHelper.isTablet(constraints),
                     ),
 
                     // Main Sync Info Card
                     Container(
-                      width: FunctionHelper.getContainerWidth(
+                      width: GlobalFunctionHelper.getContainerWidth(
                         constraints,
                       ).clamp(320.0, 720.0),
                       padding: EdgeInsets.symmetric(
-                        horizontal: FunctionHelper.isTablet(constraints)
+                        horizontal: GlobalFunctionHelper.isTablet(constraints)
                             ? 28.0
                             : 20.0,
-                        vertical: FunctionHelper.isTablet(constraints)
+                        vertical: GlobalFunctionHelper.isTablet(constraints)
                             ? 22.0
                             : 16.0,
                       ),
@@ -173,7 +173,7 @@ class SyncInformationScreen extends BasePage<SyncInformationScreenController> {
                     Text(
                       'copy_right'.tr,
                       style: TextStyle(
-                        fontSize: FunctionHelper.isTablet(constraints)
+                        fontSize: GlobalFunctionHelper.isTablet(constraints)
                             ? 14
                             : 12,
                         color: theme.colorScheme.onSurface,

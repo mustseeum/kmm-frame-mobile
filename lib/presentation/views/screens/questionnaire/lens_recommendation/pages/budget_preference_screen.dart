@@ -12,10 +12,12 @@ class BudgetPreferenceScreen extends BasePage<BudgetPreferenceController> {
   Widget buildPage(BuildContext context) {
     final controller = Get.find<BudgetPreferenceController>();
     final bg = Theme.of(context); // pale teal-ish
-    return Scaffold(
-      backgroundColor: bg.scaffoldBackgroundColor,
-      // Top bar with logo on left and "Step 12 of 12" on right
-      appBar: PreferredSize(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: bg.scaffoldBackgroundColor,
+        // Top bar with logo on left and "Step 12 of 12" on right
+        appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
@@ -91,6 +93,7 @@ class BudgetPreferenceScreen extends BasePage<BudgetPreferenceController> {
           ),
         );
       }),
+      ),
     );
   }
 }

@@ -13,10 +13,12 @@ class ImportantDistanceScreen extends BasePage<ImportantDistanceController> {
     // background color similar to screenshot
     final bg = Theme.of(context); // pale teal-ish
     final controller = Get.find<ImportantDistanceController>();
-    return Scaffold(
-      backgroundColor: bg.scaffoldBackgroundColor,
-      // Top bar with logo on left and "Step 7 of 11" on right
-      appBar: PreferredSize(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: bg.scaffoldBackgroundColor,
+        // Top bar with logo on left and "Step 7 of 11" on right
+        appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
@@ -89,6 +91,7 @@ class ImportantDistanceScreen extends BasePage<ImportantDistanceController> {
           ),
         );
       }),
+      ),
     );
   }
 }

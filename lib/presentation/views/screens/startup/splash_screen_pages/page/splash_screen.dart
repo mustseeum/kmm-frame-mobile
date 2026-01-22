@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/splash_screen_pages/controller/splash_screen_controller.dart';
 import 'package:lottie/lottie.dart';
 import 'package:kacamatamoo/core/utilities/responsive.dart';
@@ -53,8 +53,8 @@ class SplashScreen extends BasePage<SplashScreenController> {
                     // 🔹 Logo "KacamataMoo" dengan split warna
                     Image.asset(
                       AssetsConstants.imageLogo,
-                      width: FunctionHelper.isTablet(constraints) ? 300 : 100,
-                      height: FunctionHelper.isTablet(constraints) ? 29 : 100,
+                      width: GlobalFunctionHelper.isTablet(constraints) ? 300 : 100,
+                      height: GlobalFunctionHelper.isTablet(constraints) ? 29 : 100,
                     ),
                     const SizedBox(height: 10 ),
                     // 🔹 Subtitle: "Eyewear for Everyone"

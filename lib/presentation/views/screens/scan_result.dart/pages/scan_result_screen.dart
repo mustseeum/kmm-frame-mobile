@@ -15,9 +15,11 @@ class ScanResultScreen extends BasePage<ScanResultController> {
   @override
   Widget buildPage(BuildContext context) {
     final controller = Get.find<ScanResultController>();
-    return Scaffold(
-      backgroundColor: AppColors.p50,
-      appBar: PreferredSize(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: AppColors.p50,
+        appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
@@ -295,6 +297,7 @@ class ScanResultScreen extends BasePage<ScanResultController> {
             ),
           );
         }),
+      ),
       ),
     );
   }

@@ -6,4 +6,5 @@ class ApiConstants {
   static const String logout = 'auth/logout';
   static const String getSessionProduct = 'sessions/start';
   static const String privacyPoliciesActive = 'privacy-policies/active';
+  static const String mlScanProcessingEndpoint = 'images/upload';
 }

@@ -112,8 +112,73 @@ class LoginRepositories extends BaseRepo with CacheManager {
     return RequestHelper().responseHandler(
       response: response,
       onSuccess: () {
-        final SessionDm dataModel = SessionDm.fromJson(parent?.data['session'] ?? {});
+        final SessionDm dataModel = SessionDm.fromJson(
+          parent?.data['session'] ?? {},
+        );
         parent?.data = dataModel;
+        return parent;
+      },
+      onRedirection: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+      onUnprocessableEntity: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+      onError: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+      onUnreachable: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+      onDefault: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+      unauthenticated: () {
+        return RequestHelper().generateErrorResponse(
+          response?.errorMessage ?? "",
+        );
+      },
+    );
+  }
+
+  Future<ParentResponse?> logoutUser(String token) async {
+    String endPoint = ApiConstants.logout;
+    ParentResponse? parent;
+    // execute API
+    BaseResult? response;
+    response = await post(
+      endPoint,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    debugPrint(
+      "$pageId(1)-log-dologoutUser-response: ${json.encode(response.data)}",
+    );
+    try {
+      parent = ParentResponse.fromJson(response.data);
+      debugPrint(
+        "$pageId(2)-log-dologoutUser-response: ${json.encode(parent)}",
+      );
+    } catch (e) {
+      debugPrint(
+        "$pageId(3)-log-dologoutUser-response: ${json.encode(e.toString())}",
+      );
+      rethrow;
+    }
+
+    return RequestHelper().responseHandler(
+      response: response,
+      onSuccess: () {
+        parent?.data = parent?.data;
         return parent;
       },
       onRedirection: () {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/services/face_ar_channel.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 
 class VirtualTryOnPageController extends BaseController {
   @override
@@ -39,7 +39,7 @@ class VirtualTryOnPageController extends BaseController {
   Future<bool> requestCameraPermission({
     bool openSettingsIfPermanentlyDenied = false,
   }) async {
-    return await FunctionHelper.handleCameraPermission(
+    return await GlobalFunctionHelper.handleCameraPermission(
       openSettingsIfPermanentlyDenied: openSettingsIfPermanentlyDenied,
     );
   }

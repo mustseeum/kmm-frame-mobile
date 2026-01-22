@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_page.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/login_pages/controller/login_screen_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/heading_card_widget.dart';
 
@@ -31,19 +31,19 @@ class LoginScreen extends BasePage<LoginScreenController> {
                     children: [
                       // heading logo and title
                       HeadingCardWidget(
-                        containerWidth: FunctionHelper.getContainerWidth(
+                        containerWidth: GlobalFunctionHelper.getContainerWidth(
                           constraints,
                         ),
-                        isTablet: FunctionHelper.isTablet(constraints),
+                        isTablet: GlobalFunctionHelper.isTablet(constraints),
                       ),
 
                       // login form container
                       Container(
-                        width: FunctionHelper.getContainerWidth(
+                        width: GlobalFunctionHelper.getContainerWidth(
                           constraints,
                         ).clamp(320.0, 720.0),
                         padding: EdgeInsets.all(
-                          FunctionHelper.isTablet(constraints) ? 36 : 20,
+                          GlobalFunctionHelper.isTablet(constraints) ? 36 : 20,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -62,7 +62,7 @@ class LoginScreen extends BasePage<LoginScreenController> {
                             Text(
                               'Login'.tr,
                               style: TextStyle(
-                                fontSize: FunctionHelper.isTablet(constraints)
+                                fontSize: GlobalFunctionHelper.isTablet(constraints)
                                     ? 32
                                     : 18,
                                 fontWeight: FontWeight.w700,
@@ -73,7 +73,7 @@ class LoginScreen extends BasePage<LoginScreenController> {
                             Text(
                               'login_wording'.tr,
                               style: TextStyle(
-                                fontSize: FunctionHelper.isTablet(constraints)
+                                fontSize: GlobalFunctionHelper.isTablet(constraints)
                                     ? 16
                                     : 18,
                                 fontWeight: FontWeight.w600,
@@ -133,34 +133,6 @@ class LoginScreen extends BasePage<LoginScreenController> {
                                           (v == null || v.length < 6)
                                           ? 'password_warning'.tr
                                           : null,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Obx(
-                                    () => Row(
-                                      children: [
-                                        Checkbox(
-                                          value: auth.rememberMe.value,
-                                          onChanged: (value) {
-                                            auth.rememberMe.value =
-                                                value ?? false;
-                                          },
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            auth.rememberMe.value =
-                                                !auth.rememberMe.value;
-                                          },
-                                          child: Text(
-                                            'Remember me',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  theme.colorScheme.onSurface,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
                                   const SizedBox(height: 16),
@@ -225,12 +197,12 @@ class LoginScreen extends BasePage<LoginScreenController> {
                       Center(
                         child: Padding(
                           padding: EdgeInsets.only(
-                            top: FunctionHelper.isTablet(constraints) ? 24 : 12,
+                            top: GlobalFunctionHelper.isTablet(constraints) ? 24 : 12,
                           ),
                           child: Text(
                             'copy_right'.tr,
                             style: TextStyle(
-                              fontSize: FunctionHelper.isTablet(constraints)
+                              fontSize: GlobalFunctionHelper.isTablet(constraints)
                                   ? 14
                                   : 12,
                               color: theme.colorScheme.onSurface,

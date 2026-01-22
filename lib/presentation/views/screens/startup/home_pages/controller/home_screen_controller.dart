@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/core/utilities/language_helper.dart';
+import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/core/utilities/permission_helper.dart';
 import 'package:kacamatamoo/core/utilities/session_helper.dart';
 
 class HomeScreenController extends BaseController {
   final Rx<Language> language = Language.en.obs;
   final SessionHelper _sessionHelper = SessionHelper();
+  final RxBool isLoading = false.obs;
 
   // Text getters for UI with language tracking
   String get titleWhenAI {
@@ -90,6 +93,7 @@ class HomeScreenController extends BaseController {
   /// Handle option selection and start session
   Future<void> onTapOption(String key) async {
     try {
+      isLoading.value = true;
       await _sessionHelper.getSessionProductAndNavigate(key);
     } catch (e) {
       debugPrint('Error in onTapOption: $e');
@@ -98,7 +102,14 @@ class HomeScreenController extends BaseController {
         'Failed to start session. Please try again.',
         snackPosition: SnackPosition.BOTTOM,
       );
+    } finally {
+      isLoading.value = false;
     }
+  }
+
+  /// Handle back navigation - only allow going back to SyncInformationScreen
+  void handleBackNavigation() {
+    Navigation.navigateAndRemoveAll(ScreenRoutes.syncScreen);
   }
 
   @override

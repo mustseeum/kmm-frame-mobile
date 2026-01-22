@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
-import 'package:kacamatamoo/core/utilities/function_helper.dart';
+import 'package:kacamatamoo/core/utilities/global_function_helper.dart';
 import 'package:kacamatamoo/data/models/data_response/login/login_data_model.dart';
 import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
 
@@ -75,7 +75,7 @@ mixin CacheManager {
     try {
       final storage = GetStorage();
       final json = jsonEncode(userData.toJson());
-      final encrypt = FunctionHelper.aesEncrypt(json, aesKey);
+      final encrypt = GlobalFunctionHelper.aesEncrypt(json, aesKey);
       await storage.write(CacheManagerKey.userData.name, encrypt);
       return true;
     } catch (e) {
@@ -89,7 +89,7 @@ mixin CacheManager {
     final storage = GetStorage();
     if (storage.hasData(CacheManagerKey.userData.name)) {
       final data = storage.read(CacheManagerKey.userData.name);
-      final decrypt = FunctionHelper.aesDecrypt(data, aesKey);
+      final decrypt = GlobalFunctionHelper.aesDecrypt(data, aesKey);
       final json = jsonDecode(decrypt);
       return LoginDataModel.fromJson(json);
     } else {
@@ -102,7 +102,7 @@ mixin CacheManager {
     try {
       final storage = GetStorage();
       final json = jsonEncode(sessionData.toJson());
-      final encrypt = FunctionHelper.aesEncrypt(json, aesKey);
+      final encrypt = GlobalFunctionHelper.aesEncrypt(json, aesKey);
       await storage.write(CacheManagerKey.sessionData.name, encrypt);
       return true;
     } catch (e) {
@@ -116,7 +116,7 @@ mixin CacheManager {
     final storage = GetStorage();
     if (storage.hasData(CacheManagerKey.sessionData.name)) {
       final data = storage.read(CacheManagerKey.sessionData.name);
-      final decrypt = FunctionHelper.aesDecrypt(data, aesKey);
+      final decrypt = GlobalFunctionHelper.aesDecrypt(data, aesKey);
       final json = jsonDecode(decrypt);
       return SessionDm.fromJson(json);
     } else {

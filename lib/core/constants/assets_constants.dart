@@ -17,6 +17,7 @@ class AssetsConstants {
   static String wayfarerThumb = '${dirImages}wayfarer_thumb.png';
   static String roundThumb = '${dirImages}round_thumb.png';
   static String hexagonThumb = '${dirImages}hexagon_glasses.jpg';
+  static String warningAlert = '${dirImages}warning_alert.png';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';

@@ -13,9 +13,11 @@ class PrivacyIntroScreen extends BasePage<PrivacyIntroController> {
   Widget buildPage(BuildContext context) {
     final ctrl = Get.find<PrivacyIntroController>();
     final baseColor = const Color(0xFFEFF9F8); // pale mint background
-    return Scaffold(
-      backgroundColor: baseColor,
-      appBar: PreferredSize(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: baseColor,
+        appBar: PreferredSize(
         preferredSize: const Size.fromHeight(72),
         child: const GlobalHeader(),
       ),
@@ -26,6 +28,7 @@ class PrivacyIntroScreen extends BasePage<PrivacyIntroController> {
         isLoading: ctrl.isLoading.value,
         isButtonEnabled: ctrl.hasAgreedToPrivacy.value,
       )),
+      ),
     );
   }
 }

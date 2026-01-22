@@ -23,7 +23,6 @@ import 'package:kacamatamoo/presentation/views/screens/questionnaire/lens_recomm
 import 'package:kacamatamoo/presentation/views/screens/questionnaire/lens_recommendation/pages/uv_protection_importance_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/questionnaire/lens_recommendation/pages/wearing_purpose_screens.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/store_information_pages/page/sync_information_screen.dart';
-import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/bindings/try_on_glasses_screen_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/scan_result.dart/bindings/scan_result_bindings.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/login_pages/binding/login_binding.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/home_pages/binding/home_screen_binding.dart';
@@ -40,7 +39,6 @@ import 'package:kacamatamoo/presentation/views/screens/startup/home_pages/page/h
 import 'package:kacamatamoo/presentation/views/screens/startup/login_pages/page/login_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/startup/splash_screen_pages/page/splash_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/bindings/try_on_glasses_screen_v2_binding.dart';
-import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/pages/virtual_try_on_screen_v2.dart';
 
 class AppRoutes {
