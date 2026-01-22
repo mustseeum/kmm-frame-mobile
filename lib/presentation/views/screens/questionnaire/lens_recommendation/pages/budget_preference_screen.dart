@@ -18,7 +18,7 @@ class BudgetPreferenceScreen extends BasePage<BudgetPreferenceController> {
         backgroundColor: bg.scaffoldBackgroundColor,
         // Top bar with logo on left and "Step 12 of 12" on right
         appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(30+ kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
           trailing: Padding(

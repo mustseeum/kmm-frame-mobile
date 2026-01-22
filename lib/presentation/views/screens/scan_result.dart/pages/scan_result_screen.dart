@@ -8,6 +8,7 @@ import 'package:kacamatamoo/presentation/views/widgets/cards/profile_card.dart';
 import 'package:kacamatamoo/presentation/views/widgets/other/info_tile.dart';
 import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/presentation/views/widgets/headers/question_header_widget.dart';
+import 'package:kacamatamoo/presentation/views/widgets/other/circular_image_widget.dart';
 
 class ScanResultScreen extends BasePage<ScanResultController> {
   const ScanResultScreen({super.key});
@@ -15,14 +16,11 @@ class ScanResultScreen extends BasePage<ScanResultController> {
   @override
   Widget buildPage(BuildContext context) {
     final controller = Get.find<ScanResultController>();
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        backgroundColor: AppColors.p50,
-        appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+    return Scaffold(
+      backgroundColor: AppColors.p50,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(30 + kToolbarHeight),
         child: QuestionHeader(
-          showBack: false,
           trailing: Padding(
             padding: const EdgeInsets.only(right: 20),
             child: Text('step_4_of_5'.tr, style: TextStyle(color: Colors.blue)),
@@ -75,35 +73,20 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // LEFT: large image area
-                          SizedBox(
-                            width: leftWidth,
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(200),
-                                child: Container(
-                                  width: avatarDiameter,
+                          profile?.imagePath != null
+                              ? CircularImageWidget(
+                                  imagePath: profile!.imagePath,
+                                  width: leftWidth,
+                                  diameter: avatarDiameter,
+                                )
+                              : SizedBox(
+                                  width: leftWidth,
                                   height: avatarDiameter,
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    borderRadius: BorderRadius.circular(200),
-                                    border: Border.all(color: Colors.black26),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: ClipOval(
-                                      child: profile?.imagePath != null
-                                          ? _buildImage(profile!.imagePath)
-                                          : Image.asset(
-                                              AssetsConstants.faceIcon,
-                                              fit: BoxFit.cover,
-                                            ),
-                                    ),
+                                  child: Image.asset(
+                                    AssetsConstants.faceIconOval,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-
                           const SizedBox(width: 24),
 
                           // RIGHT: information cards (read-only)
@@ -149,14 +132,18 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                           Expanded(
                                             child: InfoTile(
                                               label: 'face_width'.tr,
-                                              value: _mm(profile?.faceWidth),
+                                              value: controller.formatMm(
+                                                profile?.faceWidth,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: InfoTile(
                                               label: 'eye_length'.tr,
-                                              value: _mm(profile?.eyeLength),
+                                              value: controller.formatMm(
+                                                profile?.eyeLength,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -166,14 +153,18 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                           Expanded(
                                             child: InfoTile(
                                               label: 'eye_width'.tr,
-                                              value: _mm(profile?.eyeWidth),
+                                              value: controller.formatMm(
+                                                profile?.eyeWidth,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: InfoTile(
                                               label: 'eye_height'.tr,
-                                              value: _mm(profile?.eyeHeight),
+                                              value: controller.formatMm(
+                                                profile?.eyeHeight,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -183,14 +174,18 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                           Expanded(
                                             child: InfoTile(
                                               label: 'bridge'.tr,
-                                              value: _mm(profile?.bridge),
+                                              value: controller.formatMm(
+                                                profile?.bridge,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: InfoTile(
                                               label: 'temple_length'.tr,
-                                              value: _mm(profile?.templeLength),
+                                              value: controller.formatMm(
+                                                profile?.templeLength,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -240,38 +235,38 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                 ),
                 // Buttons
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: controller.retakeScan,
-                        icon: const Icon(Icons.arrow_back),
-                        label: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Text(
-                            'retake_scan'.tr,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
-                          ),
+                    OutlinedButton.icon(
+                      onPressed: controller.retakeScan,
+                      icon: const Icon(Icons.arrow_back),
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text(
+                          'retake_scan'.tr,
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.black12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.black12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 18),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: controller.tryOnMyself,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0B413F),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                    OutlinedButton.icon(
+                      onPressed: controller.tryOnMyself,
+                      icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                      iconAlignment: IconAlignment.end,
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0B413F),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                      ),
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Obx(() {
                           if (controller.tryingOn.value) {
                             return const SizedBox(
@@ -285,7 +280,7 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                           }
                           return Text(
                             'try_on_myself'.tr,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                           );
                         }),
                       ),
@@ -298,20 +293,6 @@ class ScanResultScreen extends BasePage<ScanResultController> {
           );
         }),
       ),
-      ),
     );
   }
-
-  Widget _buildImage(String path) {
-    if (path.startsWith('http')) {
-      return Image.network(path, fit: BoxFit.cover);
-    }
-    if (File(path).existsSync()) {
-      return Image.file(File(path), fit: BoxFit.cover);
-    }
-    return Image.asset(path, fit: BoxFit.cover);
-  }
-
-  String _mm(double? value) =>
-      value == null ? 'X mm' : '${value.toStringAsFixed(0)} mm';
 }

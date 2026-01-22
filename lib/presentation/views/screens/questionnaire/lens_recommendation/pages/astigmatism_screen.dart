@@ -19,7 +19,7 @@ class AstigmatismScreen extends BasePage<AstigmatismController> {
         backgroundColor: bg.scaffoldBackgroundColor,
         // Top bar with logo on left and "Step 5 of 11" on right
         appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(30+ kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
           trailing: Padding(

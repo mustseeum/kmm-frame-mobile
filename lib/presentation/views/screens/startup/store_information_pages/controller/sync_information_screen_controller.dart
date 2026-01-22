@@ -84,7 +84,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
     lastUpdated.value = DateTime.now();
     isSyncing.value = false;
     // replace with: Get.toNamed('/home'); etc.
-    Get.toNamed(ScreenRoutes.home);
+    Get.toNamed(ScreenRoutes.scanResultScreen);
     // Get.snackbar('Continue', 'Proceeding to next screen', snackPosition: SnackPosition.BOTTOM);
   }
 
@@ -103,11 +103,11 @@ class SyncInformationScreenController extends BaseController with CacheManager {
       onPrimaryPressed: () {
         Navigator.of(Get.context!).pop(true);
         // Handle logout logic here
-        print('User logged out');
+        debugPrint('User logged out');
       },
       onSecondaryPressed: () {
         Navigator.of(Get.context!).pop(false);
-        print('Cancelled');
+        debugPrint('Cancelled');
       },
     );
 
@@ -116,7 +116,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
       await loginBl.logout();
       // Navigate to login screen
       Navigation.navigateAndRemoveAll(ScreenRoutes.login);
-      print('User confirmed action');
+      debugPrint('User confirmed action');
     }
   }
 

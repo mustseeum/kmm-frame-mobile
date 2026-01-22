@@ -20,7 +20,7 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
       child: Scaffold(
         backgroundColor: bgColor.scaffoldBackgroundColor,
         appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(30+ kToolbarHeight),
         child: QuestionHeader(
           backgroundColor: bgColor.appBarTheme.backgroundColor ?? Colors.white,
           dividerColor: dividerColor,
@@ -68,7 +68,7 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
                         previewMirror: controller.previewMirror.value,
                         progress: controller.progress.value,
                         message: controller.displayMessage,
-                        placeholderIcon: AssetsConstants.faceIcon,
+                        placeholderIcon: AssetsConstants.faceIconCircle,
                         onUpdateOverlay: controller.updateOverlay,
                         onStartScanning: controller.startScanning,
                       );

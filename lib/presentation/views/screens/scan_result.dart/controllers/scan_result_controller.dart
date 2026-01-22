@@ -106,4 +106,8 @@ class ScanResultController extends BaseController {
       isLoading.value = false;
     }
   }
+  
+  /// Format measurement value to millimeter string
+  String formatMm(double? value) =>
+      value == null ? 'X mm' : '${value.toStringAsFixed(0)} mm';
 }

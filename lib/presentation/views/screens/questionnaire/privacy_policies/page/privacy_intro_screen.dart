@@ -18,7 +18,7 @@ class PrivacyIntroScreen extends BasePage<PrivacyIntroController> {
       child: Scaffold(
         backgroundColor: baseColor,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(72),
+          preferredSize: const Size.fromHeight(30 + kToolbarHeight),
           child: const QuestionHeader(
             fontSize: 15,
             stepText: 'AI–Powered Virtual Try On System',

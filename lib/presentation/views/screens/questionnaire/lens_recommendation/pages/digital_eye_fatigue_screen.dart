@@ -19,7 +19,7 @@ class DigitalEyeFatigueScreen extends BasePage<DigitalEyeFatigueController> {
         backgroundColor: bg.scaffoldBackgroundColor,
         // Top bar with logo on left and "Step 8 of 11" on right
         appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(30+ kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
           trailing: Padding(

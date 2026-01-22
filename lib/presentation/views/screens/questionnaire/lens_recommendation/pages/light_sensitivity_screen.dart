@@ -18,7 +18,7 @@ class LightSensitivityScreen extends BasePage <LightSensitivityController>{
         backgroundColor: bg.scaffoldBackgroundColor,
         // Top bar with logo on left and "Step 10 of 11" on right
         appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(30+ kToolbarHeight),
         child: QuestionHeader(
           showBack: false,
           trailing: Padding(
