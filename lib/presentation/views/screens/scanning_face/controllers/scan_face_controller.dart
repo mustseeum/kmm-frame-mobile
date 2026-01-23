@@ -354,12 +354,12 @@ class ScanFaceController extends BaseController with CacheManager {
       } else {
         // Navigate to result screen with ML processing result
         debugPrint(
-          'Navigating to ScanResultScreen with ML processing result, result: ${json.encode(json.encode(result))} ',
+          'Navigating to ScanResultScreen with ML processing result, result: ${json.encode(result)} ',
         );
-        Get.toNamed(
-          ScreenRoutes.scanResultScreen,
-          arguments: {'result': result, 'imagePath': capturedImagePath},
-        );
+        // Get.toNamed(
+        //   ScreenRoutes.scanResultScreen,
+        //   arguments: {'result': result, 'imagePath': capturedImagePath},
+        // );
       }
       debugPrint('ML Scanning Processing Result: $result');
     } catch (e, st) {

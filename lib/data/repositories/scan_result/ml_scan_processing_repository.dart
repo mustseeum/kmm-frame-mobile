@@ -14,21 +14,23 @@ import 'package:path/path.dart';
 class MLScanProcessingRepository extends BaseRepo {
   MLScanProcessingRepository(super.dio);
 
-  Future<ParentResponse?> processFaceScan(AnswersDataRequest answers, String token) async {
+  Future<ParentResponse?> processFaceScan(
+    AnswersDataRequest answers,
+    String token,
+  ) async {
     String endpoint = ApiConstants.mlScanProcessingEndpoint;
     ParentResponse? response;
     BaseResult? apiResponse;
     FormData formData = FormData();
     // formData = await answers.toFormData();
     formData = FormData.fromMap({
-        "answers": json.encode(answers.answers?.toJson()),
-        if (answers.image != null && answers.image != "")
-          "image": await MultipartFile.fromFile(
-            answers.image?.path ?? "",
-            filename: basename(answers.image!.path.split('/').last),
-          ),
-      });
-
+      "answers": json.encode(answers.answers?.toJson()),
+      if (answers.image != null && answers.image != "")
+        "image": await MultipartFile.fromFile(
+          answers.image?.path ?? "",
+          filename: basename(answers.image!.path.split('/').last),
+        ),
+    });
 
     apiResponse = await post(
       endpoint,
@@ -55,8 +57,14 @@ class MLScanProcessingRepository extends BaseRepo {
     return RequestHelper().responseHandler(
       response: apiResponse,
       onSuccess: () {
+        debugPrint(
+          "MLScanProcessingRepository-log-processFaceScan-dataModel(3): ${json.encode(response?.data)}",
+        );
         final MLScanProcessingDm dataModel = MLScanProcessingDm.fromJson(
           response?.data ?? {},
+        );
+        debugPrint(
+          "MLScanProcessingRepository-log-processFaceScan-dataModel(4): ${json.encode(dataModel)}",
         );
         response?.data = dataModel;
         return response;

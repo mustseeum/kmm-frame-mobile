@@ -4,9 +4,9 @@ part 'ml_scan_processing_dm.g.dart';
 
 @JsonSerializable()
 class MLScanProcessingDm {
+  String? session_id;
   String? image_id;
   MLResultDM? ml_result;
-  String? session_id;
 
   MLScanProcessingDm({this.image_id, this.ml_result, this.session_id});
 

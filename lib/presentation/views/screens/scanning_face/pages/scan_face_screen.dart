@@ -25,6 +25,15 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
           backgroundColor: bgColor.appBarTheme.backgroundColor ?? Colors.white,
           dividerColor: dividerColor,
           showDivider: true,
+          trailing: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Text(
+                controller.screenType == "both"
+                    ? 'step_1_of_10'.tr
+                    : 'step_3_of_5'.tr,
+                style: const TextStyle(color: Colors.blue),
+              ),
+            ),
         ),
       ),
       body: Stack(
