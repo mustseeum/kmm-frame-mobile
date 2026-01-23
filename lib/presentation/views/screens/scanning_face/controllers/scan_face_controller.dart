@@ -110,7 +110,7 @@ class ScanFaceController extends BaseController with CacheManager {
     resetProgress();
     faceState.value = FaceState.noFace;
     message.value = 'Face not detected';
-    
+
     // Restart the progress timer in case it was stopped
     _startProgressTimer();
 
@@ -290,7 +290,7 @@ class ScanFaceController extends BaseController with CacheManager {
 
   Future<void> _onScanComplete() async {
     _stopProgressTimer();
-    
+
     try {
       final SessionDm session = await getSessionData();
       String sessionId = session.session_id ?? '';
@@ -301,11 +301,16 @@ class ScanFaceController extends BaseController with CacheManager {
 
       // Create Answers model with all questionnaire data and image
       answers.session_id = sessionId;
-      answers.looking_for = selectedGender == "Men"
+      answers.looking_for = selectedGender == "Men" || selectedGender == "Pria"
           ? 'men_eyewear'
+          : selectedGender == "I prefer not to say" ||
+                selectedGender == "Saya memilih untuk tidak menyebutkan"
+          ? 'general_eyewear'
           : 'women_eyewear';
       answers.age_range = GlobalFunctionHelper.formatAgeString(selectedAge);
-      answers.gender_identity = selectedGender == "I prefer not to say"
+      answers.gender_identity =
+          selectedGender == "I prefer not to say" ||
+              selectedGender == "Saya memilih untuk tidak menyebutkan"
           ? 'prefer_not_to_say'
           : selectedGender?.toLowerCase();
 
@@ -325,11 +330,11 @@ class ScanFaceController extends BaseController with CacheManager {
     } catch (e, st) {
       debugPrint('Error in _onScanComplete: $e');
       debugPrint('Stack trace: $st');
-      
+
       // Ensure camera is stopped and state is reset even on error
       await stopScanning();
       isLoading.value = false;
-      
+
       Get.snackbar(
         'Error',
         'Failed to complete scan. Please try again.',
@@ -405,18 +410,19 @@ class ScanFaceController extends BaseController with CacheManager {
       debugPrint('Image captured successfully: $capturedImagePath');
 
       // Save image to device gallery (publicly accessible)
-      final savedPath = await GlobalFunctionHelper.saveImageToGallery(
-        imagePath,
-        fileName: 'face_scan_$timestamp.jpg',
-        albumName: 'KacamataMoo',
-      );
+      // **uncomment the following lines if you want to save to gallery**
+      // final savedPath = await GlobalFunctionHelper.saveImageToGallery(
+      //   imagePath,
+      //   fileName: 'face_scan_$timestamp.jpg',
+      //   albumName: 'KacamataMoo',
+      // );
 
-      if (savedPath != null) {
-        capturedImagePath = savedPath;
-        debugPrint('Image saved to gallery: $savedPath');
-      } else {
-        debugPrint('Failed to save image to gallery, using temp path');
-      }
+      // if (savedPath != null) {
+      //   capturedImagePath = savedPath;
+      //   debugPrint('Image saved to gallery: $savedPath');
+      // } else {
+      //   debugPrint('Failed to save image to gallery, using temp path');
+      // }
     } catch (e, st) {
       debugPrint('Error capturing image: $e');
       debugPrint('Stack trace: $st');

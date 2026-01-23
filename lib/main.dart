@@ -30,9 +30,10 @@ void main() async {
       statusBarIconBrightness: Brightness.dark, // For Android: (dark icons)
     ),
   );
-  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]).then(
-    (value) {
-      runApp(KacamataMooApp());
-    },
-  );
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]).then(
+  //   (value) {
+  //     runApp(KacamataMooApp());
+  //   },
+  // ); // uncomment this if you want to lock orientation to landscape
+  runApp(const KacamataMooApp());
 }

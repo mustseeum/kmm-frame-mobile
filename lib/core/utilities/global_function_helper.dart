@@ -442,11 +442,11 @@ class GlobalFunctionHelper {
     }
 
     // Handle special case: "Over 51 years old" -> "51+"
-    if (ageString.toLowerCase().contains('over 51')) {
+    if (ageString.toLowerCase().contains('over 51') || ageString.toLowerCase().contains('di atas 51')) {
       return '51+';
     }
 
-    if (ageString.toLowerCase().contains('under 18')) {
+    if (ageString.toLowerCase().contains('under 18') || ageString.toLowerCase().contains('di bawah 18')) {
       return '<18';
     }
 

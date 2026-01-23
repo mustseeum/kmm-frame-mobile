@@ -8,9 +8,7 @@ part of 'ml_result_dm.dart';
 
 MLResultDM _$MLResultDMFromJson(Map<String, dynamic> json) => MLResultDM(
   confidence_level: (json['confidence_level'] as num?)?.toDouble(),
-  face_shape: json['face_shape'] == null
-      ? null
-      : FaceShapeDm.fromJson(json['face_shape'] as Map<String, dynamic>),
+  face_shape: json['face_shape'] as String?,
   image_id: json['image_id'] as String?,
   measurements: json['measurements'] == null
       ? null
@@ -21,9 +19,7 @@ MLResultDM _$MLResultDMFromJson(Map<String, dynamic> json) => MLResultDM(
           json['recommended_frames'] as Map<String, dynamic>,
         ),
   session_id: json['session_id'] as String?,
-  skin_tone: json['skin_tone'] == null
-      ? null
-      : SkinToneDm.fromJson(json['skin_tone'] as Map<String, dynamic>),
+  skin_tone: json['skin_tone'] as String?,
 );
 
 Map<String, dynamic> _$MLResultDMToJson(MLResultDM instance) =>

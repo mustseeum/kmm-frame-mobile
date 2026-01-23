@@ -1,4 +1,4 @@
-enum EnvironmentType { dev, prod }
+enum EnvironmentType { dev, staging, prod }
 
 enum CacheManagerKey {
   environmentType,
@@ -6,7 +6,7 @@ enum CacheManagerKey {
   userData,
   isLoggedIn,
   rememberMeEmail,
-  sessionData
+  sessionData,
 }
 
 enum PopupType { warning, info, error, success, refresh, question, failed }
@@ -37,4 +37,4 @@ final aesKey = "Gi1oV68mklSFzq9W";
 
 enum Language { id, en }
 
-enum SessionParam { FRAME_ONLY, LENS_ONLY, BOTH}
+enum SessionParam { FRAME_ONLY, LENS_ONLY, BOTH }

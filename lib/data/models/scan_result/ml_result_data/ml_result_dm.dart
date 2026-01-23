@@ -8,12 +8,12 @@ part 'ml_result_dm.g.dart';
 @JsonSerializable()
 class MLResultDM {
   double? confidence_level;
-  FaceShapeDm? face_shape;
+  String? face_shape;
   String? image_id;
   MeasurementsDm? measurements;
   RecommendedFramesDm? recommended_frames;
   String? session_id;
-  SkinToneDm? skin_tone;
+  String? skin_tone;
 
   MLResultDM({
     this.confidence_level,

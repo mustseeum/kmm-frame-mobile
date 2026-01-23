@@ -6,6 +6,7 @@ class AppEnvironment with CacheManager {
   static const String API_VERSION = "/v1/";
   String API_URL_PROD = "${dotenv.env['BASE_URL_PROD']}$API_VERSION";
   String API_URL_DEV = "${dotenv.env['BASE_URL_DEV']}$API_VERSION";
+  String API_URL_STAGING = "${dotenv.env['BASE_URL_STAGING']}$API_VERSION";
 
   // selected environtment
   EnvironmentType environtment = EnvironmentType.dev;
@@ -14,6 +15,8 @@ class AppEnvironment with CacheManager {
     String? env = getSelectedEnvironment();
     if (env == EnvironmentType.prod.name) {
       return API_URL_PROD;
+    } else if (env == EnvironmentType.staging.name) {
+      return API_URL_STAGING;
     } else {
       return API_URL_DEV;
     }
