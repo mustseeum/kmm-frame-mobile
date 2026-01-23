@@ -155,6 +155,123 @@ class GlobalFunctionHelper {
     }
   }
 
+  /// Saves an image file to device gallery/Pictures folder (publicly accessible).
+  ///
+  /// This makes the image visible in the device gallery and file manager.
+  /// Requires storage permissions on Android.
+  ///
+  /// [sourceFilePath] - The source file path to copy from.
+  /// [fileName] - Optional custom file name (with extension). If not provided,
+  ///              generates a timestamped name with 'KacamataMoo_' prefix.
+  /// [albumName] - Optional album/subfolder name in Pictures (e.g., 'KacamataMoo').
+  ///               Defaults to 'KacamataMoo'.
+  ///
+  /// Returns the saved file path on success, or null on failure.
+  static Future<String?> saveImageToGallery(
+    String sourceFilePath, {
+    String? fileName,
+    String? albumName,
+  }) async {
+    try {
+      final File sourceFile = File(sourceFilePath);
+      if (!await sourceFile.exists()) {
+        debugPrint('Source file does not exist: $sourceFilePath');
+        return null;
+      }
+
+      // Request storage permission
+      PermissionStatus status;
+      if (Platform.isAndroid) {
+        // For Android 13+ (API 33+), use photos permission
+        // For older versions, use storage permission
+        if (await Permission.photos.isGranted) {
+          status = PermissionStatus.granted;
+        } else if (await Permission.storage.isGranted) {
+          status = PermissionStatus.granted;
+        } else {
+          // Try photos first (for Android 13+)
+          status = await Permission.photos.request();
+          if (!status.isGranted) {
+            // Fallback to storage for older Android
+            status = await Permission.storage.request();
+          }
+        }
+
+        if (!status.isGranted) {
+          debugPrint('Storage permission denied');
+          return null;
+        }
+      } else if (Platform.isIOS) {
+        status = await Permission.photos.request();
+        if (!status.isGranted) {
+          debugPrint('Photos permission denied');
+          return null;
+        }
+      }
+
+      // Generate file name if not provided
+      final String album = albumName ?? 'KacamataMoo';
+      final String targetFileName = fileName ??
+          'KacamataMoo_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+      String? savedPath;
+
+      if (Platform.isAndroid) {
+        // For Android, save to Pictures directory
+        Directory? picturesDir;
+        
+        // Try to get external storage directory
+        final externalDirs = await getExternalStorageDirectories();
+        if (externalDirs != null && externalDirs.isNotEmpty) {
+          // Navigate to Pictures folder
+          final String basePath = externalDirs.first.path.split('Android')[0];
+          picturesDir = Directory(path.join(basePath, 'Pictures', album));
+        }
+
+        if (picturesDir == null) {
+          debugPrint('Could not access Pictures directory');
+          return null;
+        }
+
+        // Create album directory if it doesn't exist
+        if (!await picturesDir.exists()) {
+          await picturesDir.create(recursive: true);
+        }
+
+        final String targetPath = path.join(picturesDir.path, targetFileName);
+
+        // Copy file to Pictures directory
+        await sourceFile.copy(targetPath);
+        savedPath = targetPath;
+
+        debugPrint('Image saved to gallery: $savedPath');
+      } else if (Platform.isIOS) {
+        // For iOS, we need to use platform-specific code or a plugin
+        // Since we don't have image_gallery_saver, we'll save to app's directory
+        // and inform the user they need a plugin for iOS gallery access
+        debugPrint('iOS gallery save requires image_gallery_saver plugin');
+        debugPrint('Falling back to app documents directory');
+        
+        final directory = await getApplicationDocumentsDirectory();
+        final targetPath = path.join(directory.path, album, targetFileName);
+        final targetDir = Directory(path.join(directory.path, album));
+        
+        if (!await targetDir.exists()) {
+          await targetDir.create(recursive: true);
+        }
+        
+        await sourceFile.copy(targetPath);
+        savedPath = targetPath;
+      }
+
+      return savedPath;
+    } catch (e, st) {
+      debugPrint('Error saving image to gallery: $e');
+      debugPrint('Stack trace: $st');
+      return null;
+    }
+  }
+
   /// Saves image bytes to local storage (app's documents directory).
   ///
   /// [bytes] - The image data as Uint8List.
@@ -314,6 +431,7 @@ class GlobalFunctionHelper {
   ///
   /// Converts "25 years old" to "25", "18-24 years old" to "18-24".
   /// Special case: "Over 51 years old" converts to "51+".
+  /// Special case: "Under 18 years old" converts to "<18".
   ///
   /// [ageString] - The age string to format (e.g., "25 years old").
   ///
@@ -326,6 +444,10 @@ class GlobalFunctionHelper {
     // Handle special case: "Over 51 years old" -> "51+"
     if (ageString.toLowerCase().contains('over 51')) {
       return '51+';
+    }
+
+    if (ageString.toLowerCase().contains('under 18')) {
+      return '<18';
     }
 
     // Remove "years old" (case insensitive)
@@ -369,4 +491,5 @@ class GlobalFunctionHelper {
     ); // default to English
     return langCode;
   }
+  
 }

@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
 import 'package:kacamatamoo/data/business_logic/ml_scan_processing_bl.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
@@ -355,10 +356,10 @@ class ScanFaceController extends BaseController with CacheManager {
         debugPrint(
           'Navigating to ScanResultScreen with ML processing result, result: ${json.encode(json.encode(result))} ',
         );
-        // Get.toNamed(
-        //   ScreenRoutes.scanResultScreen,
-        //   arguments: {'result': result, 'imagePath': capturedImagePath},
-        // );
+        Get.toNamed(
+          ScreenRoutes.scanResultScreen,
+          arguments: {'result': result, 'imagePath': capturedImagePath},
+        );
       }
       debugPrint('ML Scanning Processing Result: $result');
     } catch (e, st) {
@@ -402,6 +403,20 @@ class ScanFaceController extends BaseController with CacheManager {
 
       capturedImagePath = imagePath;
       debugPrint('Image captured successfully: $capturedImagePath');
+
+      // Save image to device gallery (publicly accessible)
+      final savedPath = await GlobalFunctionHelper.saveImageToGallery(
+        imagePath,
+        fileName: 'face_scan_$timestamp.jpg',
+        albumName: 'KacamataMoo',
+      );
+
+      if (savedPath != null) {
+        capturedImagePath = savedPath;
+        debugPrint('Image saved to gallery: $savedPath');
+      } else {
+        debugPrint('Failed to save image to gallery, using temp path');
+      }
     } catch (e, st) {
       debugPrint('Error capturing image: $e');
       debugPrint('Stack trace: $st');

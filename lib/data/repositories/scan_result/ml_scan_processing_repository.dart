@@ -8,18 +8,28 @@ import 'package:kacamatamoo/core/network/models/parent_response.dart';
 import 'package:kacamatamoo/core/utilities/request_helper.dart';
 import 'package:kacamatamoo/data/models/request/questionnaire/answers_data_request.dart';
 import 'package:kacamatamoo/data/models/scan_result/ml_result_data/ml_scan_processing_dm.dart';
+import 'package:dio/dio.dart';
+import 'package:path/path.dart';
 
 class MLScanProcessingRepository extends BaseRepo {
   MLScanProcessingRepository(super.dio);
 
-  Future<ParentResponse?> processFaceScan(
-    AnswersDataRequest answersDataRequest,
-    String token,
-  ) async {
+  Future<ParentResponse?> processFaceScan(AnswersDataRequest answers, String token) async {
     String endpoint = ApiConstants.mlScanProcessingEndpoint;
     ParentResponse? response;
     BaseResult? apiResponse;
-    final formData = await answersDataRequest.toFormData();
+    FormData formData = FormData();
+    // formData = await answers.toFormData();
+    formData = FormData.fromMap({
+        "answers": json.encode(answers.answers?.toJson()),
+        if (answers.image != null && answers.image != "")
+          "image": await MultipartFile.fromFile(
+            answers.image?.path ?? "",
+            filename: basename(answers.image!.path.split('/').last),
+          ),
+      });
+
+
     apiResponse = await post(
       endpoint,
       body: formData,
@@ -29,12 +39,12 @@ class MLScanProcessingRepository extends BaseRepo {
       },
     );
     debugPrint(
-      "MLScanProcessingRepository-log-processFaceScan-response: ${json.encode(apiResponse.data)}",
+      "MLScanProcessingRepository-log-processFaceScan-response(1): ${json.encode(apiResponse.data)}",
     );
     try {
       response = ParentResponse.fromJson(apiResponse.data);
       debugPrint(
-        "MLScanProcessingRepository-log-processFaceScan-parentResponse: ${json.encode(response)}",
+        "MLScanProcessingRepository-log-processFaceScan-parentResponse(2): ${json.encode(response)}",
       );
     } catch (e) {
       debugPrint(

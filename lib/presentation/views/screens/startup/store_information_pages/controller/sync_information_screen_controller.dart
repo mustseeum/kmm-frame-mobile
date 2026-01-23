@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/business_logic/login_bl.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
@@ -84,7 +85,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
     lastUpdated.value = DateTime.now();
     isSyncing.value = false;
     // replace with: Get.toNamed('/home'); etc.
-    Get.toNamed(ScreenRoutes.scanResultScreen);
+    Get.toNamed(ScreenRoutes.home);
     // Get.snackbar('Continue', 'Proceeding to next screen', snackPosition: SnackPosition.BOTTOM);
   }
 
@@ -94,9 +95,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
       context: Get.context!,
       title: '',
       content: 'are_you_sure_you_want_to_logout'.tr,
-      iconData: Icons.error_outline, // Or use iconAssetPath for custom icon
-      iconBackgroundColor: const Color(0xFFFEE4E2),
-      iconColor: const Color(0xFFD92D20),
+      iconAssetPath: AssetsConstants.roundedWarning, // Or use iconAssetPath for custom icon
       primaryButtonText: 'Logout',
       secondaryButtonText: 'Cancel',
       primaryButtonColor: const Color(0xFFD92D20),

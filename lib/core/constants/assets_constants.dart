@@ -19,6 +19,8 @@ class AssetsConstants {
   static String roundThumb = '${dirImages}round_thumb.png';
   static String hexagonThumb = '${dirImages}hexagon_glasses.jpg';
   static String warningAlert = '${dirImages}warning_alert.png';
+  static String roundedError = '${dirImages}roundedError.png';
+  static String roundedWarning = '${dirImages}roundedWarning.png';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';

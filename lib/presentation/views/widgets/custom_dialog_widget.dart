@@ -46,8 +46,7 @@ class CustomDialogWidget extends StatelessWidget {
       backgroundColor: Colors.white,
       child: Container(
         width: 400,
-        height: 268,
-        padding: const EdgeInsets. all(24.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,14 +68,13 @@ class CustomDialogWidget extends StatelessWidget {
                       child: iconAssetPath != null
                           ?  Image.asset(
                               iconAssetPath!,
-                              width: 24,
-                              height: 24,
-                              color: iconColor ?? const Color(0xFFD92D20),
+                              width: 45,
+                              height: 45,
                             )
                           :  Icon(
                               iconData ??  Icons.error_outline,
                               color: iconColor ?? const Color(0xFFD92D20),
-                              size: 24,
+                              size: 40,
                             ),
                     ),
                   ),
@@ -101,15 +99,18 @@ class CustomDialogWidget extends StatelessWidget {
 
                 // Content Section
                 if (content != null)
-                  Text(
-                    content! ,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight:  FontWeight.w400,
-                      color: Color(0xFF667085),
-                      height: 1.5,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Text(
+                      content! ,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight:  FontWeight.w400,
+                        color: Color(0xFF667085),
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
               ],
             ),

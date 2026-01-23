@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/http_connection/base_result.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
+import 'package:kacamatamoo/core/constants/assets_constants.dart';
 import 'package:kacamatamoo/core/network/models/parent_response.dart';
 import 'package:kacamatamoo/core/utilities/navigation_helper.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
+import 'package:kacamatamoo/presentation/views/widgets/custom_dialog_widget.dart';
 
 class RequestHelper with CacheManager {
-
   Future<ParentResponse?> generateErrorResponse(String message) async {
     ParentResponse parentResponse = ParentResponse();
     parentResponse.message = message;
@@ -46,33 +48,53 @@ class RequestHelper with CacheManager {
   Future<bool> unAuthenticated(int? statusCode, String? statusMessage) async {
     if (statusCode == 401) {
       debugPrint("Unauthorized User - $statusMessage");
-      
+
       // Show dialog to inform user about unauthorized access
-      await Get.dialog(
-        AlertDialog(
-          title: const Text("Session Expired"),
-          content: Text(
+      // await Get.dialog(
+      //   AlertDialog(
+      //     title: const Text("Session Expired"),
+      //     content: Text(
+      //       statusMessage ?? "Your session has expired. Please login again.",
+      //     ),
+      //     actions: [
+      //       TextButton(
+      //         onPressed: () async {
+      //           // Close dialog
+      //           Get.back();
+
+      //           // Clear all auth data
+      //           await clearAuthData();
+
+      //           // Navigate to login screen
+      //           Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+      //         },
+      //         child: const Text("OK"),
+      //       ),
+      //     ],
+      //   ),
+      //   barrierDismissible: false,
+      // );
+
+      await CustomDialogWidget.show(
+        context: Get.context!,
+        title: 'Session Expired !',
+        content:
             statusMessage ?? "Your session has expired. Please login again.",
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                // Close dialog
-                Get.back();
-                
-                // Clear all auth data
-                await clearAuthData();
-                
-                // Navigate to login screen
-                Navigation.navigateAndRemoveAll(ScreenRoutes.login);
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-        barrierDismissible: false,
+        iconAssetPath: AssetsConstants.roundedError,
+        primaryButtonText: 'OK',
+        primaryButtonColor: AppColors.primary,
+        onPrimaryPressed: () async {
+          // Close dialog
+          Get.back();
+
+          // Clear all auth data
+          await clearAuthData();
+
+          // Navigate to login screen
+          Navigation.navigateAndRemoveAll(ScreenRoutes.login);
+        },
       );
-      
+
       return true;
     }
     return false;
@@ -100,20 +122,21 @@ class RequestHelper with CacheManager {
 
   Future<bool> showError(String errorMessage) async {
     String message = errorMessage.capitalize ?? "Silahkan hubungi admin";
-    Get.dialog(
-      AlertDialog(
-        title: Text("Ooops !"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: Text("OK"),
-          ),
-        ],
-      ),
-      barrierDismissible: false,
+    await CustomDialogWidget.show(
+      context: Get.context!,
+      title: 'Ooops !',
+      content: message,
+      iconAssetPath: AssetsConstants.roundedError,
+      primaryButtonText: 'OK',
+      primaryButtonColor: AppColors.primary,
+      onPrimaryPressed: () {
+        Navigator.of(Get.context!).pop(true);
+        // Handle logout logic here
+      },
+      onSecondaryPressed: () {
+        Navigator.of(Get.context!).pop(false);
+        debugPrint('Cancelled');
+      },
     );
     return true;
   }
