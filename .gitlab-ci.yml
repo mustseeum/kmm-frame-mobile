@@ -12,7 +12,7 @@ variables:
   APP_NAME: kacamatamoo-frame-ai
   APP_TAG_STAGING: ${CI_COMMIT_SHORT_SHA}
   APP_TAG_PRODUCTION: $CI_COMMIT_TAG
-  DOCKERFILE_PATH: ./Dockerfile
+  APP_OUTPUT: build/app/outputs/flutter-apk/app-release.apk
   INFISICAL_ENV_PATH: /kacamatamoo/frame/kmm-frame-mobile
   GOCACHE: $CI_PROJECT_DIR/.cache/go-build
   GOMODCACHE: $CI_PROJECT_DIR/.cache/go-mod

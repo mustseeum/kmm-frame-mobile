@@ -9,27 +9,36 @@ set -e
 # FIREBASE_TOKEN: (Optional if using FIREBASE_SERVICE_ACCOUNT_KEY)
 # GOOGLE_APPLICATION_CREDENTIALS: (Optional, path to service account key)
 
-APK_SOURCE="build/app/outputs/flutter-apk/app-release.apk"
-
-if [[ ! -f "$APK_SOURCE" ]]; then
-    echo "Error: APK not found at $APK_SOURCE"
+if [[ ! -f "$APP_OUTPUT" ]]; then
+    echo "Error: APK not found at $APP_OUTPUT"
     exit 1
 fi
 
 if [[ -n "$FIREBASE_OUTPUT_APK" ]]; then
     echo "Renaming APK to $FIREBASE_OUTPUT_APK"
-    mv "$APK_SOURCE" "$FIREBASE_OUTPUT_APK"
+    mv "$APP_OUTPUT" "$FIREBASE_OUTPUT_APK"
     APK_PATH="$FIREBASE_OUTPUT_APK"
 else
-    APK_PATH="$APK_SOURCE"
+    APK_PATH="$APP_OUTPUT"
 fi
 
 echo "Deploying to Firebase App Distribution..."
 
-# If FIREBASE_SERVICE_ACCOUNT_KEY is present, write it to a file
-if [[ -n "$FIREBASE_SERVICE_ACCOUNT_KEY" ]]; then
+# Handle GOOGLE_APPLICATION_CREDENTIALS
+if [[ -n "$GOOGLE_APPLICATION_CREDENTIALS" ]]; then
+    if [[ -f "$GOOGLE_APPLICATION_CREDENTIALS" ]]; then
+        echo "Using GOOGLE_APPLICATION_CREDENTIALS from file path: $GOOGLE_APPLICATION_CREDENTIALS"
+    else
+        echo "GOOGLE_APPLICATION_CREDENTIALS is not a file, assuming raw JSON content..."
+        echo "$GOOGLE_APPLICATION_CREDENTIALS" > firebase-key.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/firebase-key.json
+        CLEANUP_KEY=true
+    fi
+elif [[ -n "$FIREBASE_SERVICE_ACCOUNT_KEY" ]]; then
+    echo "Using FIREBASE_SERVICE_ACCOUNT_KEY..."
     echo "$FIREBASE_SERVICE_ACCOUNT_KEY" > firebase-key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/firebase-key.json
+    CLEANUP_KEY=true
 fi
 
 firebase appdistribution:distribute "$APK_PATH" \
@@ -38,8 +47,8 @@ firebase appdistribution:distribute "$APK_PATH" \
     ${FIREBASE_RELEASE_NOTES:+--release-notes "$FIREBASE_RELEASE_NOTES"}
 
 # Cleanup
-if [[ -f "firebase-key.json" ]]; then
-    rm firebase-key.json
+if [[ "$CLEANUP_KEY" = true ]]; then
+    rm -f firebase-key.json
 fi
 
 echo "Firebase deployment completed successfully."
