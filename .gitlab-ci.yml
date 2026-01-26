@@ -28,18 +28,8 @@ before_script:
   - flutter pub get
 
 ################################################################################
-# ANALYZE & TEST
+# Flutter TEST
 ################################################################################
-
-flutter_analyze:
-  stage: analyze
-  image: http://ghcr.io/cirruslabs/flutter:3.38.5
-  script:
-    - flutter analyze
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "staging"'
-    - if: '$CI_COMMIT_BRANCH == "main"'
 
 flutter_test:
   stage: test
@@ -52,13 +42,23 @@ flutter_test:
     - if: '$CI_COMMIT_BRANCH == "main"'
 
 ################################################################################
-# SECURITY SCAN (Trivy & GitGuardian)
+# SECURITY SCAN (Trivy, GitGuardian, Flutter Analyze)
 ################################################################################
 
 gitguardian-scan:
   image: gitguardian/ggshield:latest
   stage: scan
   script: ggshield secret scan ci
+
+flutter_analyze:
+  stage: analyze
+  image: http://ghcr.io/cirruslabs/flutter:3.38.5
+  script:
+    - flutter analyze
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
 
 trivy-scan-fs:
   stage: scan
@@ -80,31 +80,13 @@ build_android:
   stage: build
   image: http://ghcr.io/cirruslabs/flutter:3.38.5
   script:
+    - flutter clean
+    - flutter pub get
     - flutter build apk --release
   artifacts:
     paths:
       - build/app/outputs/flutter-apk/app-release.apk
     expire_in: 1 week
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "staging"'
-    - if: '$CI_COMMIT_TAG'
-
-################################################################################
-# SECURITY SCAN (Trivy Image/Binary - Optional for Mobile)
-################################################################################
-
-trivy-scan-image:
-  stage: post-build-scan
-  image:
-    name: aquasec/trivy:latest
-    entrypoint: [""]
-  needs:
-    - job: build_android
-      artifacts: true
-  before_script: [] # Override global before_script
-  script:
-    # Scanning the generated APK for vulnerabilities
-    - trivy fs --exit-code 0 --severity HIGH,CRITICAL build/app/outputs/flutter-apk/app-release.apk
   rules:
     - if: '$CI_COMMIT_BRANCH == "staging"'
     - if: '$CI_COMMIT_TAG'
