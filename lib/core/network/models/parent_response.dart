@@ -3,28 +3,16 @@ part 'parent_response.g.dart';
 
 @JsonSerializable()
 class ParentResponse {
-  int? code;
-  int? statusCode;
-  bool? status;
+  bool? success;
   String? message;
   dynamic data;
-  String? responseTime;
-  int? totalElement;
-  int? totalPage;
-  int? currentPage;
-  int? pageSize;
+  String? error;
 
   ParentResponse({
-    this.code,
-    this.statusCode,
-    this.status,
-    this.responseTime,
+    this.success,
     this.message,
     this.data,
-    this.totalElement,
-    this.totalPage,
-    this.currentPage,
-    this.pageSize,
+    this.error,
   });
 
   factory ParentResponse.fromJson(Map<String, dynamic> json) =>

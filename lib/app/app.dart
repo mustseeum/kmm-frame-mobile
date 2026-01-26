@@ -15,7 +15,7 @@ class KacamataMooApp extends StatelessWidget {
     final isDarkMode = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
 
     return GetMaterialApp(
-      title: 'KacamataMoo',
+      title: 'Kacamatamoo',
       debugShowCheckedModeBanner: false,
       // 🔹 Theme
       theme: AppTheme.lightTheme,
@@ -26,7 +26,6 @@ class KacamataMooApp extends StatelessWidget {
       locale: LocalizationService.locale,
       fallbackLocale: LocalizationService.fallbackLocale,
       // 🔹 Akhir tambahan
-
       initialRoute: ScreenRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );
