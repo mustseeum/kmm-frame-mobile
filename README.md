@@ -189,7 +189,48 @@ For questions, issues, or support:
 - **Documentation**: See [docs/](docs/) folder
 - **Theme Guide**: [THEME_GUIDE.md](THEME_GUIDE.md)
 
-## 🙏 Acknowledgments
+## � Changelog
+
+### [Unreleased] - 2026-01-26
+
+#### Added
+- ✨ AR support detection functionality in `GlobalFunctionHelper`
+- 🎯 AR compatibility check before face scanning starts
+- 🔘 Next button on face scanning screen with progress-based enablement
+- 📊 Enhanced scan result display with organized frame and color recommendations
+- 🎨 Wrap layout for frame types and colors (horizontal flow with automatic wrapping)
+- 🏷️ Styled chip badges for frame recommendations (blue) and color recommendations (green)
+- 📦 Proper data model structure for `ScanResultModel` with nested models
+- 🔧 Helper methods in `ScanResultController` for getting sorted recommendations
+
+#### Fixed
+- 🐛 Fixed type mismatch error when passing ML result data from arguments
+- 🔄 Updated `ScanResultModel` to use proper JSON serialization
+- 📏 Corrected measurement data access through `measurements` property
+- 🎯 Fixed perfect match display to show top-scored recommendations
+
+#### Changed
+- 🔄 Moved AR support checking from controller to `GlobalFunctionHelper` for reusability
+- 📱 Updated scan result screen to display recommendations as interactive chips
+- 🎨 Changed recommendation display from single values to sortable lists
+- 💾 Improved data model format for better JSON handling
+
+#### Technical
+- 📚 Added `device_info_plus` integration for AR capability detection
+- 🏗️ Refactored data model structure for scan results
+- 🔧 Enhanced controller methods for recommendation sorting and formatting
+- 🎯 Integrated AR check into face scanning initialization flow
+
+---
+
+### Future Planned Features
+- 🌟 iOS AR support implementation
+- 🔄 Real-time AR frame switching
+- 📸 Save and share virtual try-on photos
+- 🛒 Direct purchase integration
+- 👥 Social media sharing features
+
+## �🙏 Acknowledgments
 
 - **DeepAR SDK** - AR technology
 - **Google ARCore** - Augmented reality platform
