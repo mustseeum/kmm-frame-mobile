@@ -5,3 +5,7 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+
+# Firebase
+firebase-key.json
+google-services.json
