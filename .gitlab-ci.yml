@@ -9,8 +9,9 @@ stages:
 variables:
   DOCKER_REGISTRY: 560397894482.dkr.ecr.ap-southeast-3.amazonaws.com
   IMAGE_NAME: kmm-frame-mobile
-  IMAGE_TAG_STAGING: ${CI_COMMIT_SHORT_SHA}
-  IMAGE_TAG_PRODUCTION: $CI_COMMIT_TAG
+  APP_NAME: kacamatamoo-frame-ai
+  APP_TAG_STAGING: ${CI_COMMIT_SHORT_SHA}
+  APP_TAG_PRODUCTION: $CI_COMMIT_TAG
   DOCKERFILE_PATH: ./Dockerfile
   INFISICAL_ENV_PATH: /kacamatamoo/frame/kmm-frame-mobile
   GOCACHE: $CI_PROJECT_DIR/.cache/go-build
@@ -23,6 +24,15 @@ cache:
       - pubspec.lock
   paths:
     - .pub-cache/
+
+.deploy_setup: &deploy_setup
+  image: node:20.19.6-alpine3.22
+  before_script:
+    - apk add --no-cache curl bash
+    - curl -1sLf 'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash
+    - apk update && apk add infisical
+    - npm install -g firebase-tools
+    - chmod +x ci/*.sh
 
 before_script:
   - flutter pub get
@@ -96,35 +106,35 @@ build_android:
 ################################################################################
 
 deploy:staging:
+  <<: *deploy_setup
   stage: deploy
-  image: alpine:3.22.2
   needs:
     - job: build_android
       artifacts: true
   rules:
     - if: '$CI_COMMIT_BRANCH == "staging"'
-  before_script: []
   script:
-    - mkdir -p deploy/
-    - cp build/app/outputs/flutter-apk/app-release.apk deploy/${IMAGE_TAG_STAGING}.apk
-  artifacts:
-    paths:
-      - deploy/${IMAGE_TAG_STAGING}.apk
-    expire_in: 1 week
+    - export INFISICAL_ENVIRONMENT=staging
+    - bash ci/infisical.sh
+    - set -a; source .env; set +a
+    - export FIREBASE_OUTPUT_APK="${APP_NAME}-release-${APP_TAG_STAGING}-pre.apk"
+    - bash ci/firebase-deploy.sh
 
 deploy:production:
+  <<: *deploy_setup
   stage: deploy
-  image: alpine:3.22.2
   needs:
     - job: build_android
       artifacts: true
   rules:
     - if: '$CI_COMMIT_TAG'
-  before_script: []
   script:
-    - mkdir -p deploy/
-    - cp build/app/outputs/flutter-apk/app-release.apk deploy/${IMAGE_TAG_PRODUCTION}.apk
+    - export INFISICAL_ENVIRONMENT=prod
+    - bash ci/infisical.sh
+    - set -a; source .env; set +a
+    - export FIREBASE_OUTPUT_APK="${APP_NAME}-release-${APP_TAG_PRODUCTION}.apk"
+    - bash ci/firebase-deploy.sh
   artifacts:
     paths:
-      - deploy/${IMAGE_TAG_PRODUCTION}.apk
+      - deploy/${APP_TAG_PRODUCTION}.apk
     expire_in: 1 year
