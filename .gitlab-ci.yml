@@ -33,7 +33,7 @@ before_script:
 
 flutter_analyze:
   stage: analyze
-  image: ghcr.io/cirruslabs/flutter:3.10.4
+  image: http://ghcr.io/cirruslabs/flutter:3.38.5
   script:
     - flutter analyze
   rules:
@@ -43,7 +43,7 @@ flutter_analyze:
 
 flutter_test:
   stage: test
-  image: ghcr.io/cirruslabs/flutter:3.10.4
+  image: http://ghcr.io/cirruslabs/flutter:3.38.5
   script:
     - flutter test
   rules:
@@ -78,7 +78,7 @@ trivy-scan-fs:
 
 build_android:
   stage: build
-  image: ghcr.io/cirruslabs/flutter:3.10.4
+  image: http://ghcr.io/cirruslabs/flutter:3.38.5
   script:
     - flutter build apk --release
   artifacts:
