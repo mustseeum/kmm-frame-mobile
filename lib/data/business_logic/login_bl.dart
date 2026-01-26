@@ -84,6 +84,7 @@ class LoginBl with CacheManager {
     String key,
     String token,
     SessionDataRequest sessionDataRequest,
+    String lang,
   ) async {
     try {
       SessionDm sessionDm = SessionDm();
@@ -91,6 +92,7 @@ class LoginBl with CacheManager {
         key,
         token,
         sessionDataRequest,
+        lang,
       );
       bool success = response?.success ?? false;
       debugPrint(

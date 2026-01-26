@@ -94,7 +94,8 @@ class HomeScreenController extends BaseController {
   Future<void> onTapOption(String key) async {
     try {
       isLoading.value = true;
-      await _sessionHelper.getSessionProductAndNavigate(key);
+      final lang = Get.locale?.languageCode ?? 'en';
+      await _sessionHelper.getSessionProductAndNavigate(key, lang);
     } catch (e) {
       debugPrint('Error in onTapOption: $e');
       Get.snackbar(

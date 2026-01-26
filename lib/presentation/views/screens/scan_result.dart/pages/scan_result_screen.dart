@@ -75,7 +75,7 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                           // LEFT: large image area
                           profile?.imagePath != null
                               ? CircularImageWidget(
-                                  imagePath: profile!.imagePath,
+                                  imagePath: profile?.imagePath ?? "",
                                   width: leftWidth,
                                   diameter: avatarDiameter,
                                 )
@@ -133,7 +133,9 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'face_width'.tr,
                                               value: controller.formatMm(
-                                                profile?.faceWidth,
+                                                profile
+                                                    ?.measurements
+                                                    .face_width,
                                               ),
                                             ),
                                           ),
@@ -142,7 +144,9 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'eye_length'.tr,
                                               value: controller.formatMm(
-                                                profile?.eyeLength,
+                                                profile
+                                                    ?.measurements
+                                                    .eye_length_oicd,
                                               ),
                                             ),
                                           ),
@@ -154,7 +158,7 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'eye_width'.tr,
                                               value: controller.formatMm(
-                                                profile?.eyeWidth,
+                                                profile?.measurements.eye_width,
                                               ),
                                             ),
                                           ),
@@ -163,7 +167,9 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'eye_height'.tr,
                                               value: controller.formatMm(
-                                                profile?.eyeHeight,
+                                                profile
+                                                    ?.measurements
+                                                    .eye_height,
                                               ),
                                             ),
                                           ),
@@ -175,7 +181,7 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'bridge'.tr,
                                               value: controller.formatMm(
-                                                profile?.bridge,
+                                                profile?.measurements.bridge,
                                               ),
                                             ),
                                           ),
@@ -184,7 +190,9 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                             child: InfoTile(
                                               label: 'temple_length'.tr,
                                               value: controller.formatMm(
-                                                profile?.templeLength,
+                                                profile
+                                                    ?.measurements
+                                                    .temple_length,
                                               ),
                                             ),
                                           ),
@@ -200,22 +208,130 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                                     icon: Icons.style,
                                     children: [
                                       Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          // Frame Types List
                                           Expanded(
-                                            child: InfoTile(
-                                              label: 'frame'.tr,
-                                              value:
-                                                  profile?.suggestedFrame ??
-                                                  '-',
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'frame'.tr,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 8),
+                                                Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  children: controller
+                                                      .getFrameTypesList()
+                                                      .map(
+                                                        (frame) => frame['score']==6?Container(
+                                                          padding:
+                                                              const EdgeInsets.symmetric(
+                                                                horizontal: 12,
+                                                                vertical: 6,
+                                                              ),
+                                                          decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .blue
+                                                                .shade50,
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  16,
+                                                                ),
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .blue
+                                                                  .shade200,
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                          child: Text(
+                                                            frame['name'],
+                                                            style: TextStyle(
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Colors
+                                                                  .blue
+                                                                  .shade900,
+                                                            ),
+                                                          ),
+                                                        ):Container(),
+                                                      )
+                                                      .toList(),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          const SizedBox(width: 12),
+                                          const SizedBox(width: 15),
+                                          // Frame Colors List
                                           Expanded(
-                                            child: InfoTile(
-                                              label: 'color'.tr,
-                                              value:
-                                                  profile?.suggestedColor ??
-                                                  '-',
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'color'.tr,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 8),
+                                                Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  children: controller
+                                                      .getFrameColorsList()
+                                                      .map(
+                                                        (color) => color['score']==6?Container(
+                                                          padding:
+                                                              const EdgeInsets.symmetric(
+                                                                horizontal: 15,
+                                                                vertical: 6,
+                                                              ),
+                                                          decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .green
+                                                                .shade50,
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  16,
+                                                                ),
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .green
+                                                                  .shade200,
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                          child: Text(
+                                                            color['name'],
+                                                            style: TextStyle(
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Colors
+                                                                  .green
+                                                                  .shade900,
+                                                            ),
+                                                          ),
+                                                        ):Container(),
+                                                      )
+                                                      .toList(),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -257,7 +373,10 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                     ),
                     OutlinedButton.icon(
                       onPressed: controller.tryOnMyself,
-                      icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                      icon: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ),
                       iconAlignment: IconAlignment.end,
                       style: OutlinedButton.styleFrom(
                         backgroundColor: const Color(0xFF0B413F),
@@ -280,7 +399,10 @@ class ScanResultScreen extends BasePage<ScanResultController> {
                           }
                           return Text(
                             'try_on_myself'.tr,
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           );
                         }),
                       ),

@@ -1,27 +1,24 @@
+import 'package:kacamatamoo/data/models/scan_result/ml_result_data/measurements_dm.dart';
+import 'package:kacamatamoo/data/models/scan_result/ml_result_data/recommended_frames_dm.dart';
+
 class ScanResultModel {
+  final double confidenceLevel;
   final String faceShape;
+  final String imageId;
+  final MeasurementsDm measurements;
+  final RecommendedFramesDm recommendedFrames;
+  final String sessionId;
   final String skinTone;
-  final double faceWidth; // mm
-  final double eyeWidth; // mm
-  final double eyeLength;
-  final double eyeHeight;
-  final double bridge;
-  final double templeLength;
-  final String suggestedFrame;
-  final String suggestedColor;
-  final String imagePath; // local asset or file path or network
+  final String imagePath;
 
   ScanResultModel({
+    required this.confidenceLevel,
     required this.faceShape,
+    required this.imageId,
+    required this.measurements,
+    required this.recommendedFrames,
+    required this.sessionId,
     required this.skinTone,
-    required this.faceWidth,
-    required this.eyeWidth,
-    required this.eyeLength,
-    required this.eyeHeight,
-    required this.bridge,
-    required this.templeLength,
-    required this.suggestedFrame,
-    required this.suggestedColor,
     required this.imagePath,
   });
 }

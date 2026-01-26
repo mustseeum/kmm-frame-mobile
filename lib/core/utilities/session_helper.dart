@@ -26,7 +26,7 @@ class SessionHelper with CacheManager {
   }
 
   /// Gets session product and navigates to appropriate screen based on the session type
-  Future<void> getSessionProductAndNavigate(String key) async {
+  Future<void> getSessionProductAndNavigate(String key, String lang) async {
     final sessionParam = mapKeyToSessionParam(key);
 
     if (sessionParam == null) {
@@ -50,6 +50,7 @@ class SessionHelper with CacheManager {
       sessionParamName,
       token,
       sessionDataRequest,
+      lang,
     );
 
     debugPrint('Session Product Response: ${response.toString()}');

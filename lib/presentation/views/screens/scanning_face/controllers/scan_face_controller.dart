@@ -11,11 +11,14 @@ import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:kacamatamoo/app/routes/screen_routes.dart';
 import 'package:kacamatamoo/core/base/page_frame/base_controller.dart';
+import 'package:kacamatamoo/core/constants/app_colors.dart';
 import 'package:kacamatamoo/data/business_logic/ml_scan_processing_bl.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 import 'package:kacamatamoo/data/models/data_response/session/session_dm.dart';
 import 'package:kacamatamoo/data/models/request/questionnaire/answers.dart';
 import 'package:kacamatamoo/data/models/request/questionnaire/answers_data_request.dart';
+import 'package:kacamatamoo/data/models/scan_result/ml_result_data/ml_result_dm.dart';
+import 'package:kacamatamoo/data/models/scan_result/ml_result_data/ml_scan_processing_dm.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:path_provider/path_provider.dart';
@@ -39,6 +42,7 @@ class ScanFaceController extends BaseController with CacheManager {
   final double holdSecondsToComplete = 5.0;
   Timer? _progressTimer;
   Rx<FaceState> faceState = FaceState.noFace.obs;
+
   RxString message = 'Face not detected'.obs;
   final Answers answers = Answers();
   final AnswersDataRequest answersDataRequest = AnswersDataRequest();
@@ -111,6 +115,21 @@ class ScanFaceController extends BaseController with CacheManager {
     faceState.value = FaceState.noFace;
     message.value = 'Face not detected';
 
+    // Check AR support before starting
+    final isArSupported = await GlobalFunctionHelper.checkArSupport();
+    if (!isArSupported) {
+      Get.snackbar(
+        'AR Not Supported',
+        'Your device may not fully support AR features. Virtual try-on may be limited.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.o400.withValues(alpha: 0.8),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+      isScanning.value = false;
+      return;
+    }
+
     // Restart the progress timer in case it was stopped
     _startProgressTimer();
 
@@ -118,6 +137,7 @@ class ScanFaceController extends BaseController with CacheManager {
     if (!status.isGranted) {
       faceState.value = FaceState.permissionDenied;
       message.value = 'Camera permission denied';
+      isScanning.value = false;
       return;
     }
 
@@ -345,8 +365,10 @@ class ScanFaceController extends BaseController with CacheManager {
 
   Future<void> _mlScanProcessing(AnswersDataRequest answersDataRequest) async {
     try {
+      final lang = Get.locale?.languageCode ?? 'en';
       final result = await _mlScanProcessingBl.processFaceScan(
         answersDataRequest,
+        lang,
       );
       if (result == null) {
         debugPrint('ML scanning processing returned null result');
@@ -358,13 +380,21 @@ class ScanFaceController extends BaseController with CacheManager {
         return;
       } else {
         // Navigate to result screen with ML processing result
+        MLScanProcessingDm mlScanProcessingDm = result;
+        MLResultDM? mlResultDm = mlScanProcessingDm.ml_result;
+
         debugPrint(
-          'Navigating to ScanResultScreen with ML processing result, result: ${json.encode(result)} ',
+          'MLScanProcessingRepository-log-processFaceScan-MLScanProcessingController: ${json.encode(mlResultDm)} ',
         );
-        // Get.toNamed(
-        //   ScreenRoutes.scanResultScreen,
-        //   arguments: {'result': result, 'imagePath': capturedImagePath},
-        // );
+
+        Get.toNamed(
+          ScreenRoutes.scanResultScreen,
+          arguments: {
+            'answersData': answersDataRequest,
+            'answerResult': mlResultDm,
+            'imagePath': capturedImagePath,
+          },
+        );
       }
       debugPrint('ML Scanning Processing Result: $result');
     } catch (e, st) {

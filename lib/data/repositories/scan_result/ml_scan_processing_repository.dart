@@ -16,7 +16,7 @@ class MLScanProcessingRepository extends BaseRepo {
 
   Future<ParentResponse?> processFaceScan(
     AnswersDataRequest answers,
-    String token,
+    String token, String lang,
   ) async {
     String endpoint = ApiConstants.mlScanProcessingEndpoint;
     ParentResponse? response;
@@ -38,6 +38,7 @@ class MLScanProcessingRepository extends BaseRepo {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': 'Bearer $token',
+        "User-Language": lang,
       },
     );
     debugPrint(

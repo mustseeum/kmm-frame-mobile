@@ -12,14 +12,14 @@ import 'package:kacamatamoo/data/repositories/scan_result/ml_scan_processing_rep
 class MLScanProcessingBl with CacheManager{
   MLScanProcessingRepository repository = MLScanProcessingRepository(DioModule.getInstance());
 
-  Future<MLScanProcessingDm?> processFaceScan(AnswersDataRequest answers) async {
+  Future<MLScanProcessingDm?> processFaceScan(AnswersDataRequest answers, String lang) async {
     // Simulate network call delay
     await Future.delayed(const Duration(seconds: 2));
     final LoginDataModel loginDataModel = await getUserData();
     String token = loginDataModel.access_token ?? "";
 
     MLScanProcessingDm mlScanProcessingDm = MLScanProcessingDm();
-    ParentResponse? response = await repository.processFaceScan(answers, token);
+    ParentResponse? response = await repository.processFaceScan(answers, token, lang);
      debugPrint(
           "MLScanProcessingRepository-log-processFaceScan-MLScanProcessingBl(1): ${json.encode(response?.data)}",
         );

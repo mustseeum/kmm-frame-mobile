@@ -85,6 +85,58 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
                   },
                 ),
               ),
+
+              // Next button
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 16.0,
+                ),
+                child: Obx(() {
+                  final canProceed = controller.progress.value >= 100.0 || controller.isScanning.value == false;
+                  
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: canProceed
+                          ? () async {
+                              await controller.stopScanning();
+                              // Add your navigation logic here
+                              Get.back();
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0B413F),
+                        disabledBackgroundColor: Colors.grey.shade300,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'next'.tr,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: canProceed ? Colors.white : Colors.grey.shade600,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: canProceed ? Colors.white : Colors.grey.shade600,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+
+              
             ],
           ),
 

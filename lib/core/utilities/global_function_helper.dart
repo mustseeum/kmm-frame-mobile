@@ -9,11 +9,12 @@ import 'package:path/path.dart' as path;
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 
-import 'package:kacamatamoo/data/json_question/en_question/frame_recommendation.dart';
-import 'package:kacamatamoo/data/json_question/en_question/lens_recommendation.dart';
-import 'package:kacamatamoo/data/json_question/id_question/frame_recommendation_id.dart';
-import 'package:kacamatamoo/data/json_question/id_question/lens_recommendation_id.dart';
+import 'package:kacamatamoo/data/json_data_dummy/en_question/frame_recommendation.dart';
+import 'package:kacamatamoo/data/json_data_dummy/en_question/lens_recommendation.dart';
+import 'package:kacamatamoo/data/json_data_dummy/id_question/frame_recommendation_id.dart';
+import 'package:kacamatamoo/data/json_data_dummy/id_question/lens_recommendation_id.dart';
 
 class GlobalFunctionHelper {
   GlobalFunctionHelper._();
@@ -62,6 +63,61 @@ class GlobalFunctionHelper {
     // Fallback: request permission
     final result = await Permission.camera.request();
     return result.isGranted;
+  }
+
+  /// Check if the device supports AR (ARCore for Android, ARKit for iOS).
+  ///
+  /// Returns `true` if the device meets the minimum requirements for AR.
+  /// For Android: Checks for API 24+ and ARM architecture support.
+  /// For iOS: Checks for iOS 11.0+ which supports ARKit.
+  static Future<bool> checkArSupport() async {
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        final sdkInt = androidInfo.version.sdkInt;
+
+        // ARCore requires Android 7.0+ (API level 24+)
+        if (sdkInt < 24) {
+          debugPrint('AR Check: Device SDK $sdkInt < 24 (minimum)');
+          return false;
+        }
+
+        // Check for ARM architecture support
+        final supportedAbis = androidInfo.supportedAbis;
+        final hasArmSupport = supportedAbis.any(
+          (abi) => abi.contains('armeabi-v7a') || abi.contains('arm64-v8a'),
+        );
+
+        if (!hasArmSupport) {
+          debugPrint('AR Check: No ARM architecture support');
+          return false;
+        }
+
+        debugPrint('AR Check: Android AR supported (SDK: $sdkInt)');
+        return true;
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        final version = iosInfo.systemVersion;
+        final majorVersion = int.tryParse(version.split('.').first) ?? 0;
+
+        // ARKit requires iOS 11.0+
+        if (majorVersion < 11) {
+          debugPrint('AR Check: iOS $version < 11.0 (minimum)');
+          return false;
+        }
+
+        debugPrint('AR Check: iOS AR supported (iOS $version)');
+        return true;
+      } else {
+        debugPrint('AR Check: Platform not supported');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('AR Check Error: $e');
+      return false;
+    }
   }
 
   static String aesEncrypt(String value, String secret) {

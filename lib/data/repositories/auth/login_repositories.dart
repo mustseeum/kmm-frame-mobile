@@ -83,6 +83,7 @@ class LoginRepositories extends BaseRepo with CacheManager {
     String key,
     String token,
     SessionDataRequest sessionDataRequest,
+    String lang,
   ) async {
     String endPoint = ApiConstants.getSessionProduct;
     ParentResponse? parent;
@@ -91,7 +92,7 @@ class LoginRepositories extends BaseRepo with CacheManager {
     response = await post(
       endPoint,
       body: sessionDataRequest,
-      headers: {'Authorization': 'Bearer $token'},
+      headers: {'Authorization': 'Bearer $token', "User-Language": lang},
     );
     debugPrint(
       "$pageId(1)-log-doGetSession-response: ${json.encode(response.data)}",
