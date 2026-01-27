@@ -1,4 +1,5 @@
 // lib/app/app.dart
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kacamatamoo/app/routes/app_routes.dart';
@@ -12,15 +13,19 @@ class KacamataMooApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Optional: Deteksi tema sistem (bisa diubah jadi default light jika mau)
-    final isDarkMode = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    final isDarkMode =
+        MediaQuery.platformBrightnessOf(context) == Brightness.dark;
 
     return GetMaterialApp(
       title: 'Kacamatamoo',
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [ChuckerFlutter.navigatorObserver],
       // 🔹 Theme
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light, // atau ThemeMode.light jika selalu light
+      themeMode: isDarkMode
+          ? ThemeMode.dark
+          : ThemeMode.light, // atau ThemeMode.light jika selalu light
       // 🔹 Tambahkan ini:
       translations: LocalizationService(),
       locale: LocalizationService.locale,

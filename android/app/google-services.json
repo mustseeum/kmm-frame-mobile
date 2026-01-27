@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "780898052956",
+    "project_id": "kacamatamoo-ai-frame-and-lens",
+    "storage_bucket": "kacamatamoo-ai-frame-and-lens.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780898052956:android:4125f1f36752cb2d906f99",
+        "android_client_info": {
+          "package_name": "com.kacamatamoo.frame.ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9SpE-OT4t02-xTBeUi5_DMXPd1m9ys6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

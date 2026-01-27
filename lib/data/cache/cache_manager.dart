@@ -175,4 +175,10 @@ mixin CacheManager {
       return false;
     }
   }
+
+  Future<bool> getLoggingActiveStatus() async {
+    final storage = GetStorage();
+    bool data = await storage.read(CacheManagerKey.loggerApiEnv.name) ?? false;
+    return data;
+  }
 }

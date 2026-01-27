@@ -1,3 +1,4 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:kacamatamoo/core/config/app_environment.dart';
@@ -21,6 +22,7 @@ class DioModule with DioMixin implements Dio {
 
     interceptors.add(ApiInterceptor());
     interceptors.add(log.LogInterceptor());
+    interceptors.add(ChuckerDioInterceptor());
 
     httpClientAdapter = IOHttpClientAdapter();
   }
