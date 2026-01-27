@@ -3,10 +3,11 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.kacamatamoo.app"
+    namespace = "com.kacamatamoo.frame.ai"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +22,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.kacamatamoo.app"
+        applicationId = "com.kacamatamoo.frame.ai"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // minSdk = flutter.minSdkVersion
@@ -41,15 +42,16 @@ android {
     }
 
      androidResources {
+        // COMMENTED OUT - Unity disabled
         // Read unityStreamingAssets from gradle.properties
-        val unityStreamingAssetsList = (project.findProperty("unityStreamingAssets") as? String)
-                ?.split(",")
-                ?.map { it.trim() }
-                ?: emptyList()
+        // val unityStreamingAssetsList = (project.findProperty("unityStreamingAssets") as? String)
+        //         ?.split(",")
+        //         ?.map { it.trim() }
+        //         ?: emptyList()
 
-        noCompress += listOf(
-        ".unity3d", ".ress", ".resource", ".obb", ".bundle", ".unityexp"
-        ) + unityStreamingAssetsList
+        // noCompress += listOf(
+        // ".unity3d", ".ress", ".resource", ".obb", ".bundle", ".unityexp"
+        // ) + unityStreamingAssetsList
 
         ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
     }
@@ -61,7 +63,8 @@ flutter {
 }
 
 dependencies {
-    implementation (project(":unityLibrary")) 
+    // COMMENTED OUT - Unity disabled
+    // implementation (project(":unityLibrary")) 
     // {
     //     // Exclude ARCore from Unity to avoid duplicate classes
     //     exclude(group = "com.google.ar", module = "core")

@@ -7,6 +7,7 @@ enum CacheManagerKey {
   isLoggedIn,
   rememberMeEmail,
   sessionData,
+  loggerApiEnv
 }
 
 enum PopupType { warning, info, error, success, refresh, question, failed }

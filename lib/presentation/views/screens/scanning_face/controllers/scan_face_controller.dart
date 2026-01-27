@@ -82,7 +82,7 @@ class ScanFaceController extends BaseController with CacheManager {
       enableContours: false,
     );
     faceDetector = FaceDetector(options: options);
-    _startProgressTimer();
+    // _startProgressTimer();
   }
 
   @override
@@ -325,7 +325,7 @@ class ScanFaceController extends BaseController with CacheManager {
           ? 'men_eyewear'
           : selectedGender == "I prefer not to say" ||
                 selectedGender == "Saya memilih untuk tidak menyebutkan"
-          ? 'general_eyewear'
+          ? 'prefer_not_to_say'
           : 'women_eyewear';
       answers.age_range = GlobalFunctionHelper.formatAgeString(selectedAge);
       answers.gender_identity =

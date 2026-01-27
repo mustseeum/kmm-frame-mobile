@@ -58,14 +58,18 @@ dependencies:
   face_camera: ^0.1.4
   google_mlkit_face_detection: ^0.13.1
   google_mlkit_commons: ^0.11.0
-  flutter_embed_unity: ^1.4.0
-  flutter_embed_unity_6000_0_android: ^1.2.3
+  # flutter_embed_unity: ^1.4.0  # COMMENTED OUT - Unity disabled
+  # flutter_embed_unity_6000_0_android: ^1.2.3  # COMMENTED OUT - Unity disabled
   camera: ^0.11.0
   vector_math: ^2.1.4
-  flutter_hooks: ^0.20.5 # optional
-  face_scanning_id: ^0.0.2
+  flutter_hooks: ^0.21.3+1 # optional
+  face_scanning_id:
+    path: D:/Save Zone/Documents/Project/Hybrid/um/face_scanning_id/
+  # face_scanning_id: ^0.0.2
   encrypt: ^5.0.3
   flutter_widget_from_html: ^0.17.1
+  firebase_core: ^4.4.0
+  chucker_flutter: ^1.9.1
 
 dev_dependencies:
   flutter_test:
@@ -131,6 +135,6 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 dependency_overrides:
-  permission_handler: ^12.0.1
+  # permission_handler: ^12.0.1
   google_mlkit_face_detection: ^0.13.1
-  google_mlkit_commons: ^0.11.0
+  # google_mlkit_commons: ^0.11.0

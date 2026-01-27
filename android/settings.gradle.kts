@@ -26,4 +26,5 @@ plugins {
 include(":app")
 
 // Alternative syntax for android/settings.gradle.kts
-include(":unityLibrary")
+// COMMENTED OUT - Unity disabled
+// include(":unityLibrary")
