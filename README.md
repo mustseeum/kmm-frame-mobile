@@ -189,9 +189,9 @@ For questions, issues, or support:
 - **Documentation**: See [docs/](docs/) folder
 - **Theme Guide**: [THEME_GUIDE.md](THEME_GUIDE.md)
 
-## � Changelog
+## 📋 Changelog
 
-### [Unreleased] - 2026-01-26
+### [1.0.0] - 2026-01-27
 
 #### Added
 - ✨ AR support detection functionality in `GlobalFunctionHelper`
