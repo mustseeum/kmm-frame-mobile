@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_embed_unity/flutter_embed_unity.dart';
+// import 'package:flutter_embed_unity/flutter_embed_unity.dart';  // COMMENTED OUT - Unity disabled
 import 'package:get/get.dart';
 import 'package:kacamatamoo/presentation/views/screens/virtual_try_on/controllers/try_on_glasses_v2_controller.dart';
 import 'package:kacamatamoo/presentation/views/widgets/vto/camera_preview.dart';
@@ -29,34 +29,41 @@ class VirtualTryOnPageV2 extends GetView<VirtualTryOnV2Controller> {
               builder: (_) {
                 return Column(
                   children: [
-                    SizedBox(
-                      height: 600, // Set a fixed height for Unity widget
-                      child: EmbedUnity(
-                        onMessageFromUnity: (String data) {
-                          // A message has been received from a Unity script
-                          // controller.handleUnityMessage(data);
-                          // if (data == "scene_loaded") {
-                          //   sendToUnity(
-                          //     "MyGameObject",
-                          //     "SpawnKacamata",
-                          //     "kacamata",
-                          //   );
-                          // }
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Send message to Unity
-                          sendToUnity(
-                            "MyGameObject",
-                            "SpawnKacamata",
-                            "kacamata",
-                          );
-                        },
-                        child: const Text("Set rotation speed"),
+                    // COMMENTED OUT - Unity disabled
+                    // SizedBox(
+                    //   height: 600, // Set a fixed height for Unity widget
+                    //   child: EmbedUnity(
+                    //     onMessageFromUnity: (String data) {
+                    //       // A message has been received from a Unity script
+                    //       // controller.handleUnityMessage(data);
+                    //       // if (data == "scene_loaded") {
+                    //       //   sendToUnity(
+                    //       //     "MyGameObject",
+                    //       //     "SpawnKacamata",
+                    //       //     "kacamata",
+                    //       //   );
+                    //       // }
+                    //     },
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       // Send message to Unity
+                    //       sendToUnity(
+                    //         "MyGameObject",
+                    //         "SpawnKacamata",
+                    //         "kacamata",
+                    //       );
+                    //     },
+                    //     child: const Text("Set rotation speed"),
+                    //   ),
+                    // ),
+                    const Center(
+                      child: Text(
+                        'Unity functionality is currently disabled',
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     // Padding(
