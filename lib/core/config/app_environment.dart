@@ -10,8 +10,17 @@ class AppEnvironment with CacheManager {
 
   // selected environtment
   EnvironmentType environtment = EnvironmentType.dev;
+  
+  bool chuckerLogEnvStatus() {
+    String? env = getSelectedEnvironment();
+    if (env == EnvironmentType.prod.name) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  baseUrl() {
+  String baseUrl() {
     String? env = getSelectedEnvironment();
     if (env == EnvironmentType.prod.name) {
       return API_URL_PROD;

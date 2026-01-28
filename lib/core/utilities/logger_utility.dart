@@ -3,7 +3,7 @@ import 'package:kacamatamoo/core/constants/constants.dart';
 import 'package:kacamatamoo/data/cache/cache_manager.dart';
 
 class LoggerUtility with CacheManager {
-  getChuckerShowStatus() async {
+  Future<bool> getChuckerShowStatus() async {
     bool status = await getLoggingActiveStatus();
 
     if (status) {
@@ -13,7 +13,7 @@ class LoggerUtility with CacheManager {
     }
   }
 
-  getChuckerReleaseStatus() async {
+  Future<bool> getChuckerReleaseStatus() async {
     bool status = await getLoggingActiveStatus();
 
     String? env = getSelectedEnvironment();
