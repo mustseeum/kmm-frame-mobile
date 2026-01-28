@@ -68,51 +68,9 @@ class ScanFaceScreen extends BasePage<ScanFaceController> {
                     );
 
                     return Obx(() {
-                      // Safety check: ensure dimensions are valid before rendering
-                      // This prevents RenderBox layout issues
-                      final diameter = controller.diameter.value;
-                      final ringSize = controller.ringSize.value;
-                      
-                      if (diameter <= 0 || ringSize <= 0) {
-                        // Return a placeholder while dimensions are being calculated
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      // Additional safety: if camera is scanning but not initialized,
-                      // ensure we don't render until preview size is available
-                      final camCtrl = controller.cameraController;
-                      if (controller.isScanning.value && 
-                          camCtrl != null && 
-                          controller.cameraInitialized.value &&
-                          camCtrl.value.isInitialized &&
-                          camCtrl.value.previewSize != null) {
-                        final previewSize = camCtrl.value.previewSize!;
-                        // Validate preview size has non-zero dimensions
-                        if (previewSize.width <= 0 || previewSize.height <= 0) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CircularProgressIndicator(),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Initializing camera...',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
-
                       return ScanFaceWidget(
-                        diameter: diameter,
-                        ringSize: ringSize,
+                        diameter: controller.diameter.value,
+                        ringSize: controller.ringSize.value,
                         cameraController: controller.cameraController,
                         isScanning: controller.isScanning.value,
                         cameraInitialized: controller.cameraInitialized.value,

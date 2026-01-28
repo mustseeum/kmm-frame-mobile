@@ -15,7 +15,7 @@ const enUS = {
   'please_enter_email':'Please enter your email',
   'password_warning':'Password must be at least 6 chars',
   'sign_in':'Sign In',
-  'copy_right': '© 2026 KacamataMoo. All rights reserved.',
+  'copy_right': '© 2026 KACAMATAMOO. All rights reserved.',
 
   // Home Screen
   'eye_wear_for_everyone':'Eyewear Tailored to You',
