@@ -191,6 +191,33 @@ For questions, issues, or support:
 
 ## 📋 Changelog
 
+### [1.0.1] - 2026-01-28
+
+#### Added
+- 🖼️ New background image for application (`background_app.jpg`)
+- 💾 Enhanced cache management with new `CacheManager` utility class
+- 🔐 Improved login screen controller with additional functionality
+
+#### Changed
+- 🎨 Redesigned login screen UI with improved user experience
+- 🚀 Updated splash screen implementation
+- 📝 Refined heading card widget design
+- ⚙️ Updated app environment configuration
+
+#### Removed
+- 🗑️ Removed Linux platform support (CMakeLists, build files, runner)
+- 🗑️ Removed macOS platform support (Xcode project, Runner, entitlements)
+- 🗑️ Removed Windows platform support (CMakeLists, runner, resources)
+- 📦 Cleaned up `.env` file from repository (now gitignored)
+
+#### Technical
+- 🔧 Updated dependency versions in `pubspec.yaml`
+- 🔒 Enhanced `.gitignore` to include `.env` file
+- 🏗️ Focused development on Android platform only
+- 📉 Reduced codebase size by ~3,000 lines through platform cleanup
+
+---
+
 ### [1.0.0] - 2026-01-27
 
 #### Added
