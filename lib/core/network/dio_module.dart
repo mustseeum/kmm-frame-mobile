@@ -9,7 +9,10 @@ import 'log_interceptor.dart' as log;
 class DioModule with DioMixin implements Dio {
   final AppEnvironment env = AppEnvironment();
 
-  DioModule._() {
+  DioModule._({
+    bool useToastAsError = false,
+    bool disableErrorMessage = false,
+  }) {
     options = BaseOptions(
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 60),
@@ -27,5 +30,6 @@ class DioModule with DioMixin implements Dio {
     httpClientAdapter = IOHttpClientAdapter();
   }
 
-  static Dio getInstance() => DioModule._();
+  static Dio getInstance({bool useToast = false, bool disableError = false}) =>
+      DioModule._(useToastAsError: useToast, disableErrorMessage: disableError);
 }

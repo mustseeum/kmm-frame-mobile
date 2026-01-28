@@ -7,6 +7,8 @@ class HeadingCardWidget extends StatelessWidget {
   final bool isTablet;
   final VoidCallback? onTap;
   final VoidCallback? onPress;
+  final bool? isDevelopmentEndpoint;
+  final ValueChanged<bool>? onEndpointChanged;
 
   const HeadingCardWidget({
     super.key,
@@ -14,6 +16,8 @@ class HeadingCardWidget extends StatelessWidget {
     required this.isTablet,
     this.onTap,
     this.onPress,
+    this.isDevelopmentEndpoint,
+    this.onEndpointChanged,
   });
 
   void _handleTap() {
@@ -38,7 +42,7 @@ class HeadingCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
@@ -49,7 +53,7 @@ class HeadingCardWidget extends StatelessWidget {
           children: [
             Image.asset(
               AssetsConstants.imageLogo,
-              width: isTablet ? 300 : 100,
+              width: isTablet ? 300 : 250,
               height: isTablet ? 29 : 100,
             ),
             const SizedBox(height: 12),
@@ -61,6 +65,52 @@ class HeadingCardWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
+            if (onEndpointChanged != null) ...[
+              const SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 20 : 16,
+                  vertical: isTablet ? 12 : 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Environment',
+                            style: TextStyle(
+                              fontSize: isTablet ? 14 : 12,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            (isDevelopmentEndpoint ?? false) ? 'Development' : 'Production',
+                            style: TextStyle(
+                              fontSize: isTablet ? 13 : 11,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                      value: isDevelopmentEndpoint ?? false,
+                      onChanged: onEndpointChanged,
+                      activeThumbColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

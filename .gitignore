@@ -52,3 +52,7 @@ google-services.json
 pubspec.lock
 android/unityLibrary.zip
 android/unityLibrary
+linux
+macos
+windows
+.env

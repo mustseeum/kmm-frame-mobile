@@ -9,9 +9,18 @@ class AppEnvironment with CacheManager {
   String API_URL_STAGING = "${dotenv.env['BASE_URL_STAGING']}$API_VERSION";
 
   // selected environtment
-  EnvironmentType environtment = EnvironmentType.dev;
+  EnvironmentType environtment = EnvironmentType.staging;
+  
+  bool chuckerLogEnvStatus() {
+    String? env = getSelectedEnvironment();
+    if (env == EnvironmentType.prod.name) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  baseUrl() {
+  String baseUrl() {
     String? env = getSelectedEnvironment();
     if (env == EnvironmentType.prod.name) {
       return API_URL_PROD;
