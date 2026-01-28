@@ -21,6 +21,7 @@ class AssetsConstants {
   static String roundedWarning = '${dirImages}roundedWarning.png';
   static String warningAlert = '${dirImages}warning_alert.png';
   static String wayfarerThumb = '${dirImages}wayfarer_thumb.png';
+  static String backgroundApp = '${dirImages}background_app.jpg';
   
   // 3D Models
   static String modelGlasses = '${dirModel3D}test_image_asset.glb';

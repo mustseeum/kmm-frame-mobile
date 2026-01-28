@@ -53,17 +53,23 @@ class SplashScreen extends BasePage<SplashScreenController> {
                     // 🔹 Logo "KacamataMoo" dengan split warna
                     Image.asset(
                       AssetsConstants.imageLogo,
-                      width: GlobalFunctionHelper.isTablet(constraints) ? 300 : 100,
-                      height: GlobalFunctionHelper.isTablet(constraints) ? 29 : 100,
+                      width: GlobalFunctionHelper.isTablet(constraints)
+                          ? 300
+                          : 250,
+                      height: GlobalFunctionHelper.isTablet(constraints)
+                          ? 29
+                          : 100,
                     ),
-                    const SizedBox(height: 10 ),
+                    const SizedBox(height: 10),
                     // 🔹 Subtitle: "Eyewear for Everyone"
                     Text(
                       'eye_wear_for_everyone'.tr,
                       style: TextStyle(
                         fontSize: subtitleFontSize,
                         fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.7,
+                        ),
                       ),
                       textAlign: TextAlign.center,
                     ),

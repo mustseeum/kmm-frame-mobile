@@ -44,6 +44,20 @@ mixin CacheManager {
     return coreEnvType;
   }
 
+  Future<bool> setSelectedEnvironment(EnvironmentType environmentType) async {
+    try {
+      final storage = GetStorage();
+      await storage.write(
+        CacheManagerKey.environmentType.name,
+        environmentType.name,
+      );
+      return true;
+    } catch (e) {
+      debugPrint('Error saving environment: ${e.toString()}');
+      return false;
+    }
+  }
+
   // Save authentication token
   Future<bool> saveAuthToken(String token) async {
     try {
@@ -174,6 +188,12 @@ mixin CacheManager {
       debugPrint('Error clearing auth data: ${e.toString()}');
       return false;
     }
+  }
+
+  Future<bool> setLoggingActiveStatus(bool? status) async {
+    final storage = GetStorage();
+    await storage.write(CacheManagerKey.loggerApiEnv.name, status ?? false);
+    return true;
   }
 
   Future<bool> getLoggingActiveStatus() async {

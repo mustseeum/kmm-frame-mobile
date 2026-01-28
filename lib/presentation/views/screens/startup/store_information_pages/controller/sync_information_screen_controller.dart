@@ -93,7 +93,7 @@ class SyncInformationScreenController extends BaseController with CacheManager {
   void logout() async {
     final result = await CustomDialogWidget.show(
       context: Get.context!,
-      title: '',
+      title: 'Logout Confirmation',
       content: 'are_you_sure_you_want_to_logout'.tr,
       iconAssetPath: AssetsConstants.roundedWarning, // Or use iconAssetPath for custom icon
       primaryButtonText: 'Logout',
