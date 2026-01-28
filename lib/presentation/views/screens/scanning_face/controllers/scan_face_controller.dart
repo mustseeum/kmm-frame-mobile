@@ -441,18 +441,18 @@ class ScanFaceController extends BaseController with CacheManager {
 
       // Save image to device gallery (publicly accessible)
       // **uncomment the following lines if you want to save to gallery**
-      // final savedPath = await GlobalFunctionHelper.saveImageToGallery(
-      //   imagePath,
-      //   fileName: 'face_scan_$timestamp.jpg',
-      //   albumName: 'KacamataMoo',
-      // );
+      final savedPath = await GlobalFunctionHelper.saveImageToGallery(
+        imagePath,
+        fileName: 'face_scan_$timestamp.jpg',
+        albumName: 'KacamataMoo',
+      );
 
-      // if (savedPath != null) {
-      //   capturedImagePath = savedPath;
-      //   debugPrint('Image saved to gallery: $savedPath');
-      // } else {
-      //   debugPrint('Failed to save image to gallery, using temp path');
-      // }
+      if (savedPath != null) {
+        capturedImagePath = savedPath;
+        debugPrint('Image saved to gallery: $savedPath');
+      } else {
+        debugPrint('Failed to save image to gallery, using temp path');
+      }
     } catch (e, st) {
       debugPrint('Error capturing image: $e');
       debugPrint('Stack trace: $st');

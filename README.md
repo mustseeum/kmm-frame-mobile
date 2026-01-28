@@ -191,6 +191,22 @@ For questions, issues, or support:
 
 ## 📋 Changelog
 
+### [1.0.2] - 2026-01-28
+
+#### Changed
+- 🔧 Commented out Unity AR integration (`flutter_embed_unity` packages)
+- 🎮 Disabled Unity-related features in Virtual Try-On V2 screen
+- 📱 Improved Scan Face screen with `SingleChildScrollView` for better responsiveness
+- 🐛 Fixed layout constraints in Scan Face screen to prevent rendering errors
+
+#### Technical
+- 📦 Removed `flutter_embed_unity` and `flutter_embed_unity_6000_0_android` dependencies
+- 🔄 Commented out Unity AR properties and methods in `VirtualTryOnV2Controller`
+- 🏗️ Replaced `Expanded` with `LayoutBuilder` and `SizedBox` in scrollable context
+- ✨ Added proper height calculation for camera preview in scrollable layout
+
+---
+
 ### [1.0.1] - 2026-01-28
 
 #### Added

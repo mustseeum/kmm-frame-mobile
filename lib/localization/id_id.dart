@@ -1,5 +1,5 @@
 const idID = {
-  'app_title': 'KacamataMoo',
+  'app_title': 'KACAMATAMOO',
   'search_hint': 'Cari kacamata berdasarkan nama...',
   'loading': 'Memuat...',
   'error': 'Kesalahan',
@@ -14,7 +14,7 @@ const idID = {
   'please_enter_email': 'Silakan masukkan email Anda',
   'password_warning': 'Kata sandi harus minimal 6 karakter',
   'sign_in': 'Masuk',
-  'copy_right': '© 2026 KacamataMoo. All rights reserved.',
+  'copy_right': '© 2026 KACAMATAMOO. All rights reserved.',
 
   // Home Screen
   'eye_wear_for_everyone': 'Kacamata yang Disesuaikan untuk Anda',
